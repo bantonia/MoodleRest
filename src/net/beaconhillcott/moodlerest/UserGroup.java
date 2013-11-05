@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class UserGroup {
+public class UserGroup implements Serializable {
 
   private Long id=null;
   private String name=null;
