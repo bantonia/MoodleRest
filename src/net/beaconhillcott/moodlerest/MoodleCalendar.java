@@ -17,11 +17,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class MoodleCalendar {
+public class MoodleCalendar implements Serializable {
   
   private Integer id=null;
   private String modulename=null;
