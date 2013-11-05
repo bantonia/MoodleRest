@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Bill Antonia
  */
-public class MoodleWarning {
+public class MoodleWarning implements Serializable {
 
   private String item=null;
   private Integer itemid=null;
