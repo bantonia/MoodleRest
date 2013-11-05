@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * 
@@ -31,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @author Bill Antonia
  * @see MoodleUser
  */
-public class MoodleRestCohort {
+public class MoodleRestCohort implements Serializable {
   
   public static Hashtable<Long, ArrayList> getCohortsMemberIds(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException {
     StringBuilder data=new StringBuilder();
