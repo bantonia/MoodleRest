@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class UserRole {
+public class UserRole implements Serializable {
 
   private Long roleid=null;
   private String name=null;
