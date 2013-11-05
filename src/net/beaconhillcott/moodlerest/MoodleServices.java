@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class containing the Moodle web services function names as constants.</p>
  * 
  * @author Bill Antonia
  */
-public class MoodleServices {
+public class MoodleServices implements Serializable {
   
   // Group functions
   /**
