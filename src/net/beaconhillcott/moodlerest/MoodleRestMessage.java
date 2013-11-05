@@ -23,13 +23,14 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class to call Moodle REST message web services.</p>
  * 
  * @author Bill Antonia
  */
-public class MoodleRestMessage {
+public class MoodleRestMessage implements Serializable {
   
   /**
    * <p>Method to send a single message between users.</p>
