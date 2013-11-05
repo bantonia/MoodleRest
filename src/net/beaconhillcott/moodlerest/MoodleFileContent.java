@@ -18,6 +18,8 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to store the file content as a Base64 uuencoded string.</p>
  * <p>Note no encoding takes place, this is left up to the developer as it may be implementation dependent.</p>
@@ -26,7 +28,7 @@ package net.beaconhillcott.moodlerest;
  * @author Bill Antonia
  * @see MoodleFileFile
  */
-public class MoodleFileContent extends MoodleFileFile {
+public class MoodleFileContent extends MoodleFileFile implements Serializable {
 
     /**
      *
