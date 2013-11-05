@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * Class used to hold user/course memberships. Returned when fetching a list of users enrolled in a course.
  * @see MoodleRestCourse
  * @author Bill Antonia
  */
-public class MoodleCourseUser {
+public class MoodleCourseUser implements Serializable {
 
     private Long courseid=null;
     private Long userid=null;
