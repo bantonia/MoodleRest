@@ -4,11 +4,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class MoodleGroupGroupings {
+public class MoodleGroupGroupings implements Serializable {
   
   private Long id=null;
   private Long courseid=null;
