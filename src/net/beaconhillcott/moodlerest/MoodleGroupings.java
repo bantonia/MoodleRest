@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Bill Antonia
  */
-public class MoodleGroupings {
+public class MoodleGroupings implements Serializable {
 
     public static final Long MOODLE=0L;
     public static final Long HTML=1L;
