@@ -4,11 +4,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class MoodleModAssignAssignmentConfig {
+public class MoodleModAssignAssignmentConfig implements Serializable {
   private Long id=null;
   private Long assignment=null;
   private String plugin=null;
