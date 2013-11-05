@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleModAssignFile {
+public class MoodleModAssignFile implements Serializable {
 
     private Long id=null;
     private Long numfiles=0L;
