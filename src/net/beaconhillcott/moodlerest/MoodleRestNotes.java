@@ -22,13 +22,14 @@ import java.io.*;
 import java.net.*;
 import java.util.logging.*;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class containing static Methods to call Moodle REST notes web services.</p>
  * 
  * @author Bill Antonia
  */
-public class MoodleRestNotes {
+public class MoodleRestNotes implements Serializable {
   
   //private static final int BUFFER_MAX=4000;
   
