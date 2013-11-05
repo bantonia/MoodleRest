@@ -19,12 +19,13 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleModAssignSubmission {
+public class MoodleModAssignSubmission implements Serializable {
 
     private Long id=null;
     private Long userid=null;
