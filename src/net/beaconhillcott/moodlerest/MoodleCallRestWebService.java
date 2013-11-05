@@ -25,6 +25,7 @@ import java.util.logging.*;
 import javax.xml.xpath.*;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import java.io.Serializable;
 
 /**
  * <p>Contains static routines to initialise the REST web service for authentication and to call the Moodle web service.</p>
@@ -38,7 +39,7 @@ import org.xml.sax.InputSource;
  * 
  * @author Bill Antonia
  */
-public class MoodleCallRestWebService {
+public class MoodleCallRestWebService implements Serializable {
 
     private static final String MOODLE_REST_VERSION="Version  0.1.6";
     private static String token=null;
