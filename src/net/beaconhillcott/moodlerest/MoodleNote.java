@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to create objects which contain the details of a Moodle note.</p>
  * 
  * @author Bill Antonia
  */
-public class MoodleNote {
+public class MoodleNote implements Serializable {
   
     /**
      * <p></p>
