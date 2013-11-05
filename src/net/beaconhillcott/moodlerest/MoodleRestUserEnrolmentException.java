@@ -4,13 +4,11 @@
  */
 package net.beaconhillcott.moodlerest;
 
-import java.io.Serializable;
-
 /**
  *
  * @author root
  */
-class MoodleRestUserEnrolmentException extends Exception implements Serializable {
+class MoodleRestUserEnrolmentException extends Exception {
   
   public static final String USER_NULL="User cannot be null";
 
