@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class UserEnrolledCourse {
+public class UserEnrolledCourse implements Serializable {
   private Long id=null;
   private String fullname=null;
   private String shortname=null;
