@@ -19,6 +19,7 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * <p>Class for which to create object in which to store module information that has been attached to a course.</p>
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  * @see MoodleRestCourse
  * @see MoodleModuleContent
  */
-public class MoodleModule {
+public class MoodleModule implements Serializable {
   
     /**
      * <p></p>
