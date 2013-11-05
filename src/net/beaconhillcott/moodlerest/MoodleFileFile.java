@@ -18,6 +18,8 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to store the file information results once it has been uploaded</p>
  * <p>Extends MoodleFileParent</p>
@@ -25,7 +27,7 @@ package net.beaconhillcott.moodlerest;
  * @author Bill Antonia
  * @see MoodleFileParent
  */
-public class MoodleFileFile extends MoodleFileParent {
+public class MoodleFileFile extends MoodleFileParent implements Serializable {
 
     private Boolean isdir=false;
     private String url=null;
