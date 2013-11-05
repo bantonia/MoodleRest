@@ -19,12 +19,13 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * 
  * @author Bill Antonia
  */
-public class MoodleModAssignGradeParam {
+public class MoodleModAssignGradeParam implements Serializable {
 
     private String status="";
     private Long since=0L;
