@@ -4,11 +4,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-class MoodleRestCohortException extends MoodleRestException {
+class MoodleRestCohortException extends MoodleRestException implements Serializable {
 
   public MoodleRestCohortException(String string) {
   }
