@@ -17,7 +17,9 @@
  */
 package net.beaconhillcott.moodlerest;
 
-public class MoodleUserEnrolment {
+import java.io.Serializable;
+
+public class MoodleUserEnrolment implements Serializable {
   private Integer roleId=null;
   private Long userId=null;
   private Long courseId=null;
