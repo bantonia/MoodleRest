@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * Class to store the name and version details of a Moodle webservice.
  *
  * @author Bill Antonia
  */
-public class Function {
+public class Function implements Serializable {
   private String name=null;
   private Double version;
 
