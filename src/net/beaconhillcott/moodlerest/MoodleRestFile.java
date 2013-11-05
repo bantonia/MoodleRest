@@ -21,13 +21,14 @@ package net.beaconhillcott.moodlerest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class to call the Moodle REST file web services.</p>
  * 
  * @author Bill Antonia
  */
-public class MoodleRestFile {
+public class MoodleRestFile implements Serializable {
   
     /**
      * <p>Method to return the details of files attached to a context.</p>
