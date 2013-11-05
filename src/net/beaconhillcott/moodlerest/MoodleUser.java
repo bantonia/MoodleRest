@@ -19,13 +19,14 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Class to hold the state of a MoodleUser object. Used when creating, updating or fetching user information in Moodle.
  * @see MoodleRestUser
  * @author Bill Antonia
  */
-public class MoodleUser {
+public class MoodleUser implements Serializable {
 
     /**
      *
