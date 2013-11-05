@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleModAssignOnlineText {
+public class MoodleModAssignOnlineText implements Serializable {
 
     private Long id=null;
     private String onlinetext=null;
