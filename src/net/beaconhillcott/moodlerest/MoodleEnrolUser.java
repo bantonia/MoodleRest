@@ -18,13 +18,15 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to relate a user to a role within a particular context.</p>
  * <p>Problem here as of 2011-02-13 there is no way of obtaining the contextid or roleid programatically through the standard web services interface.</p>
  * @see MoodleRestEnrol
  * @author Bill Antonia
  */
-public class MoodleEnrolUser {
+public class MoodleEnrolUser implements Serializable {
 
     private Long roleid=null;
     private Long userid=null;
