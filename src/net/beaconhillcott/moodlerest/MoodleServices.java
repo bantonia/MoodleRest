@@ -33,153 +33,153 @@ public enum MoodleServices implements Serializable {
         // # ACTUAL FUNCTIONS #
         // ####################
         // GROUP API
-        CORE_GROUP_CREATE_GROUPS,        
-        CORE_GROUP_GET_GROUPS,
-        CORE_GROUP_GET_COURSE_GROUPS,
-        CORE_GROUP_DELETE_GROUPS,        
-        CORE_GROUP_GET_GROUP_MEMBERS,        
-        CORE_GROUP_ADD_GROUP_MEMBERS,        
-        CORE_GROUP_DELETE_GROUP_MEMBERS,        
-        CORE_GROUP_CREATE_GROUPINGS,        
-        CORE_GROUP_UPDATE_GROUPINGS,        
-        CORE_GROUP_GET_GROUPINGS,        
-        CORE_GROUP_GET_COURSE_GROUPINGS,        
-        CORE_GROUP_DELETE_GROUPINGS,        
-        CORE_GROUP_ASSIGN_GROUPING,        
-        CORE_GROUP_UNASSIGN_GROUPING,        
+        CORE_GROUP_CREATE_GROUPS, // MoodleRestGroup      
+        CORE_GROUP_GET_GROUPS, // MoodleRestGroup
+        CORE_GROUP_GET_COURSE_GROUPS, // MoodleRestGroup
+        CORE_GROUP_DELETE_GROUPS, // MoodleRestGroup
+        CORE_GROUP_GET_GROUP_MEMBERS, // MoodleRestGroup
+        CORE_GROUP_ADD_GROUP_MEMBERS, // MoodleRestGroup
+        CORE_GROUP_DELETE_GROUP_MEMBERS, // MoodleRestGroup
+        CORE_GROUP_CREATE_GROUPINGS, // MoodleRestGroup
+        CORE_GROUP_UPDATE_GROUPINGS, // MoodleRestGroup
+        CORE_GROUP_GET_GROUPINGS, // MoodleRestGroup
+        CORE_GROUP_GET_COURSE_GROUPINGS, // MoodleRestGroup
+        CORE_GROUP_DELETE_GROUPINGS, // MoodleRestGroup
+        CORE_GROUP_ASSIGN_GROUPING, // MoodleRestGroup
+        CORE_GROUP_UNASSIGN_GROUPING, // MoodleRestGroup
 
         // FILES API
-        CORE_FILES_GET_FILES,
-        CORE_FILES_UPLOAD,        
+        CORE_FILES_GET_FILES, //MoodleRestFile
+        CORE_FILES_UPLOAD, //MoodleRestFile
 
         // USER API
-        CORE_USER_CREATE_USERS,        
-        CORE_USER_GET_USERS_BY_ID,
-        CORE_USER_GET_COURSE_USER_PROFILES,
-        CORE_USER_DELETE_USERS,
-        CORE_USER_UPDATE_USERS,        
-        CORE_USER_GET_USERS,        
-        CORE_USER_GET_USERS_BY_FIELD,
+        CORE_USER_CREATE_USERS, // MoodleRestUser       
+        CORE_USER_GET_USERS_BY_ID, // MoodleRestUser
+        CORE_USER_GET_COURSE_USER_PROFILES, // MoodleRestUser
+        CORE_USER_DELETE_USERS, // MoodleRestUser
+        CORE_USER_UPDATE_USERS, // MoodleRestUser       
+        CORE_USER_GET_USERS, // MoodleRestUser       
+        CORE_USER_GET_USERS_BY_FIELD, // Not yet implemented
 
         // ENROL
-        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY,        
-        CORE_ENROL_GET_ENROLLED_USERS,        
-        CORE_ENROL_GET_USERS_COURSES,
-        ENROL_MANUAL_ENROL_USERS,        
+        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY, // Not yet implemented       
+        CORE_ENROL_GET_ENROLLED_USERS, // MoodleRestEnrol       
+        CORE_ENROL_GET_USERS_COURSES, // MoodleRestEnrol
+        ENROL_MANUAL_ENROL_USERS, // MoodleRestUserEnrolment       
 
         // ROLE
-        CORE_ROLE_ASSIGN_ROLES,        
-        CORE_ROLE_UNASSIGN_ROLES,
+        CORE_ROLE_ASSIGN_ROLES,  //MoodleRestEnrol       
+        CORE_ROLE_UNASSIGN_ROLES, //MoodleRestEnrol
 
         // COURSE
-        CORE_COURSE_GET_CONTENTS,        
-        CORE_COURSE_GET_COURSES,        
-        CORE_COURSE_CREATE_COURSES,
-        CORE_COURSE_DELETE_COURSES,        
-        CORE_COURSE_DUPLICATE_COURSE,        
-        CORE_COURSE_GET_CATEGORIES,        
-        CORE_COURSE_CREATE_CATEGORIES,        
-        CORE_COURSE_UPDATE_CATEGORIES,        
-        CORE_COURSE_DELETE_CATEGORIES,        
-        CORE_COURSE_IMPORT_COURSE,
-        CORE_COURSE_DELETE_MODULES,        
-        CORE_COURSE_UPDATE_COURSES,        
+        CORE_COURSE_GET_CONTENTS, // MoodleRestCourse
+        CORE_COURSE_GET_COURSES, // MoodleRestCourse
+        CORE_COURSE_CREATE_COURSES, // MoodleRestCourse
+        CORE_COURSE_DELETE_COURSES, // MoodleRestCourse
+        CORE_COURSE_DUPLICATE_COURSE, // Not yet implemented
+        CORE_COURSE_GET_CATEGORIES, // MoodleRestCourse
+        CORE_COURSE_CREATE_CATEGORIES, // MoodleRestCourse
+        CORE_COURSE_UPDATE_CATEGORIES, // MoodleRestCourse
+        CORE_COURSE_DELETE_CATEGORIES, // MoodleRestCourse
+        CORE_COURSE_IMPORT_COURSE, // Not yet implemented
+        CORE_COURSE_DELETE_MODULES, // Not yet implemented
+        CORE_COURSE_UPDATE_COURSES, // Not yet implemented
 
         // MESSAGE
-        CORE_MESSAGE_SEND_INSTANT_MESSAGES,        
-        CORE_MESSAGE_CREATE_CONTACTS,        
-        CORE_MESSAGE_DELETE_CONTACTS,        
-        CORE_MESSAGE_BLOCK_CONTACTS,
-        CORE_MESSAGE_UNBLOCK_CONTACTS,        
-        CORE_MESSAGE_GET_CONTACTS,        
-        CORE_MESSAGE_SEARCH_CONTACTS,
+        CORE_MESSAGE_SEND_INSTANT_MESSAGES, // MoodleRestMessage
+        CORE_MESSAGE_CREATE_CONTACTS, // MoodleRestMessage
+        CORE_MESSAGE_DELETE_CONTACTS, // MoodleRestMessage
+        CORE_MESSAGE_BLOCK_CONTACTS, // MoodleRestMessage
+        CORE_MESSAGE_UNBLOCK_CONTACTS, // MoodleRestMessage
+        CORE_MESSAGE_GET_CONTACTS, // MoodleRestMessage
+        CORE_MESSAGE_SEARCH_CONTACTS, // Not yet implemented
 
         // NOTES
-        CORE_NOTES_CREATE_NOTES,        
-        CORE_NOTES_DELETE_NOTES,        
-        CORE_NOTES_GET_NOTES,        
-        CORE_NOTES_UPDATE_NOTES,        
+        CORE_NOTES_CREATE_NOTES, // MoodleRestNotes
+        CORE_NOTES_DELETE_NOTES, // Not yet implemented
+        CORE_NOTES_GET_NOTES, // Not yet implemented
+        CORE_NOTES_UPDATE_NOTES, // Not yet implemented
 
         // WEBSERVICE
-        CORE_WEBSERVICE_GET_SITE_INFO,
+        CORE_WEBSERVICE_GET_SITE_INFO, // MoodleRestWebService
 
         // GET
-        CORE_GET_STRING,        
-        CORE_GET_STRINGS,        
-        CORE_GET_COMPONENT_STRINGS,        
+        CORE_GET_STRING, // Not yet implemented
+        CORE_GET_STRINGS, // Not yet implemented
+        CORE_GET_COMPONENT_STRINGS, // Not yet implemented
 
         // ASSIGN
-        MOD_ASSIGN_GET_GRADES,        
-        MOD_ASSIGN_GET_ASSIGNMENTS,        
-        MOD_ASSIGN_GET_SUBMISSIONS,        
+        MOD_ASSIGN_GET_GRADES, // Not yet implemented
+        MOD_ASSIGN_GET_ASSIGNMENTS, // MoodleRestModAssign
+        MOD_ASSIGN_GET_SUBMISSIONS, // MoodleRestModAssign
 
         // COHORT
-        CORE_COHORT_CREATE_COHORTS,        
-        CORE_COHORT_DELETE_COHORTS,        
-        CORE_COHORT_GET_COHORTS,
-        CORE_COHORT_UPDATE_COHORTS,        
-        CORE_COHORT_ADD_COHORT_MEMBERS,        
-        CORE_COHORT_DELETE_COHORT_MEMBERS,
-        CORE_COHORT_GET_COHORT_MEMBERS,        
+        CORE_COHORT_CREATE_COHORTS, // Not yet implemented
+        CORE_COHORT_DELETE_COHORTS, // MoodleRestCohort
+        CORE_COHORT_GET_COHORTS, // MoodleRestCohort
+        CORE_COHORT_UPDATE_COHORTS, // Not yet implemented
+        CORE_COHORT_ADD_COHORT_MEMBERS, // Not yet implemented
+        CORE_COHORT_DELETE_COHORT_MEMBERS, // MoodleRestCohort
+        CORE_COHORT_GET_COHORT_MEMBERS, // MoodleRestCohort
 
         // GRADE
-        CORE_GRADE_GET_DEFINITIONS,        
+        CORE_GRADE_GET_DEFINITIONS, // Not yet implemented
 
         // CALENDAR
-        CORE_CALENDAR_DELETE_CALENDAR_EVENTS,        
-        CORE_CALENDAR_GET_CALENDAR_EVENTS,        
-        CORE_CALENDAR_CREATE_CALENDAR_EVENTS,
+        CORE_CALENDAR_DELETE_CALENDAR_EVENTS, //MoodleRestCalendar
+        CORE_CALENDAR_GET_CALENDAR_EVENTS, //MoodleRestCalendar
+        CORE_CALENDAR_CREATE_CALENDAR_EVENTS, //MoodleRestCalendar
 
         // FORUM
-        MOD_FORUM_GET_FORUMS_BY_COURSES,
-        MOD_FORUM_GET_FORUM_DISCUSSIONS,
+        MOD_FORUM_GET_FORUMS_BY_COURSES, // Not yet implemented
+        MOD_FORUM_GET_FORUM_DISCUSSIONS, // Not yet implemented
 
         
         // ####################
         // # LEGACY FUNCTIONS #
         // ####################
         // GROUP API
-        MOODLE_GROUP_CREATE_GROUPS,        
-        MOODLE_GROUP_GET_GROUPS,        
-        MOODLE_GROUP_GET_COURSE_GROUPS,        
-        MOODLE_GROUP_DELETE_GROUPS,        
-        MOODLE_GROUP_GET_GROUPMEMBERS,        
-        MOODLE_GROUP_ADD_GROUPMEMBERS,        
-        MOODLE_GROUP_DELETE_GROUPMEMBERS,        
+        MOODLE_GROUP_CREATE_GROUPS, // MoodleRestGroup
+        MOODLE_GROUP_GET_GROUPS, // MoodleRestGroup
+        MOODLE_GROUP_GET_COURSE_GROUPS, // MoodleRestGroup
+        MOODLE_GROUP_DELETE_GROUPS, // MoodleRestGroup
+        MOODLE_GROUP_GET_GROUPMEMBERS, // MoodleRestGroup
+        MOODLE_GROUP_ADD_GROUPMEMBERS, // MoodleRestGroup
+        MOODLE_GROUP_DELETE_GROUPMEMBERS, // MoodleRestGroup
 
         // FILE API
-        MOODLE_FILE_GET_FILES,        
-        MOODLE_FILE_UPLOAD,        
+        MOODLE_FILE_GET_FILES, // MoodleRestFile
+        MOODLE_FILE_UPLOAD, // MoodleRestFile
 
         // USER API
-        MOODLE_USER_CREATE_USERS,        
-        MOODLE_USER_GET_USERS_BY_ID,        
-        MOODLE_USER_GET_USERS_BY_COURSEID,        
-        MOODLE_USER_GET_COURSE_PARTICIPANTS_BY_ID,        
-        MOODLE_USER_DELETE_USERS,        
-        MOODLE_USER_UPDATE_USERS,        
+        MOODLE_USER_CREATE_USERS, // MoodleRestUser
+        MOODLE_USER_GET_USERS_BY_ID, // MoodleRestUser
+        MOODLE_USER_GET_USERS_BY_COURSEID, // Not yet implemented
+        MOODLE_USER_GET_COURSE_PARTICIPANTS_BY_ID, // Not yet implemented
+        MOODLE_USER_DELETE_USERS, // MoodleRestUser
+        MOODLE_USER_UPDATE_USERS, // MoodleRestUser
 
         // ENROL
-        MOODLE_ENROL_GET_ENROLLED_USERS,        
-        MOODLE_ENROL_GET_USERS_COURSES,        
-        MOODLE_ENROL_MANUAL_ENROL_USERS,        
+        MOODLE_ENROL_GET_ENROLLED_USERS, // MoodleRestEnrol
+        MOODLE_ENROL_GET_USERS_COURSES, // Not yet implemented
+        MOODLE_ENROL_MANUAL_ENROL_USERS, // Not yet implemented
 
         // ROLE
-        MOODLE_ROLE_ASSIGN,        
-        MOODLE_ROLE_UNASSIGN,        
+        MOODLE_ROLE_ASSIGN, // MoodleRestEnrol
+        MOODLE_ROLE_UNASSIGN, // MoodleRestEnrol
 
         // COURSE
-        MOODLE_COURSE_GET_COURSES,        
-        MOODLE_COURSE_CREATE_COURSES,        
+        MOODLE_COURSE_GET_COURSES, // MoodleRestCourse
+        MOODLE_COURSE_CREATE_COURSES, // MoodleRestCourse
 
         // MESSAGE
-        MOODLE_MESSAGE_SEND_INSTANTMESSAGES,        
+        MOODLE_MESSAGE_SEND_INSTANTMESSAGES, // Not yet implemented
 
         // NOTES
-        MOODLE_NOTES_CREATE_NOTES,        
+        MOODLE_NOTES_CREATE_NOTES, // MoodleRestNotes
 
         // WEBSERVICE
-        MOODLE_WEBSERVICE_GET_SITEINFO,
+        MOODLE_WEBSERVICE_GET_SITEINFO, // MoodleRestWebService
 
         ENCODING {
                 public String toString() {

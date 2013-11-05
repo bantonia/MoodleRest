@@ -51,7 +51,6 @@ public class MoodleRestEnrol implements Serializable {
      * @throws MoodleRestException
      */
     public static MoodleCourseUser[] getEnrolledUsers(Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         Vector v=new Vector();
         String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.name();
@@ -81,7 +80,6 @@ public class MoodleRestEnrol implements Serializable {
     }
 
     public MoodleCourseUser[] __getEnrolledUsers(String url, String token, Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         Vector v=new Vector();
         String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.name();

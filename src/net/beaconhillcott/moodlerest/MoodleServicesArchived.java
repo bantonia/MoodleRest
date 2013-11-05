@@ -22,7 +22,7 @@ package net.beaconhillcott.moodlerest;
  *
  * @author root
  */
-public class MoodleServicesOldFile {
+public class MoodleServicesArchived {
   
   // Group functions
   /**

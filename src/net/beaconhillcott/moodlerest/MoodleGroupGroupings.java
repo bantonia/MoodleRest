@@ -16,7 +16,7 @@ public class MoodleGroupGroupings implements Serializable {
   private Long courseid=null;
   private String name=null;
   private String description=null;
-  private Integer descriptionformat=MoodleConstants.GROUPING_DESCRIPTIONFORMAT_HTML;
+  private Integer descriptionformat=DescriptionFormat.HTML.getInt();
 
   public MoodleGroupGroupings() {
   }
