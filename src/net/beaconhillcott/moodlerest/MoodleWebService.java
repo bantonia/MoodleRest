@@ -19,12 +19,13 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleWebService {
+public class MoodleWebService implements Serializable {
   private String sitename=null;
   private String username=null;
   private String firstname=null;
