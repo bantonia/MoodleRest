@@ -52,6 +52,7 @@ public class MoodleUser implements Serializable {
     private String description=null;
     private String city=null;
     private String country=null;
+    private String fullname = null;
     
     private String address=null;
     private String phone1=null;
@@ -126,7 +127,7 @@ public class MoodleUser implements Serializable {
         if (nodeName.equals("descriptionformat") && content!=null) setDescriptionFormat(Long.valueOf(content));
         if (nodeName.equals("city") && content!=null) setCity(content);
         if (nodeName.equals("country") && content!=null) setCountry(content);
-        
+        if (nodeName.equals("fullname")) { setFullname(content);}
         if (nodeName.equals("address") && content!=null) setAddress(content);
         if (nodeName.equals("phone1") && content!=null) setPhone1(content);
         if (nodeName.equals("phone2") && content!=null) setPhone2(content);
@@ -145,6 +146,15 @@ public class MoodleUser implements Serializable {
         if (nodeName.equals("profileimageurl") && content!=null) setProfileImageURL(content);
     }
 
+  public String getFullname() {
+    return fullname;
+  }
+
+  public void setFullname(String fullname) {
+    this.fullname = fullname;
+  }
+
+    
     /**
      *
      * @param type

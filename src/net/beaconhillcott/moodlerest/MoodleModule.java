@@ -68,7 +68,7 @@ public class MoodleModule implements Serializable {
   }
   
   /**
-   * <p>Costructor using complete module information.</p>
+   * <p>Constructor using complete module information.</p>
    * 
    * @param id long
    * @param name String
@@ -309,9 +309,24 @@ public class MoodleModule implements Serializable {
     if (name.equals("modicon")) setModIcon(content);
     if (name.equals("modname")) setModName(content);
     if (name.equals("modplural")) setModPlural(content);
-    if (name.equals("availablefrom")) setAvailableFrom(Long.parseLong(content.trim()));
-    if (name.equals("availableuntil")) setAvailableUntil(Long.parseLong(content.trim()));
-    if (name.equals("indent")) setIndent(Integer.parseInt(content));
+    if (name.equals("availablefrom")) {
+      if (content.isEmpty()) {
+        content="0" ;
+      }
+      setAvailableFrom(Long.parseLong(content.trim()));
+    }
+    if (name.equals("availableuntil")) {
+      if (content.isEmpty()) {
+        content="0" ;
+      }
+      setAvailableUntil(Long.parseLong(content.trim()));
+    }
+    if (name.equals("indent")) {
+      if (content.isEmpty()) {
+        content="0" ;
+      }
+      setIndent(Integer.parseInt(content));
+    }
   }
   
   /**
