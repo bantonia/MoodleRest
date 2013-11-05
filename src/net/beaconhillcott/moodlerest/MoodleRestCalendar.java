@@ -21,12 +21,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleRestCalendar {
+public class MoodleRestCalendar implements Serializable {
 
   public MoodleRestCalendar() {}
   
