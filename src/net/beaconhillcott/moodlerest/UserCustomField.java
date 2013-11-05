@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class UserCustomField {
+public class UserCustomField implements Serializable {
   
   private String type=null;
   private String value=null;
