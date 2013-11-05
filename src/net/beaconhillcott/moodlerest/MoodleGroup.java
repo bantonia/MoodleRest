@@ -18,13 +18,15 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * Class to create and hold the status of a MoodleGroup object. Used in the process of group creation and manipulation for courses.
  * 
  * @author Bill Antonia
  * @see MoodleRestGroup
  */
-public class MoodleGroup {
+public class MoodleGroup implements Serializable {
 
     private Long id=null;
     private Long courseid=null;
