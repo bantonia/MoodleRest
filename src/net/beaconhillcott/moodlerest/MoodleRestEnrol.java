@@ -25,6 +25,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class containing the static routines to manipulate the enrolment information within Moodle.<br />
@@ -34,7 +35,7 @@ import org.w3c.dom.NodeList;
  * @see MoodleEnrolUser
  * @author Bill Antonia
  */
-public class MoodleRestEnrol {
+public class MoodleRestEnrol implements Serializable {
 
   //  private static final int BUFFER_MAX=4000;
 
