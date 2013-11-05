@@ -18,6 +18,8 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class for MoodleCourse objects. Used when creating new courses or retrieving course details.</p>
  * <p>When creating a new MoodleCourse object its initial id state is set to default of -1. This will be updated to the id of the course created in Moodle.</p>
@@ -26,7 +28,7 @@ package net.beaconhillcott.moodlerest;
  * @author Bill Antonia
  *
  */
-public class MoodleCourse {
+public class MoodleCourse implements Serializable {
 
     /**
      *
