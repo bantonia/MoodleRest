@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.logging.*;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class containing the static routines to create, update and delete Moodle users.</p>
@@ -31,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @author Bill Antonia
  * @see MoodleUser
  */
-public class MoodleRestUser {
+public class MoodleRestUser implements Serializable {
 
     /**
      * <p>Method to create a new user within Moodle from a MoodleUser object.</p>
