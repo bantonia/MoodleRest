@@ -18,11 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class OptionParameter {
+public class OptionParameter implements Serializable {
+  
   private String name=null;
   private String value=null;
   
