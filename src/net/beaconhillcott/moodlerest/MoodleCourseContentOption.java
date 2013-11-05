@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * Class to create objects to store an option of a course content.
  *
  * @author Bill Antonia
  */
-public class MoodleCourseContentOption {
+public class MoodleCourseContentOption implements Serializable {
   private String name=null;
   private String value=null;
   
