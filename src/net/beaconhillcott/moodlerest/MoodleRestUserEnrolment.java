@@ -23,8 +23,9 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
-public class MoodleRestUserEnrolment {
+public class MoodleRestUserEnrolment implements Serializable {
   public static void enrolUsers(MoodleUserEnrolment[] users) throws MoodleRestUserEnrolmentException, MoodleRestException {
         Hashtable hash=new Hashtable();
         String functionCall=MoodleServices.ENROL_MANUAL_ENROL_USERS;
