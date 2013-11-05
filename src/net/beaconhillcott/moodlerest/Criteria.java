@@ -18,12 +18,14 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class Criteria {
-private String key=null;
+public class Criteria  implements Serializable {
+  private String key=null;
   private String value=null;
 
   /**
