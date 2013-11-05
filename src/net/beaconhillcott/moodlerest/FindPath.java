@@ -19,6 +19,7 @@
 package net.beaconhillcott.moodlerest;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * Path to the Entity file to be injected into the XML stream returned from a webservice.
@@ -26,7 +27,7 @@ import java.io.InputStream;
  *
  * @author Bill Antonia (Class only), file downloaded from the Internet.
  */
-public class FindPath {
+public class FindPath implements Serializable {
 
     /**
      * Stream resource
