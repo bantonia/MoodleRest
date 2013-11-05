@@ -21,12 +21,13 @@ package net.beaconhillcott.moodlerest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  *
  * @author root
  */
-public class MoodleRestModAssign {
+public class MoodleRestModAssign implements Serializable {
 
     public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
