@@ -19,6 +19,7 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * <p>Class to used to create objects to enable the storage of data returned from MoodleRestFile.getFiles</p>
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  * @author Bill Antonia
  * @see MoodleRestFile
  */
-public class MoodleFileGetFiles {
+public class MoodleFileGetFiles implements Serializable {
   
   private ArrayList<MoodleFileParent> parents=null;
   private ArrayList<MoodleFileFile> files=null;
