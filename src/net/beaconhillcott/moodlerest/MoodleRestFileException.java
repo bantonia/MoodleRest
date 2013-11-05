@@ -18,11 +18,13 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bill Antonia
  */
-public class MoodleRestFileException extends MoodleRestException {
+public class MoodleRestFileException extends MoodleRestException implements Serializable {
 
     /**
      *
