@@ -18,13 +18,15 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to create an object which will hold the data required to send an instant message between users.</p>
  *
  * @author Bill Antonia
  * @see MoodleRestMessage
  */
-public class MoodleMessage {
+public class MoodleMessage implements Serializable {
   
   private Long touserid=null;
   private String text=null;
