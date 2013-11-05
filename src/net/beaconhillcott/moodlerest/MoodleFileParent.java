@@ -18,13 +18,15 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to create an object which will hold the parent information of a file from a call to MoodleRestFile.getFiles.</p>
  *
  * @author Bill Antonia
  * @see MoodleRestFile
  */
-public class MoodleFileParent {
+public class MoodleFileParent implements Serializable {
 
     /**
      *
