@@ -19,12 +19,13 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.*;
+import java.io.Serializable;
 
 /**
  *
  * @author root
  */
-public class MoodleModAssignSubmissionParam {
+public class MoodleModAssignSubmissionParam implements Serializable {
 
     private String status="";
     private Long since=0L;
