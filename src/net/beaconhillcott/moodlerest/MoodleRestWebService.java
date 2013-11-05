@@ -23,12 +23,13 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class to call the Moodle REST WebServices.</p>
  * @author Bill Antonia
  */
-public class MoodleRestWebService {
+public class MoodleRestWebService implements Serializable {
     
   //core_webservice_get_site_info
     /**
