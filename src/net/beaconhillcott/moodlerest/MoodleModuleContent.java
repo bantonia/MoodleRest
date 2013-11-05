@@ -18,6 +18,8 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to create objects to store the information and content of a module of a course after a call to MoodleRestCourse.getCourseContent</p>
  * 
@@ -25,7 +27,7 @@ package net.beaconhillcott.moodlerest;
  * @see MoodleCourseContent
  * @see MoodleRestCourse
  */
-public class MoodleModuleContent {
+public class MoodleModuleContent implements Serializable {
 
   private String type=null;
   private String filename=null;
