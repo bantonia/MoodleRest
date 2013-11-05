@@ -4,11 +4,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class MoodleCohort {
+public class MoodleCohort implements Serializable {
   
   public static final int DESCRIPTION_FORMAT_MOODLE=0;
   public static final int DESCRIPTION_FORMAT_HTML=1;
