@@ -18,13 +18,15 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  * <p>Class to store the details of the connection between a user and a Moodle group.</p>
  *
  * @see MoodleRestGroup
  * @author Bill Antonia
  */
-public class MoodleGroupUser {
+public class MoodleGroupUser implements Serializable {
 
     private Long groupid=null;
     private Long userid=null;
