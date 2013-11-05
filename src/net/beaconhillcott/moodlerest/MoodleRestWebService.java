@@ -41,7 +41,7 @@ public class MoodleRestWebService implements Serializable {
      */
     public static MoodleWebService getSiteInfo() throws MoodleRestWebServiceException, MoodleRestException {
         MoodleWebService service=null;
-        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITE_INFO : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO;
+        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.name() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.name();
         StringBuilder data = new StringBuilder();
         try {
             if (MoodleCallRestWebService.getAuth() == null) {
@@ -49,7 +49,7 @@ public class MoodleRestWebService implements Serializable {
             } else {
                 data.append(MoodleCallRestWebService.getAuth());
             }
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             NodeList elements=MoodleCallRestWebService.call(data.toString());
             Function function=null;
             for (int j=0;j<elements.getLength();j++) {
@@ -63,27 +63,35 @@ public class MoodleRestWebService implements Serializable {
                     service.setSiteName(content);
                 } else {
                     if (parent.equals("#document")) {
-                        service.setFunctionField(nodeName, content);
+                      if (service==null)
+                        throw new MoodleRestWebServiceException();
+                      service.setFunctionField(nodeName, content);
                     } else {
                         if (parent.equals("functions") && nodeName.equals("name")) {
                             if (function!=null) {
-                                service.addFunction(function);
-                                function=new Function();
-                                function.setName(content);
+                              if (service==null)
+                                throw new MoodleRestWebServiceException();
+                              service.addFunction(function);
+                              function=new Function();
+                              function.setName(content);
                             } else {
                                 function=new Function();
                                 function.setName(content);
                             }
                         } else {
                             if (parent.equals("functions")) {
-                                function.setFunctionField(nodeName, content);
+                              if (function==null)
+                                throw new MoodleRestWebServiceException();
+                              function.setFunctionField(nodeName, content);
                             }
                         }
                     }
                 }
             }
             if (function!=null) {
-                service.addFunction(function);
+              if (service==null)
+                throw new MoodleRestWebServiceException();
+              service.addFunction(function);
             }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestWebService.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,11 +101,11 @@ public class MoodleRestWebService implements Serializable {
 
     public MoodleWebService __getSiteInfo(String url, String token) throws MoodleRestWebServiceException, MoodleRestException {
         MoodleWebService service=null;
-        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITE_INFO : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO;
+        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.name() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.name();
         StringBuilder data = new StringBuilder();
         try {
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
             Function function=null;
             for (int j=0;j<elements.getLength();j++) {
@@ -111,27 +119,35 @@ public class MoodleRestWebService implements Serializable {
                     service.setSiteName(content);
                 } else {
                     if (parent.equals("#document")) {
-                        service.setFunctionField(nodeName, content);
+                      if (service==null)
+                        throw new MoodleRestWebServiceException();
+                      service.setFunctionField(nodeName, content);
                     } else {
                         if (parent.equals("functions") && nodeName.equals("name")) {
                             if (function!=null) {
-                                service.addFunction(function);
-                                function=new Function();
-                                function.setName(content);
+                              if (service==null)
+                                throw new MoodleRestWebServiceException();
+                              service.addFunction(function);
+                              function=new Function();
+                              function.setName(content);
                             } else {
                                 function=new Function();
                                 function.setName(content);
                             }
                         } else {
                             if (parent.equals("functions")) {
-                                function.setFunctionField(nodeName, content);
+                              if (function==null)
+                                throw new MoodleRestWebServiceException();
+                              function.setFunctionField(nodeName, content);
                             }
                         }
                     }
                 }
             }
             if (function!=null) {
-                service.addFunction(function);
+              if (service==null)
+                throw new MoodleRestWebServiceException();
+              service.addFunction(function);
             }
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestWebService.class.getName()).log(Level.SEVERE, null, ex);

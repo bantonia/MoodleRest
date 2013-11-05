@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class MoodleRestCalendarException extends MoodleRestException implements Serializable {
   
   public static final String NO_LEGACY_CALL="No legacy call";
+  public static final String INCONSISTENT_DATA_PARSE="Returned data not in correct order";
     
     MoodleRestCalendarException() {}
 

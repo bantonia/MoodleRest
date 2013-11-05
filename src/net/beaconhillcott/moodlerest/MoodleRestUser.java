@@ -66,40 +66,40 @@ public class MoodleRestUser implements Serializable {
      */
     public static MoodleUser[] createUsers(MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS:MoodleServices.CORE_USER_CREATE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.name():MoodleServices.CORE_USER_CREATE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
-                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestUserException(MoodleRestUserException.USER_NULL);
-                if (user[i].getUsername()==null) throw new MoodleRestUserException(MoodleRestUserException.USERNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING));
-                if (user[i].getPassword()==null) throw new MoodleRestUserException(MoodleRestUserException.PASSWORD_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING));
-                if (user[i].getFirstname()==null) throw new MoodleRestUserException(MoodleRestUserException.FIRSTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING));
-                if (user[i].getLastname()==null) throw new MoodleRestUserException(MoodleRestUserException.LASTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING));
-                if (user[i].getEmail()==null) throw new MoodleRestUserException(MoodleRestUserException.EMAIL_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING));
-                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING));
-                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING));
-                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING));
-                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING));
-                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING));
-                if (user[i].getMailFormat()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING));
-                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING));
-                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING));
-                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING));
+                if (user[i].getUsername()==null) throw new MoodleRestUserException(MoodleRestUserException.USERNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING.toString()));
+                if (user[i].getPassword()==null) throw new MoodleRestUserException(MoodleRestUserException.PASSWORD_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING.toString()));
+                if (user[i].getFirstname()==null) throw new MoodleRestUserException(MoodleRestUserException.FIRSTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLastname()==null) throw new MoodleRestUserException(MoodleRestUserException.LASTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getEmail()==null) throw new MoodleRestUserException(MoodleRestUserException.EMAIL_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING.toString()));
+                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING.toString()));
+                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING.toString()));
+                if (user[i].getMailFormat()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING.toString()));
+                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING.toString()));
                 if (user[i].getPreference()!=null) {
                   for (int j=0; j<user[i].getPreference().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
                 if (user[i].getCustomFields()!=null) {
                   for (int j=0; j<user[i].getCustomFields().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
             }
@@ -108,10 +108,10 @@ public class MoodleRestUser implements Serializable {
             for (int j=0;j<elements.getLength();j+=2) {
                 hash.put(elements.item(j+1).getTextContent(), elements.item(j).getTextContent());
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i=0;i<user.length;i++) {
+        for (int i=0; i<user.length; i++) {
             user[i].setId(Long.parseLong((String)(hash.get(user[i].getUsername()))));
         }
         return user;
@@ -119,37 +119,37 @@ public class MoodleRestUser implements Serializable {
 
     public MoodleUser[] __createUsers(String url, String token, MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS:MoodleServices.CORE_USER_CREATE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.name():MoodleServices.CORE_USER_CREATE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestUserException(MoodleRestUserException.USER_NULL);
-                if (user[i].getUsername()==null) throw new MoodleRestUserException(MoodleRestUserException.USERNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING));
-                if (user[i].getPassword()==null) throw new MoodleRestUserException(MoodleRestUserException.PASSWORD_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING));
-                if (user[i].getFirstname()==null) throw new MoodleRestUserException(MoodleRestUserException.FIRSTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING));
-                if (user[i].getLastname()==null) throw new MoodleRestUserException(MoodleRestUserException.LASTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING));
-                if (user[i].getEmail()==null) throw new MoodleRestUserException(MoodleRestUserException.EMAIL_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING));
-                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING));
-                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING));
-                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING));
-                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING));
-                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING));
-                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING));
-                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING));
-                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING));
-                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING));
+                if (user[i].getUsername()==null) throw new MoodleRestUserException(MoodleRestUserException.USERNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING.toString()));
+                if (user[i].getPassword()==null) throw new MoodleRestUserException(MoodleRestUserException.PASSWORD_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING.toString()));
+                if (user[i].getFirstname()==null) throw new MoodleRestUserException(MoodleRestUserException.FIRSTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLastname()==null) throw new MoodleRestUserException(MoodleRestUserException.LASTNAME_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getEmail()==null) throw new MoodleRestUserException(MoodleRestUserException.EMAIL_NULL); else data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING.toString()));
+                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING.toString()));
+                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING.toString()));
+                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING.toString()));
+                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING.toString()));
                 if (user[i].getPreference()!=null) {
                   for (int j=0; j<user[i].getPreference().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
                 if (user[i].getCustomFields()!=null) {
                   for (int j=0; j<user[i].getCustomFields().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
             }
@@ -158,10 +158,10 @@ public class MoodleRestUser implements Serializable {
             for (int j=0;j<elements.getLength();j+=2) {
                 hash.put(elements.item(j+1).getTextContent(), elements.item(j).getTextContent());
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i=0;i<user.length;i++) {
+        for (int i=0; i<user.length; i++) {
             user[i].setId(Long.parseLong((String)(hash.get(user[i].getUsername()))));
         }
         return user;
@@ -194,90 +194,90 @@ public class MoodleRestUser implements Serializable {
      * @throws MoodleRestException 
      */
     public static void updateUsers(MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS:MoodleServices.CORE_USER_UPDATE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.name():MoodleServices.CORE_USER_UPDATE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
                 data.append(MoodleCallRestWebService.getAuth());
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestUserException(MoodleRestUserException.USER_NULL);
-                if (user[i].getId()==null) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("users["+i+"][id]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+user[i].getId(), MoodleServices.ENCODING));
-                if (user[i].getUsername()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING));
-                if (user[i].getPassword()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING));
-                if (user[i].getFirstname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING));
-                if (user[i].getLastname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING));
-                if (user[i].getEmail()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING));
-                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING));
-                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING));
-                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING));
-                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING));
-                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING));
-                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING));
-                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING));
-                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING));
-                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING));
+                if (user[i].getId()==null) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("users["+i+"][id]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUsername()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING.toString()));
+                if (user[i].getPassword()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING.toString()));
+                if (user[i].getFirstname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLastname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getEmail()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING.toString()));
+                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING.toString()));
+                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING.toString()));
+                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING.toString()));
+                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING.toString()));
                 if (user[i].getPreference()!=null) {
                   for (int j=0; j<user[i].getPreference().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
                 if (user[i].getCustomFields()!=null) {
                   for (int j=0; j<user[i].getCustomFields().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
             }
             data.trimToSize();
             MoodleCallRestWebService.call(data.toString());
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void __updateUsers(String url, String token, MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS:MoodleServices.CORE_USER_UPDATE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.name():MoodleServices.CORE_USER_UPDATE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestUserException(MoodleRestUserException.USER_NULL);
-                if (user[i].getId()==null) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("users["+i+"][id]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+user[i].getId(), MoodleServices.ENCODING));
-                if (user[i].getUsername()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING));
-                if (user[i].getPassword()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING));
-                if (user[i].getFirstname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING));
-                if (user[i].getLastname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING));
-                if (user[i].getEmail()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING));
-                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING));
-                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING));
-                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING));
-                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING));
-                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING));
-                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING));
-                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING));
-                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING));
-                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING));
+                if (user[i].getId()==null) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("users["+i+"][id]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUsername()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][username]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getUsername(), MoodleServices.ENCODING.toString()));
+                if (user[i].getPassword()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][password]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPassword(), MoodleServices.ENCODING.toString()));
+                if (user[i].getFirstname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][firstname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getFirstname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLastname()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lastname]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLastname(), MoodleServices.ENCODING.toString()));
+                if (user[i].getEmail()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][email]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getEmail(), MoodleServices.ENCODING.toString()));
+                if (user[i].getAuth()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][auth]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getAuth(), MoodleServices.ENCODING.toString()));
+                if (user[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+                if (user[i].getLang()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][lang]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getLang(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTheme(), MoodleServices.ENCODING.toString()));
+                if (user[i].getTimezone()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][timezone]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getTimezone(), MoodleServices.ENCODING.toString()));
+                if (user[i].getMailFormat()!=null)data.append("&").append(URLEncoder.encode("users["+i+"][mailformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(user[i].getMailFormat()?1:0), MoodleServices.ENCODING.toString()));
+                if (user[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getDescription(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCity()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][city]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCity(), MoodleServices.ENCODING.toString()));
+                if (user[i].getCountry()!=null) data.append("&").append(URLEncoder.encode("users["+i+"][country]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCountry(), MoodleServices.ENCODING.toString()));
                 if (user[i].getPreference()!=null) {
                   for (int j=0; j<user[i].getPreference().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getType(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][preferences]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getPreference().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
                 if (user[i].getCustomFields()!=null) {
                   for (int j=0; j<user[i].getCustomFields().size(); j++) {
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING));
-                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getName(), MoodleServices.ENCODING.toString()));
+                    data.append("&").append(URLEncoder.encode("users["+i+"][customfields]["+j+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(user[i].getCustomFields().get(j).getValue(), MoodleServices.ENCODING.toString()));
                   }
                 }
             }
             data.trimToSize();
             (new MoodleCallRestWebService()).__call(url,data.toString());
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -310,36 +310,36 @@ public class MoodleRestUser implements Serializable {
      * @throws MoodleRestException
      */
     public static void deleteUsers(Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS:MoodleServices.CORE_USER_DELETE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.name():MoodleServices.CORE_USER_DELETE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
-                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<userids.length;i++) {
-                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING)).append("=").append(userids[i]);
+                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(userids[i]);
             }
             data.trimToSize();
             MoodleCallRestWebService.call(data.toString());
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void __deleteUsers(String url, String token, Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS:MoodleServices.CORE_USER_DELETE_USERS;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.name():MoodleServices.CORE_USER_DELETE_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<userids.length;i++) {
-                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING)).append("=").append(userids[i]);
+                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); else data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(userids[i]);
             }
             data.trimToSize();
             (new MoodleCallRestWebService()).__call(url,data.toString());
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -378,21 +378,21 @@ public class MoodleRestUser implements Serializable {
      */
     public static MoodleUser[] getUsersById(Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
+        MoodleUser user;
       //  boolean processed=false;
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID:MoodleServices.CORE_USER_GET_USERS_BY_ID;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.name():MoodleServices.CORE_USER_GET_USERS_BY_ID.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
-                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             UserCustomField customField=null;
             UserPreference preference=null;
             UserEnrolledCourse enrolledCourse=null;
             for (int i=0;i<userids.length;i++) {
-                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING)).append("=").append(userids[i]);
+                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(userids[i]);
             }
             data.trimToSize();
             NodeList elements=MoodleCallRestWebService.call(data.toString());
@@ -416,35 +416,52 @@ public class MoodleRestUser implements Serializable {
                 } else {
                     if (parent.equals("RESPONSE")) {
                       try {
+                        if (user==null)
+                          throw new MoodleRestUserException();
                         user.setMoodleUserField(nodeName, content);
                       } catch (NullPointerException ex){
                         System.out.println("Error "+nodeName+" = "+content);
                       }
                     } else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                    if (preference!=null)
-                                        user.addPreference(preference);
+                                    if (preference!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addPreference(preference);
+                                    }
                                     preference=new UserPreference();
                                     preference.setType(content);
                                 } else {
                                     if (parent.equals("preferences")) {
-                                        preference.setValue(content);
+                                      if (preference==null)
+                                        throw new MoodleRestUserException();
+                                      preference.setValue(content);
                                     } else {
                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                          if (enrolledCourse!=null)
+                                          if (enrolledCourse!=null) {
+                                            if (user==null)
+                                              throw new MoodleRestUserException();
                                             user.addEnrolledCourse(enrolledCourse);
+                                          }
                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                         } else {
                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                              if (enrolledCourse==null)
+                                                throw new MoodleRestUserException();
                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                             }
                                         }
@@ -467,7 +484,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];
@@ -480,17 +497,17 @@ public class MoodleRestUser implements Serializable {
 
     public MoodleUser[] __getUsersById(String url, String token, Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID:MoodleServices.CORE_USER_GET_USERS_BY_ID;
+        MoodleUser user;
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.name():MoodleServices.CORE_USER_GET_USERS_BY_ID.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             UserCustomField customField=null;
             UserPreference preference=null;
             UserEnrolledCourse enrolledCourse=null;
             for (int i=0;i<userids.length;i++) {
-                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING)).append("=").append(userids[i]);
+                if (userids[i]<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID); data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(userids[i]);
             }
             data.trimToSize();
             NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
@@ -514,35 +531,52 @@ public class MoodleRestUser implements Serializable {
                 } else {
                     if (parent.equals("RESPONSE")) {
                       try {
+                        if (user==null)
+                          throw new MoodleRestUserException();
                         user.setMoodleUserField(nodeName, content);
                       } catch (NullPointerException ex){
                         System.out.println("Error "+nodeName+" = "+content);
                       }
                     } else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                    if (preference!=null)
-                                        user.addPreference(preference);
+                                    if (preference!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addPreference(preference);
+                                    }
                                     preference=new UserPreference();
                                     preference.setType(content);
                                 } else {
                                     if (parent.equals("preferences")) {
-                                        preference.setValue(content);
+                                      if (preference==null)
+                                        throw new MoodleRestUserException();
+                                      preference.setValue(content);
                                     } else {
                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                          if (enrolledCourse!=null)
+                                          if (enrolledCourse!=null) {
+                                            if (user==null)
+                                              throw new MoodleRestUserException();
                                             user.addEnrolledCourse(enrolledCourse);
+                                          }
                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                         } else {
                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                              if (enrolledCourse==null)
+                                                throw new MoodleRestUserException();
                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                             }
                                         }
@@ -565,7 +599,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];
@@ -587,20 +621,20 @@ public class MoodleRestUser implements Serializable {
      */
     public static MoodleUser[] getCourseUserProfiles(UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
+        MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILE;
+        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
-                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<userList.length;i++) {
                 if (userList[i].getUserId()<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID);
-                data.append("&").append(URLEncoder.encode("userlist["+i+"][userid]", MoodleServices.ENCODING)).append("=").append(userList[i].getUserId());
-                data.append("&").append(URLEncoder.encode("userlist["+i+"][courseid]", MoodleServices.ENCODING)).append("=").append(userList[i].getCourseId());
+                data.append("&").append(URLEncoder.encode("userlist["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(userList[i].getUserId());
+                data.append("&").append(URLEncoder.encode("userlist["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(userList[i].getCourseId());
             }
             data.trimToSize();
             NodeList elements=MoodleCallRestWebService.call(data.toString());
@@ -629,51 +663,79 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE"))
-                        user.setMoodleUserField(nodeName, content);
+                    if (parent.equals("RESPONSE")) {
+                      if (user==null)
+                        throw new MoodleRestUserException();
+                      user.setMoodleUserField(nodeName, content);
+                    }
                     else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("groups") && nodeName.equals("id")) {
-                                    if (group!=null)
-                                        user.addGroup(group);
+                                    if (group!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addGroup(group);
+                                    }
                                     group=new UserGroup();
                                     group.setUserGroupField(nodeName, content);
                                 } else {
                                     if (parent.equals("groups")) {
-                                        group.setUserGroupField(nodeName, content);
+                                      if (group==null)
+                                        throw new MoodleRestUserException();
+                                      group.setUserGroupField(nodeName, content);
                                     } else {
                                         if (parent.equals("roles") && nodeName.equals("roleid")) {
-                                            if (role!=null)
-                                                user.addRole(role);
+                                            if (role!=null) {
+                                              if (user==null)
+                                                throw new MoodleRestUserException();
+                                              user.addRole(role);
+                                            }
                                             role=new UserRole();
                                             role.setUserRoleField(nodeName, content);
                                         } else {
                                             if (parent.equals("roles")) {
-                                                role.setUserRoleField(nodeName, content);
+                                              if (role==null)
+                                                throw new MoodleRestUserException();
+                                              role.setUserRoleField(nodeName, content);
                                             } else {
                                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                                    if (preference!=null)
-                                                        user.addPreference(preference);
+                                                    if (preference!=null) {
+                                                      if (user==null)
+                                                        throw new MoodleRestUserException();
+                                                      user.addPreference(preference);
+                                                    }
                                                     preference=new UserPreference();
                                                     preference.setType(content);
                                                 } else {
                                                     if (parent.equals("preferences")) {
-                                                        preference.setValue(content);
+                                                      if (preference==null)
+                                                        throw new MoodleRestUserException();
+                                                      preference.setValue(content);
                                                     } else {
                                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                                          if (enrolledCourse!=null)
+                                                          if (enrolledCourse!=null) {
+                                                            if (user==null)
+                                                              throw new MoodleRestUserException();
                                                             user.addEnrolledCourse(enrolledCourse);
+                                                          }
                                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                                         } else {
                                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                                              if (enrolledCourse==null)
+                                                                throw new MoodleRestUserException();
                                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                                             }
                                                         }
@@ -700,7 +762,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];
@@ -713,17 +775,17 @@ public class MoodleRestUser implements Serializable {
 
     public MoodleUser[] __getCourseUserProfiles(String url, String token, UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
+        MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILE;
+        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<userList.length;i++) {
                 if (userList[i].getUserId()<1) throw new MoodleRestUserException(MoodleRestUserException.INVALID_USERID);
-                data.append("&").append(URLEncoder.encode("userlist["+i+"][userid]", MoodleServices.ENCODING)).append("=").append(userList[i].getUserId());
-                data.append("&").append(URLEncoder.encode("userlist["+i+"][courseid]", MoodleServices.ENCODING)).append("=").append(userList[i].getCourseId());
+                data.append("&").append(URLEncoder.encode("userlist["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(userList[i].getUserId());
+                data.append("&").append(URLEncoder.encode("userlist["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(userList[i].getCourseId());
             }
             data.trimToSize();
             NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
@@ -752,51 +814,79 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE"))
-                        user.setMoodleUserField(nodeName, content);
+                    if (parent.equals("RESPONSE")) {
+                      if (user==null)
+                        throw new MoodleRestUserException();
+                      user.setMoodleUserField(nodeName, content);
+                    }
                     else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("groups") && nodeName.equals("id")) {
-                                    if (group!=null)
-                                        user.addGroup(group);
+                                    if (group!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addGroup(group);
+                                    }
                                     group=new UserGroup();
                                     group.setUserGroupField(nodeName, content);
                                 } else {
                                     if (parent.equals("groups")) {
-                                        group.setUserGroupField(nodeName, content);
+                                      if (group==null)
+                                        throw new MoodleRestUserException();
+                                      group.setUserGroupField(nodeName, content);
                                     } else {
                                         if (parent.equals("roles") && nodeName.equals("roleid")) {
-                                            if (role!=null)
-                                                user.addRole(role);
+                                            if (role!=null) {
+                                              if (user==null)
+                                                throw new MoodleRestUserException();
+                                              user.addRole(role);
+                                            }
                                             role=new UserRole();
                                             role.setUserRoleField(nodeName, content);
                                         } else {
                                             if (parent.equals("roles")) {
-                                                role.setUserRoleField(nodeName, content);
+                                              if (role==null)
+                                                throw new MoodleRestUserException();
+                                              role.setUserRoleField(nodeName, content);
                                             } else {
                                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                                    if (preference!=null)
-                                                        user.addPreference(preference);
+                                                    if (preference!=null) {
+                                                      if (user==null)
+                                                        throw new MoodleRestUserException();
+                                                      user.addPreference(preference);
+                                                    }
                                                     preference=new UserPreference();
                                                     preference.setType(content);
                                                 } else {
                                                     if (parent.equals("preferences")) {
-                                                        preference.setValue(content);
+                                                      if (preference==null)
+                                                        throw new MoodleRestUserException();
+                                                      preference.setValue(content);
                                                     } else {
                                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                                          if (enrolledCourse!=null)
+                                                          if (enrolledCourse!=null) {
+                                                            if (user==null)
+                                                              throw new MoodleRestUserException();
                                                             user.addEnrolledCourse(enrolledCourse);
+                                                          }
                                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                                         } else {
                                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                                              if (enrolledCourse==null)
+                                                                throw new MoodleRestUserException();
                                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                                             }
                                                         }
@@ -823,7 +913,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];
@@ -836,19 +926,19 @@ public class MoodleRestUser implements Serializable {
 
     public static MoodleUser[] getUsers(Criteria[] criteria) throws MoodleRestUserException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
+        MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_USERS;
+        String functionCall=MoodleServices.CORE_USER_GET_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestUserException();
             else
-                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0; i<criteria.length; i++) {
-                data.append("&").append(URLEncoder.encode("criteria["+i+"][key]", MoodleServices.ENCODING)).append("=").append(criteria[i].getKey());
-                data.append("&").append(URLEncoder.encode("criteria["+i+"][value]", MoodleServices.ENCODING)).append("=").append(criteria[i].getValue());
+                data.append("&").append(URLEncoder.encode("criteria["+i+"][key]", MoodleServices.ENCODING.toString())).append("=").append(criteria[i].getKey());
+                data.append("&").append(URLEncoder.encode("criteria["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(criteria[i].getValue());
             }
             data.trimToSize();
             NodeList elements=MoodleCallRestWebService.call(data.toString());
@@ -877,51 +967,79 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE"))
-                        user.setMoodleUserField(nodeName, content);
+                    if (parent.equals("RESPONSE")) {
+                      if (user==null)
+                        throw new MoodleRestUserException();
+                      user.setMoodleUserField(nodeName, content);
+                    }
                     else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("groups") && nodeName.equals("id")) {
-                                    if (group!=null)
-                                        user.addGroup(group);
+                                    if (group!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addGroup(group);
+                                    }
                                     group=new UserGroup();
                                     group.setUserGroupField(nodeName, content);
                                 } else {
                                     if (parent.equals("groups")) {
-                                        group.setUserGroupField(nodeName, content);
+                                      if (group==null)
+                                        throw new MoodleRestUserException();
+                                      group.setUserGroupField(nodeName, content);
                                     } else {
                                         if (parent.equals("roles") && nodeName.equals("roleid")) {
-                                            if (role!=null)
-                                                user.addRole(role);
+                                            if (role!=null) {
+                                              if (user==null)
+                                                throw new MoodleRestUserException();
+                                              user.addRole(role);
+                                            }
                                             role=new UserRole();
                                             role.setUserRoleField(nodeName, content);
                                         } else {
                                             if (parent.equals("roles")) {
-                                                role.setUserRoleField(nodeName, content);
+                                              if (role==null)
+                                                throw new MoodleRestUserException();
+                                              role.setUserRoleField(nodeName, content);
                                             } else {
                                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                                    if (preference!=null)
-                                                        user.addPreference(preference);
+                                                    if (preference!=null) {
+                                                      if (user==null)
+                                                        throw new MoodleRestUserException();
+                                                      user.addPreference(preference);
+                                                    }
                                                     preference=new UserPreference();
                                                     preference.setType(content);
                                                 } else {
                                                     if (parent.equals("preferences")) {
-                                                        preference.setValue(content);
+                                                      if (preference==null)
+                                                        throw new MoodleRestUserException();
+                                                      preference.setValue(content);
                                                     } else {
                                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                                          if (enrolledCourse!=null)
+                                                          if (enrolledCourse!=null) {
+                                                            if (user==null)
+                                                              throw new MoodleRestUserException();
                                                             user.addEnrolledCourse(enrolledCourse);
+                                                          }
                                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                                         } else {
                                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                                              if (enrolledCourse==null)
+                                                                throw new MoodleRestUserException();
                                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                                             }
                                                         }
@@ -948,7 +1066,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];
@@ -961,16 +1079,16 @@ public class MoodleRestUser implements Serializable {
 
     public MoodleUser[] __getUsers(String url, String token, Criteria[] criteria) throws MoodleRestUserException, MoodleRestException {
         Vector v=new Vector();
-        MoodleUser user=null;
+        MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_USERS;
+        String functionCall=MoodleServices.CORE_USER_GET_USERS.name();
         try {
             StringBuilder data=new StringBuilder();
-            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0; i<criteria.length; i++) {
-                data.append("&").append(URLEncoder.encode("criteria["+i+"][key]", MoodleServices.ENCODING)).append("=").append(criteria[i].getKey());
-                data.append("&").append(URLEncoder.encode("criteria["+i+"][value]", MoodleServices.ENCODING)).append("=").append(criteria[i].getValue());
+                data.append("&").append(URLEncoder.encode("criteria["+i+"][key]", MoodleServices.ENCODING.toString())).append("=").append(criteria[i].getKey());
+                data.append("&").append(URLEncoder.encode("criteria["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(criteria[i].getValue());
             }
             data.trimToSize();
             NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
@@ -999,51 +1117,79 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE"))
-                        user.setMoodleUserField(nodeName, content);
+                    if (parent.equals("RESPONSE")) {
+                      if (user==null)
+                        throw new MoodleRestUserException();
+                      user.setMoodleUserField(nodeName, content);
+                    }
                     else {
                         if(parent.equals("customfields") && nodeName.equals("type")) {
-                            if (customField!=null)
-                                user.addCustomField(customField);
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
                             customField=new UserCustomField();
                             customField.setCustomFieldField(nodeName, content);
                         } else {
                             if (parent.equals("customfields")) {
-                                customField.setCustomFieldField(nodeName, content);
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
                             } else {
                                 if (parent.equals("groups") && nodeName.equals("id")) {
-                                    if (group!=null)
-                                        user.addGroup(group);
+                                    if (group!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addGroup(group);
+                                    }
                                     group=new UserGroup();
                                     group.setUserGroupField(nodeName, content);
                                 } else {
                                     if (parent.equals("groups")) {
-                                        group.setUserGroupField(nodeName, content);
+                                      if (group==null)
+                                        throw new MoodleRestUserException();
+                                      group.setUserGroupField(nodeName, content);
                                     } else {
                                         if (parent.equals("roles") && nodeName.equals("roleid")) {
-                                            if (role!=null)
-                                                user.addRole(role);
+                                            if (role!=null) {
+                                              if (user==null)
+                                                throw new MoodleRestUserException();
+                                              user.addRole(role);
+                                            }
                                             role=new UserRole();
                                             role.setUserRoleField(nodeName, content);
                                         } else {
                                             if (parent.equals("roles")) {
-                                                role.setUserRoleField(nodeName, content);
+                                              if (role==null)
+                                                throw new MoodleRestUserException();
+                                              role.setUserRoleField(nodeName, content);
                                             } else {
                                                 if (parent.equals("preferences") && nodeName.equals("name")) {
-                                                    if (preference!=null)
-                                                        user.addPreference(preference);
+                                                    if (preference!=null) {
+                                                      if (user==null)
+                                                        throw new MoodleRestUserException();
+                                                      user.addPreference(preference);
+                                                    }
                                                     preference=new UserPreference();
                                                     preference.setType(content);
                                                 } else {
                                                     if (parent.equals("preferences")) {
-                                                        preference.setValue(content);
+                                                      if (preference==null)
+                                                        throw new MoodleRestUserException();
+                                                      preference.setValue(content);
                                                     } else {
                                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
-                                                          if (enrolledCourse!=null)
+                                                          if (enrolledCourse!=null) {
+                                                            if (user==null)
+                                                              throw new MoodleRestUserException();
                                                             user.addEnrolledCourse(enrolledCourse);
+                                                          }
                                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
                                                         } else {
                                                             if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                                              if (enrolledCourse==null)
+                                                                throw new MoodleRestUserException();
                                                               enrolledCourse.setUserEnrolledCourseField(nodeName, content);
                                                             }
                                                         }
@@ -1070,7 +1216,7 @@ public class MoodleRestUser implements Serializable {
                 enrolledCourse=null;
                 v.add(user);
             }
-        }  catch (IOException ex) {
+        }  catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         MoodleUser[] users=new MoodleUser[v.size()];

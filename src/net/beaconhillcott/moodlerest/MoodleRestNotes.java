@@ -60,33 +60,33 @@ public class MoodleRestNotes implements Serializable {
   /**
    * <p>Method to attach notes to users.</p>
    * 
-   * @param MoodleNote[] notes
+   * @param notes MoodleNote[]
    * @return MoodleNote[]
    * @throws MoodleRestNotesException
    * @throws MoodleRestException
    */
   public static MoodleNote[] createNotes(MoodleNote[] notes) throws MoodleRestNotesException, MoodleRestException {
     int processedCount=0;
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES:MoodleServices.CORE_NOTES_CREATE_NOTES;
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.name():MoodleServices.CORE_NOTES_CREATE_NOTES.name();
     try {
       StringBuilder data=new StringBuilder();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestNotesException();
       else
         data.append(MoodleCallRestWebService.getAuth());
-      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0;i<notes.length;i++) {
         if (notes[i]==null) throw new MoodleRestNotesException(MoodleRestNotesException.NOTES_NULL);
-        if (notes[i].getUserId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.USERID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][userid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+notes[i].getUserId(), MoodleServices.ENCODING));
-        if (notes[i].getPublishState()==null) throw new MoodleRestNotesException(MoodleRestNotesException.PUBLISHSTATE_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][publishstate]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getPublishState(), MoodleServices.ENCODING));
-        if (notes[i].getCourseId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.COURSEID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][courseid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+notes[i].getCourseId(), MoodleServices.ENCODING));
-        if (notes[i].getText()==null) throw new MoodleRestNotesException(MoodleRestNotesException.TEXT_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][text]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getText(), MoodleServices.ENCODING));
+        if (notes[i].getUserId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.USERID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+notes[i].getUserId(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getPublishState()==null) throw new MoodleRestNotesException(MoodleRestNotesException.PUBLISHSTATE_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][publishstate]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getPublishState(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getCourseId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.COURSEID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+notes[i].getCourseId(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getText()==null) throw new MoodleRestNotesException(MoodleRestNotesException.TEXT_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][text]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getText(), MoodleServices.ENCODING.toString()));
         if (notes[i].getFormat()==null) { notes[i].setFormat("text"); }
         if (notes[i].getFormat().equals("text") || notes[i].getFormat().equals("html"))
-          data.append("&").append(URLEncoder.encode("notes["+i+"][format]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getFormat(), MoodleServices.ENCODING));
+          data.append("&").append(URLEncoder.encode("notes["+i+"][format]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getFormat(), MoodleServices.ENCODING.toString()));
         else
           throw new MoodleRestNotesException(MoodleRestNotesException.FORMAT_INCORRECT);
-        if (notes[i].getClientNoteId()!=null) data.append("&").append(URLEncoder.encode("notes["+i+"][clientnoteid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getClientNoteId(), MoodleServices.ENCODING));
+        if (notes[i].getClientNoteId()!=null) data.append("&").append(URLEncoder.encode("notes["+i+"][clientnoteid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getClientNoteId(), MoodleServices.ENCODING.toString()));
       }
       data.trimToSize();
       NodeList elements=MoodleCallRestWebService.call(data.toString());
@@ -97,7 +97,7 @@ public class MoodleRestNotes implements Serializable {
           notes[processedCount].setMoodleNoteField(nodeName, content);
         }
       }
-    }  catch (IOException ex) {
+    }  catch (UnsupportedEncodingException ex) {
       Logger.getLogger(MoodleRestNotes.class.getName()).log(Level.SEVERE, null, ex);
     }
     return notes;
@@ -105,23 +105,23 @@ public class MoodleRestNotes implements Serializable {
 
   public MoodleNote[] __createNotes(String url, String token, MoodleNote[] notes) throws MoodleRestNotesException, MoodleRestException {
     int processedCount=0;
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES:MoodleServices.CORE_NOTES_CREATE_NOTES;
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.name():MoodleServices.CORE_NOTES_CREATE_NOTES.name();
     try {
       StringBuilder data=new StringBuilder();
-      data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING));
-      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING));
+      data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0;i<notes.length;i++) {
         if (notes[i]==null) throw new MoodleRestNotesException(MoodleRestNotesException.NOTES_NULL);
-        if (notes[i].getUserId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.USERID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][userid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+notes[i].getUserId(), MoodleServices.ENCODING));
-        if (notes[i].getPublishState()==null) throw new MoodleRestNotesException(MoodleRestNotesException.PUBLISHSTATE_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][publishstate]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getPublishState(), MoodleServices.ENCODING));
-        if (notes[i].getCourseId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.COURSEID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][courseid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(""+notes[i].getCourseId(), MoodleServices.ENCODING));
-        if (notes[i].getText()==null) throw new MoodleRestNotesException(MoodleRestNotesException.TEXT_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][text]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getText(), MoodleServices.ENCODING));
+        if (notes[i].getUserId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.USERID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+notes[i].getUserId(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getPublishState()==null) throw new MoodleRestNotesException(MoodleRestNotesException.PUBLISHSTATE_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][publishstate]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getPublishState(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getCourseId()==null) throw new MoodleRestNotesException(MoodleRestNotesException.COURSEID_NOT_SET); else data.append("&").append(URLEncoder.encode("notes["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+notes[i].getCourseId(), MoodleServices.ENCODING.toString()));
+        if (notes[i].getText()==null) throw new MoodleRestNotesException(MoodleRestNotesException.TEXT_NULL); else data.append("&").append(URLEncoder.encode("notes["+i+"][text]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getText(), MoodleServices.ENCODING.toString()));
         if (notes[i].getFormat()==null) { notes[i].setFormat("text"); }
         if (notes[i].getFormat().equals("text") || notes[i].getFormat().equals("html"))
-          data.append("&").append(URLEncoder.encode("notes["+i+"][format]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getFormat(), MoodleServices.ENCODING));
+          data.append("&").append(URLEncoder.encode("notes["+i+"][format]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getFormat(), MoodleServices.ENCODING.toString()));
         else
           throw new MoodleRestNotesException(MoodleRestNotesException.FORMAT_INCORRECT);
-        if (notes[i].getClientNoteId()!=null) data.append("&").append(URLEncoder.encode("notes["+i+"][clientnoteid]", MoodleServices.ENCODING)).append("=").append(URLEncoder.encode(notes[i].getClientNoteId(), MoodleServices.ENCODING));
+        if (notes[i].getClientNoteId()!=null) data.append("&").append(URLEncoder.encode("notes["+i+"][clientnoteid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(notes[i].getClientNoteId(), MoodleServices.ENCODING.toString()));
       }
       data.trimToSize();
       NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
@@ -132,7 +132,7 @@ public class MoodleRestNotes implements Serializable {
           notes[processedCount].setMoodleNoteField(nodeName, content);
         }
       }
-    }  catch (IOException ex) {
+    }  catch (UnsupportedEncodingException ex) {
       Logger.getLogger(MoodleRestNotes.class.getName()).log(Level.SEVERE, null, ex);
     }
     return notes;
