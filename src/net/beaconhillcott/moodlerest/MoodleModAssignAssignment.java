@@ -19,12 +19,13 @@
 package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  *
  * @author root
  */
-public class MoodleModAssignAssignment {
+public class MoodleModAssignAssignment implements Serializable {
   
     private Long id=null;
     private Long course=null;
