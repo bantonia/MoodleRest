@@ -4,10 +4,12 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class MoodleGrade {
+public class MoodleGrade implements Serializable {
   
 }
