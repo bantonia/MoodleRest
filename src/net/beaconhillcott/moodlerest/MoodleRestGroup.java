@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.Vector;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class containing the static routines to manipulate Moodle groups and users within course groups.</p>
@@ -31,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @see MoodleGroup
  * @see MoodleGroupUser
  */
-public class MoodleRestGroup {
+public class MoodleRestGroup implements Serializable {
 
    // private static final int BUFFER_MAX=4000;
 
