@@ -20,13 +20,14 @@ package net.beaconhillcott.moodlerest;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.io.Serializable;
 
 /**
  * <p>Class to hold information about the content of a course.</p>
  *
  * @author Bill Antonia
  */
-public class MoodleCourseContent {
+public class MoodleCourseContent implements Serializable {
   
   private long id=-1;
   private String name=null;
