@@ -182,6 +182,7 @@ public enum MoodleServices implements Serializable {
         MOODLE_WEBSERVICE_GET_SITEINFO, // MoodleRestWebService
 
         ENCODING {
+                @Override
                 public String toString() {
                         return "UTF-8";
         
