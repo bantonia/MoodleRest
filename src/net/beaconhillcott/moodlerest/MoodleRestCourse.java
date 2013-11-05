@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 import org.w3c.dom.NodeList;
+import java.io.Serializable;
 
 /**
  * <p>Class containing the static routines used to create or update Moodle courses.</p>
@@ -31,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @author Bill Antonia
  * @see MoodleCourse
  */
-public class MoodleRestCourse {
+public class MoodleRestCourse implements Serializable {
  
    // private static final int BUFFER_MAX=4000;
 
