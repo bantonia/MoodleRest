@@ -12,24 +12,15 @@ import java.io.Serializable;
  *
  * @author root
  */
-public enum Role implements Serializable {
+public class Role implements Serializable {
   
-  MANAGER(1),
-  COURSE_CREATOR(2),
-  TEACHER(3),
-  NON_EDITING_TEACHER(4),
-  STUDENT(5),
-  GUEST(6),
-  AUTHENTICATED_USER(7),
-  AUTHENTICATED_USER_ON_FRONT_PAGE(8);
-  
-  private final int value;
-  
-  public int getInt() {
-    return this.value;
-  }
-  private Role(int value) {
-    this.value=value;
-  }
+  public static final int MANAGER=1;
+  public static final int COURSE_CREATOR=2;
+  public static final int TEACHER=3;
+  public static final int NON_EDITING_TEACHER=4;
+  public static final int STUDENT=5;
+  public static final int GUEST=6;
+  public static final int AUTHENTICATED_USER=7;
+  public static final int AUTHENTICATED_USER_ON_FRONT_PAGE=8;
   
 }

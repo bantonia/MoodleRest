@@ -12,20 +12,11 @@ import java.io.Serializable;
  *
  * @author root
  */
-public enum DescriptionFormat implements Serializable {
+public class DescriptionFormat implements Serializable {
   
-  MOODLE(0),
-  HTML(1),
-  PLAIN(2),
-  MARKDOWN(4);
-  
-  private final int value;
-  
-  public int getInt() {
-    return this.value;
-  }
-  private DescriptionFormat(int value) {
-    this.value=value;
-  }
+  public static final int MOODLE=0;
+  public static final int HTML=1;
+  public static final int PLAIN=2;
+  public static final int MARKDOWN=4;
   
 }
