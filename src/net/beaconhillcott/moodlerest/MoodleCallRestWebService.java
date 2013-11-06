@@ -254,7 +254,7 @@ public class MoodleCallRestWebService implements Serializable {
         try {
             URL getUrl = new URL(url);
             if (debug)
-              System.out.println(url);
+              System.out.println(url+"?"+params);
             HttpURLConnection connection = (HttpURLConnection)getUrl.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/xml");
@@ -326,6 +326,8 @@ public class MoodleCallRestWebService implements Serializable {
         NodeList elements = null;
         try {
             URL getUrl = new URL(url);
+            if (debug)
+              System.out.println(url+"?"+params);
             HttpURLConnection connection = (HttpURLConnection)getUrl.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/xml");
@@ -371,11 +373,16 @@ public class MoodleCallRestWebService implements Serializable {
             // Used for testing
             if (debug) {
               for (int i=0;i<elements.getLength();i++) {
+                String nodeName;
+                String content;
                 String parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
                 if (parent.equals("KEY"))
                   parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-                String content=elements.item(i).getTextContent();
-                String nodeName=elements.item(i).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                content=elements.item(i).getTextContent();
+                if (elements.item(i).getParentNode().getAttributes().getNamedItem("name")!=null)
+                  nodeName=elements.item(i).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                else
+                  nodeName=null;
                 System.out.println("parent="+parent+" nodeName="+nodeName+" content="+content);
               }
             }
