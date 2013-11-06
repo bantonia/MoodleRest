@@ -61,6 +61,7 @@ public class MoodleUser implements Serializable {
     private String skype=null;
     private String yahoo=null;
     private String msn=null;
+    private String aim=null;
     private String department=null;
     private String institution=null;
     private String interests=null;
@@ -122,25 +123,30 @@ public class MoodleUser implements Serializable {
         if (nodeName.equals("lang") && content!=null) setLang(content);
         if (nodeName.equals("theme") && content!=null) setTheme(content);
         if (nodeName.equals("timezone") && content!=null) setTimezone(content);
-        if (nodeName.equals("mailformat") && content!=null) setMailFormat(Integer.parseInt(content)==0?EMAIL_FORMAT_NONE:EMAIL_FORMAT_HTML);
+        if (nodeName.equals("mailformat") && (content!=null || !content.equals(null))) {
+          if (!content.equals("")) setMailFormat(Integer.parseInt(content)==0?EMAIL_FORMAT_NONE:EMAIL_FORMAT_HTML);
+        }
         if (nodeName.equals("description") && content!=null) setDescription(content);
         if (nodeName.equals("descriptionformat") && content!=null) setDescriptionFormat(Long.valueOf(content));
         if (nodeName.equals("city") && content!=null) setCity(content);
         if (nodeName.equals("country") && content!=null) setCountry(content);
         if (nodeName.equals("fullname")) { setFullname(content);}
-        if (nodeName.equals("address") && content!=null) setAddress(content);
-        if (nodeName.equals("phone1") && content!=null) setPhone1(content);
-        if (nodeName.equals("phone2") && content!=null) setPhone2(content);
-        if (nodeName.equals("icq") && content!=null) setICQ(content);
-        if (nodeName.equals("skype") && content!=null) setSkype(content);
-        if (nodeName.equals("yahoo") && content!=null) setYahoo(content);
-        if (nodeName.equals("msn") && content!=null) setMSN(content);
-        if (nodeName.equals("department") && content!=null) setDepartment(content);
-        if (nodeName.equals("institution") && content!=null) setInstitution(content);
-        if (nodeName.equals("interests") && content!=null) setInterests(content);
+        if (nodeName.equals("address") && (content!=null || !content.equals(null))) setAddress(content);
+        if (nodeName.equals("phone1") && (content!=null || !content.equals(null))) setPhone1(content);
+        if (nodeName.equals("phone2") && (content!=null || !content.equals(null))) setPhone2(content);
+        if (nodeName.equals("icq") && (content!=null || !content.equals(null))) setICQ(content);
+        if (nodeName.equals("skype") && (content!=null || !content.equals(null))) setSkype(content);
+        if (nodeName.equals("yahoo") && (content!=null || !content.equals(null))) setYahoo(content);
+        if (nodeName.equals("msn") && (content!=null || !content.equals(null))) setMSN(content);
+        if (nodeName.equals("aim") && (content!=null || !content.equals(null))) setAim(content);
+        if (nodeName.equals("department") && (content!=null || !content.equals(null))) setDepartment(content);
+        if (nodeName.equals("institution") && (content!=null || !content.equals(null))) setInstitution(content);
+        if (nodeName.equals("interests") && (content!=null || !content.equals(null))) setInterests(content);
         if (nodeName.equals("firstaccess") && content!=null) setFirstAccess(Long.valueOf(content));
         if (nodeName.equals("lastaccess") && content!=null) setLastAccess(Long.valueOf(content));
-        if (nodeName.equals("confirmed") && content!=null) setConfirmed(Double.valueOf(content));
+        if (nodeName.equals("confirmed") && (content!=null || !content.equals(null))) {
+          if (!content.equals("")) setConfirmed(Double.valueOf(content));
+        }
         if (nodeName.equals("url") && content!=null) setURL(content);
         if (nodeName.equals("profileimageurlsmall") && content!=null) setProfileImageURLSmall(content);
         if (nodeName.equals("profileimageurl") && content!=null) setProfileImageURL(content);
@@ -830,4 +836,14 @@ public class MoodleUser implements Serializable {
   public long getDescriptionFormat() {
     return descriptionformat;
   }
+
+  public String getAim() {
+    return aim;
+  }
+
+  public void setAim(String aim) {
+    this.aim = aim;
+  }
+  
+  
 }

@@ -1226,4 +1226,258 @@ public class MoodleRestUser implements Serializable {
         v.removeAllElements();
         return users;
     }
+    
+    public static MoodleUser[] getUsersByField(UserFieldSearch field, String value) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+      String[] values=new String[1];
+      values[0]=value;
+      return getUsersByField(field, values);
+    }
+    
+    public static MoodleUser[] getUsersByField(UserFieldSearch field, String[] values) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);  
+      Vector v=new Vector();
+      MoodleUser user;
+      //  boolean processed=false;
+        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.name();
+        try {
+            StringBuilder data=new StringBuilder();
+            if (MoodleCallRestWebService.getAuth()==null)
+                throw new MoodleRestUserException();
+            else
+                data.append(MoodleCallRestWebService.getAuth());//data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(MoodleCallRestWebService.getToken(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+            UserCustomField customField=null;
+            UserPreference preference=null;
+            UserEnrolledCourse enrolledCourse=null;
+            data.append("&").append(URLEncoder.encode("field", MoodleServices.ENCODING.toString())).append("=").append(field.toString());
+            for (int i=0;i<values.length;i++) {
+                if (values==null) throw new MoodleRestUserException();
+                data.append("&").append(URLEncoder.encode("values["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(values[i]);
+            }
+            data.trimToSize();
+            NodeList elements=MoodleCallRestWebService.call(data.toString());
+            user=null;
+            for (int j=0;j<elements.getLength();j++) {
+                String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
+                if (parent.equals("KEY"))
+                    parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                String content=elements.item(j).getTextContent();
+                String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                if (parent.equals("RESPONSE") && nodeName.equals("id")) {
+                    if (user==null)
+                        user=new MoodleUser(Long.parseLong(content));
+                    else {
+                        v.add(user);
+                        user=new MoodleUser(Long.parseLong(content));
+                    }
+                    customField=null;
+                    preference=null;
+                    enrolledCourse=null;
+                } else {
+                    if (parent.equals("RESPONSE")) {
+                      try {
+                        if (user==null)
+                          throw new MoodleRestUserException();
+                        user.setMoodleUserField(nodeName, content);
+                      } catch (NullPointerException ex){
+                        System.out.println("Error "+nodeName+" = "+content);
+                      }
+                    } else {
+                        if(parent.equals("customfields") && nodeName.equals("type")) {
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
+                            customField=new UserCustomField();
+                            customField.setCustomFieldField(nodeName, content);
+                        } else {
+                            if (parent.equals("customfields")) {
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
+                            } else {
+                                if (parent.equals("preferences") && nodeName.equals("name")) {
+                                    if (preference!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addPreference(preference);
+                                    }
+                                    preference=new UserPreference();
+                                    preference.setType(content);
+                                } else {
+                                    if (parent.equals("preferences")) {
+                                      if (preference==null)
+                                        throw new MoodleRestUserException();
+                                      preference.setValue(content);
+                                    } else {
+                                        if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
+                                          if (enrolledCourse!=null) {
+                                            if (user==null)
+                                              throw new MoodleRestUserException();
+                                            user.addEnrolledCourse(enrolledCourse);
+                                          }
+                                          enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
+                                        } else {
+                                            if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                              if (enrolledCourse==null)
+                                                throw new MoodleRestUserException();
+                                              enrolledCourse.setUserEnrolledCourseField(nodeName, content);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (user!=null) {
+                if (customField!=null)
+                    user.addCustomField(customField);
+                customField=null;
+                if (preference!=null)
+                    user.addPreference(preference);
+                preference=null;
+                if (enrolledCourse!=null)
+                    user.addEnrolledCourse(enrolledCourse);
+                enrolledCourse=null;
+                v.add(user);
+            }
+        }  catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MoodleUser[] users=new MoodleUser[v.size()];
+        for (int i=0;i<v.size();i++) {
+            users[i]=(MoodleUser)v.get(i);
+        }
+        v.removeAllElements();
+        return users;
+    }
+    
+    public MoodleUser[] __getUsersByField(String url, String token, UserFieldSearch field, String value) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+      String[] values=new String[1];
+      values[0]=value;
+      return __getUsersByField(url, token, field, values);
+    }
+    
+    public MoodleUser[] __getUsersByField(String url, String token, UserFieldSearch field, String[] values) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);  
+      Vector v=new Vector();
+      MoodleUser user;
+      //  boolean processed=false;
+        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.name();
+        try {
+            StringBuilder data=new StringBuilder();
+            data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+            UserCustomField customField=null;
+            UserPreference preference=null;
+            UserEnrolledCourse enrolledCourse=null;
+            data.append("&").append(URLEncoder.encode("field", MoodleServices.ENCODING.toString())).append("=").append(field.toString());
+            for (int i=0;i<values.length;i++) {
+                if (values==null) throw new MoodleRestUserException();
+                data.append("&").append(URLEncoder.encode("values["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(values[i]);
+            }
+            data.trimToSize();
+            NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
+            user=null;
+            for (int j=0;j<elements.getLength();j++) {
+                String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
+                if (parent.equals("KEY"))
+                    parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                String content=elements.item(j).getTextContent();
+                String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                if (parent.equals("RESPONSE") && nodeName.equals("id")) {
+                    if (user==null)
+                        user=new MoodleUser(Long.parseLong(content));
+                    else {
+                        v.add(user);
+                        user=new MoodleUser(Long.parseLong(content));
+                    }
+                    customField=null;
+                    preference=null;
+                    enrolledCourse=null;
+                } else {
+                    if (parent.equals("RESPONSE")) {
+                      try {
+                        if (user==null)
+                          throw new MoodleRestUserException();
+                        user.setMoodleUserField(nodeName, content);
+                      } catch (NullPointerException ex){
+                        System.out.println("Error "+nodeName+" = "+content);
+                      }
+                    } else {
+                        if(parent.equals("customfields") && nodeName.equals("type")) {
+                            if (customField!=null) {
+                              if (user==null)
+                                throw new MoodleRestUserException();
+                              user.addCustomField(customField);
+                            }
+                            customField=new UserCustomField();
+                            customField.setCustomFieldField(nodeName, content);
+                        } else {
+                            if (parent.equals("customfields")) {
+                              if (customField==null)
+                                throw new MoodleRestUserException();
+                              customField.setCustomFieldField(nodeName, content);
+                            } else {
+                                if (parent.equals("preferences") && nodeName.equals("name")) {
+                                    if (preference!=null) {
+                                      if (user==null)
+                                        throw new MoodleRestUserException();
+                                      user.addPreference(preference);
+                                    }
+                                    preference=new UserPreference();
+                                    preference.setType(content);
+                                } else {
+                                    if (parent.equals("preferences")) {
+                                      if (preference==null)
+                                        throw new MoodleRestUserException();
+                                      preference.setValue(content);
+                                    } else {
+                                        if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
+                                          if (enrolledCourse!=null) {
+                                            if (user==null)
+                                              throw new MoodleRestUserException();
+                                            user.addEnrolledCourse(enrolledCourse);
+                                          }
+                                          enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
+                                        } else {
+                                            if (parent.equals("enrolledcourses") && !nodeName.equals("id")) {
+                                              if (enrolledCourse==null)
+                                                throw new MoodleRestUserException();
+                                              enrolledCourse.setUserEnrolledCourseField(nodeName, content);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (user!=null) {
+                if (customField!=null)
+                    user.addCustomField(customField);
+                customField=null;
+                if (preference!=null)
+                    user.addPreference(preference);
+                preference=null;
+                if (enrolledCourse!=null)
+                    user.addEnrolledCourse(enrolledCourse);
+                enrolledCourse=null;
+                v.add(user);
+            }
+        }  catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MoodleRestUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MoodleUser[] users=new MoodleUser[v.size()];
+        for (int i=0;i<v.size();i++) {
+            users[i]=(MoodleUser)v.get(i);
+        }
+        v.removeAllElements();
+        return users;
+    }
 }

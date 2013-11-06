@@ -59,7 +59,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_DELETE_USERS, // MoodleRestUser
         CORE_USER_UPDATE_USERS, // MoodleRestUser       
         CORE_USER_GET_USERS, // MoodleRestUser       
-        CORE_USER_GET_USERS_BY_FIELD, // Not yet implemented
+        CORE_USER_GET_USERS_BY_FIELD, // MoodleRestUser
 
         // ENROL
         CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY, // Not yet implemented       
