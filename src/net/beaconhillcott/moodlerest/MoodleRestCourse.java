@@ -54,7 +54,7 @@ public class MoodleRestCourse implements Serializable {
         
         
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.name():MoodleServices.CORE_COURSE_GET_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestCourseException();
         else
@@ -90,7 +90,7 @@ public class MoodleRestCourse implements Serializable {
 
     public MoodleCourse[] __getAllCourses(String url, String token) throws MoodleRestException, UnsupportedEncodingException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.name():MoodleServices.CORE_COURSE_GET_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("options[ids]", MoodleServices.ENCODING.toString()));
@@ -150,7 +150,7 @@ public class MoodleRestCourse implements Serializable {
         Vector v=new Vector();
         MoodleCourse course=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.name():MoodleServices.CORE_COURSE_GET_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestCourseException();
         else
@@ -197,7 +197,7 @@ public class MoodleRestCourse implements Serializable {
         Vector v=new Vector();
         MoodleCourse course=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.name():MoodleServices.CORE_COURSE_GET_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<courseids.length;i++) {
@@ -259,7 +259,7 @@ public class MoodleRestCourse implements Serializable {
     public static MoodleCourse[] createCourses(MoodleCourse[] course) throws MoodleRestException, UnsupportedEncodingException {
         Hashtable hash=new Hashtable();
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_CREATE_COURSES.name():MoodleServices.CORE_COURSE_CREATE_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_CREATE_COURSES.toString():MoodleServices.CORE_COURSE_CREATE_COURSES.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestCourseException();
         else
@@ -315,7 +315,7 @@ public class MoodleRestCourse implements Serializable {
     public MoodleCourse[] __createCourses(String url, String token, MoodleCourse[] course) throws MoodleRestException, UnsupportedEncodingException {
         Hashtable hash=new Hashtable();
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_CREATE_COURSES.name():MoodleServices.CORE_COURSE_CREATE_COURSES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_CREATE_COURSES.toString():MoodleServices.CORE_COURSE_CREATE_COURSES.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<course.length;i++) {
@@ -372,7 +372,7 @@ public class MoodleRestCourse implements Serializable {
     public static MoodleCourseContent[] getCourseContent(long courseId, MoodleCourseContentOption[] options) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_GET_CONTENTS.name();
+      String functionCall=MoodleServices.CORE_COURSE_GET_CONTENTS.toString();
       if (MoodleCallRestWebService.getAuth()==null)
           throw new MoodleRestCourseException();
       else
@@ -458,7 +458,7 @@ public class MoodleRestCourse implements Serializable {
     public MoodleCourseContent[] __getCourseContent(String url, String token, long courseId, MoodleCourseContentOption[] options) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_GET_CONTENTS.name();
+      String functionCall=MoodleServices.CORE_COURSE_GET_CONTENTS.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
@@ -564,7 +564,7 @@ public class MoodleRestCourse implements Serializable {
     public static MoodleCategory[] createCategories(MoodleCategory[] categories) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_CREATE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_CREATE_CATEGORIES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestCourseException();
       else
@@ -609,7 +609,7 @@ public class MoodleRestCourse implements Serializable {
     public MoodleCategory[] __createCategories(String url, String token, MoodleCategory[] categories) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_CREATE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_CREATE_CATEGORIES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       Hashtable<String, MoodleCategory> catStore=new Hashtable();
@@ -664,7 +664,7 @@ public class MoodleRestCourse implements Serializable {
     public static void deleteCategories(MoodleCategory[] categories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestCourseException();
       else
@@ -686,7 +686,7 @@ public class MoodleRestCourse implements Serializable {
     public void __deleteCategories(String url, String token, MoodleCategory[] categories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0; i<categories.length; i++) {
@@ -718,7 +718,7 @@ public class MoodleRestCourse implements Serializable {
     public static void updateCategories(MoodleCategory[] categories) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_UPDATE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_UPDATE_CATEGORIES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestCourseException();
       else
@@ -744,7 +744,7 @@ public class MoodleRestCourse implements Serializable {
     public void __updateCategories(String url, String token, MoodleCategory[] categories) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_UPDATE_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_UPDATE_CATEGORIES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0; i<categories.length; i++) {
@@ -790,7 +790,7 @@ public class MoodleRestCourse implements Serializable {
     public static MoodleCategory[] getCategories(long categoryId, boolean subcategories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_GET_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_GET_CATEGORIES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestCourseException();
       else
@@ -840,7 +840,7 @@ public class MoodleRestCourse implements Serializable {
     public MoodleCategory[] __getCategories(String url, String token, Long categoryId, Boolean subcategories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_GET_CATEGORIES.name();
+      String functionCall=MoodleServices.CORE_COURSE_GET_CATEGORIES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       if (categoryId<0) throw new MoodleRestCourseException(MoodleRestException.PARAMETER_RANGE+" categoryid"); data.append("&").append(URLEncoder.encode("categoryid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categoryId, MoodleServices.ENCODING.toString()));
@@ -899,7 +899,7 @@ public class MoodleRestCourse implements Serializable {
     public static void deleteCourses(Long[] courseIds) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_DELETE_COURSES.name();
+      String functionCall=MoodleServices.CORE_COURSE_DELETE_COURSES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestCourseException();
       else
@@ -920,7 +920,7 @@ public class MoodleRestCourse implements Serializable {
     public void __deleteCourses(String url, String token, Long[] courseIds) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      String functionCall=MoodleServices.CORE_COURSE_DELETE_COURSES.name();
+      String functionCall=MoodleServices.CORE_COURSE_DELETE_COURSES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0; i<courseIds.length; i++) {

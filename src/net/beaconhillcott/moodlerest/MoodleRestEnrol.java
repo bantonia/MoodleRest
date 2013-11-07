@@ -53,7 +53,7 @@ public class MoodleRestEnrol implements Serializable {
     public static MoodleCourseUser[] getEnrolledUsers(Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
         Vector v=new Vector();
-        String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.name();
+        String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestEnrolException();
         else
@@ -82,7 +82,7 @@ public class MoodleRestEnrol implements Serializable {
     public MoodleCourseUser[] __getEnrolledUsers(String url, String token, Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
         Vector v=new Vector();
-        String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.name();
+        String functionCall=MoodleServices.MOODLE_ENROL_GET_ENROLLED_USERS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (courseid==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseid, MoodleServices.ENCODING.toString()));
@@ -119,7 +119,7 @@ public class MoodleRestEnrol implements Serializable {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         Vector<MoodleUser> v=new Vector();
-        String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS.name();
+        String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestEnrolException();
         else
@@ -159,7 +159,7 @@ public class MoodleRestEnrol implements Serializable {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         Vector<MoodleUser> v=new Vector();
-        String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS.name();
+        String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (courseid==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseid, MoodleServices.ENCODING.toString()));
@@ -225,7 +225,7 @@ public class MoodleRestEnrol implements Serializable {
     public static void enrolUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         try {
             StringBuilder data=new StringBuilder();
-            String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.name():MoodleServices.CORE_ROLE_ASSIGN_ROLES.name();
+            String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.toString():MoodleServices.CORE_ROLE_ASSIGN_ROLES.toString();
             if (MoodleCallRestWebService.getAuth()==null)
                 throw new MoodleRestEnrolException();
             else
@@ -247,7 +247,7 @@ public class MoodleRestEnrol implements Serializable {
     public void __enrolUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         try {
             StringBuilder data=new StringBuilder();
-            String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.name():MoodleServices.CORE_ROLE_ASSIGN_ROLES.name();
+            String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.toString():MoodleServices.CORE_ROLE_ASSIGN_ROLES.toString();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
@@ -290,7 +290,7 @@ public class MoodleRestEnrol implements Serializable {
      * @throws MoodleRestEnrolException
      */
     public static void unenrolUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.name():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.toString():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -312,7 +312,7 @@ public class MoodleRestEnrol implements Serializable {
     }
 
     public void __unenrolUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.name():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.toString():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -345,7 +345,7 @@ public class MoodleRestEnrol implements Serializable {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       Vector<MoodleCourse> v=new Vector();
-      String functionCall=MoodleServices.CORE_ENROL_GET_USERS_COURSES.name();
+      String functionCall=MoodleServices.CORE_ENROL_GET_USERS_COURSES.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestEnrolException();
       else
@@ -390,7 +390,7 @@ public class MoodleRestEnrol implements Serializable {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       Vector<MoodleCourse> v=new Vector();
-      String functionCall=MoodleServices.CORE_ENROL_GET_USERS_COURSES.name();
+      String functionCall=MoodleServices.CORE_ENROL_GET_USERS_COURSES.toString();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       if (userId==null || userId<=0) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("userid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+userId, MoodleServices.ENCODING.toString()));

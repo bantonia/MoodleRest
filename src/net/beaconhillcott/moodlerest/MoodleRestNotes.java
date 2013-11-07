@@ -67,7 +67,7 @@ public class MoodleRestNotes implements Serializable {
    */
   public static MoodleNote[] createNotes(MoodleNote[] notes) throws MoodleRestNotesException, MoodleRestException {
     int processedCount=0;
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.name():MoodleServices.CORE_NOTES_CREATE_NOTES.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.toString():MoodleServices.CORE_NOTES_CREATE_NOTES.toString();
     try {
       StringBuilder data=new StringBuilder();
       if (MoodleCallRestWebService.getAuth()==null)
@@ -105,7 +105,7 @@ public class MoodleRestNotes implements Serializable {
 
   public MoodleNote[] __createNotes(String url, String token, MoodleNote[] notes) throws MoodleRestNotesException, MoodleRestException {
     int processedCount=0;
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.name():MoodleServices.CORE_NOTES_CREATE_NOTES.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_NOTES_CREATE_NOTES.toString():MoodleServices.CORE_NOTES_CREATE_NOTES.toString();
     try {
       StringBuilder data=new StringBuilder();
       data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));

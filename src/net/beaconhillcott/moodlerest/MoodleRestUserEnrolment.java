@@ -31,7 +31,7 @@ public class MoodleRestUserEnrolment implements Serializable {
   public static void enrolUsers(MoodleUserEnrolment[] users) throws MoodleRestUserEnrolmentException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserEnrolmentException(MoodleRestException.NO_LEGACY);
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleServices.ENROL_MANUAL_ENROL_USERS.name();
+        String functionCall=MoodleServices.ENROL_MANUAL_ENROL_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -61,7 +61,7 @@ public class MoodleRestUserEnrolment implements Serializable {
     public void __enrolUsers(String url, String token, MoodleUserEnrolment[] users) throws MoodleRestUserEnrolmentException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserEnrolmentException(MoodleRestException.NO_LEGACY);
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleServices.ENROL_MANUAL_ENROL_USERS.name();
+        String functionCall=MoodleServices.ENROL_MANUAL_ENROL_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));

@@ -66,7 +66,7 @@ public class MoodleRestUser implements Serializable {
      */
     public static MoodleUser[] createUsers(MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.name():MoodleServices.CORE_USER_CREATE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.toString():MoodleServices.CORE_USER_CREATE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -119,7 +119,7 @@ public class MoodleRestUser implements Serializable {
 
     public MoodleUser[] __createUsers(String url, String token, MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
         Hashtable hash=new Hashtable();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.name():MoodleServices.CORE_USER_CREATE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_CREATE_USERS.toString():MoodleServices.CORE_USER_CREATE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -194,7 +194,7 @@ public class MoodleRestUser implements Serializable {
      * @throws MoodleRestException 
      */
     public static void updateUsers(MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.name():MoodleServices.CORE_USER_UPDATE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.toString():MoodleServices.CORE_USER_UPDATE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -240,7 +240,7 @@ public class MoodleRestUser implements Serializable {
     }
 
     public void __updateUsers(String url, String token, MoodleUser[] user) throws MoodleRestUserException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.name():MoodleServices.CORE_USER_UPDATE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_UPDATE_USERS.toString():MoodleServices.CORE_USER_UPDATE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -310,7 +310,7 @@ public class MoodleRestUser implements Serializable {
      * @throws MoodleRestException
      */
     public static void deleteUsers(Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.name():MoodleServices.CORE_USER_DELETE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.toString():MoodleServices.CORE_USER_DELETE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -329,7 +329,7 @@ public class MoodleRestUser implements Serializable {
     }
 
     public void __deleteUsers(String url, String token, Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.name():MoodleServices.CORE_USER_DELETE_USERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_DELETE_USERS.toString():MoodleServices.CORE_USER_DELETE_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -380,7 +380,7 @@ public class MoodleRestUser implements Serializable {
         Vector v=new Vector();
         MoodleUser user;
       //  boolean processed=false;
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.name():MoodleServices.CORE_USER_GET_USERS_BY_ID.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.toString():MoodleServices.CORE_USER_GET_USERS_BY_ID.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -498,7 +498,7 @@ public class MoodleRestUser implements Serializable {
     public MoodleUser[] __getUsersById(String url, String token, Long[] userids) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
         Vector v=new Vector();
         MoodleUser user;
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.name():MoodleServices.CORE_USER_GET_USERS_BY_ID.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_USER_GET_USERS_BY_ID.toString():MoodleServices.CORE_USER_GET_USERS_BY_ID.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -623,7 +623,7 @@ public class MoodleRestUser implements Serializable {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.name();
+        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -777,7 +777,7 @@ public class MoodleRestUser implements Serializable {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.name();
+        String functionCall=MoodleServices.CORE_USER_GET_COURSE_USER_PROFILES.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -928,7 +928,7 @@ public class MoodleRestUser implements Serializable {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_USERS.name();
+        String functionCall=MoodleServices.CORE_USER_GET_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -1081,7 +1081,7 @@ public class MoodleRestUser implements Serializable {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
-        String functionCall=MoodleServices.CORE_USER_GET_USERS.name();
+        String functionCall=MoodleServices.CORE_USER_GET_USERS.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -1238,7 +1238,7 @@ public class MoodleRestUser implements Serializable {
       Vector v=new Vector();
       MoodleUser user;
       //  boolean processed=false;
-        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.name();
+        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.toString();
         try {
             StringBuilder data=new StringBuilder();
             if (MoodleCallRestWebService.getAuth()==null)
@@ -1366,7 +1366,7 @@ public class MoodleRestUser implements Serializable {
       Vector v=new Vector();
       MoodleUser user;
       //  boolean processed=false;
-        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.name();
+        String functionCall=MoodleServices.CORE_USER_GET_USERS_BY_FIELD.toString();
         try {
             StringBuilder data=new StringBuilder();
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));

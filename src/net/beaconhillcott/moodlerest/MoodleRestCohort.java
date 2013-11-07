@@ -37,7 +37,7 @@ public class MoodleRestCohort implements Serializable {
   public static Hashtable<Long, ArrayList> getCohortsMemberIds(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_COHORT_GET_COHORT_MEMBERS.name();
+    String functionCall=MoodleServices.CORE_COHORT_GET_COHORT_MEMBERS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else
@@ -90,7 +90,7 @@ public class MoodleRestCohort implements Serializable {
   public static MoodleCohort[] getCohorts(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_COHORT_GET_COHORTS.name();
+    String functionCall=MoodleServices.CORE_COHORT_GET_COHORTS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else
@@ -152,7 +152,7 @@ public class MoodleRestCohort implements Serializable {
   public static void deleteCohorts(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_COHORT_DELETE_COHORTS.name();
+    String functionCall=MoodleServices.CORE_COHORT_DELETE_COHORTS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else
@@ -176,7 +176,7 @@ public class MoodleRestCohort implements Serializable {
   public static void deleteCohortsMembers(Hashtable<Long, ArrayList> cohortsMembers) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_COHORT_DELETE_COHORT_MEMBERS.name();
+    String functionCall=MoodleServices.CORE_COHORT_DELETE_COHORT_MEMBERS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else

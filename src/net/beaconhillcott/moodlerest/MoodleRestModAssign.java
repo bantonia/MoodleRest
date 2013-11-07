@@ -32,7 +32,7 @@ public class MoodleRestModAssign implements Serializable {
     public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.name();
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestModAssignException();
         else
@@ -166,7 +166,7 @@ public class MoodleRestModAssign implements Serializable {
     public MoodleModAssignSubmissionReturn __getSubmissions(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.name();
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
@@ -297,7 +297,7 @@ public class MoodleRestModAssign implements Serializable {
     public static MoodleModAssignGradeReturn getGrades(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.name();
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestModAssignException();
         else
@@ -370,7 +370,7 @@ public class MoodleRestModAssign implements Serializable {
     public MoodleModAssignGradeReturn __getGrades(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.name();
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);

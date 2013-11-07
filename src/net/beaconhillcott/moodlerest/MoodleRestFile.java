@@ -41,7 +41,7 @@ public class MoodleRestFile implements Serializable {
      */
     public static MoodleFileGetFiles getFiles(MoodleFileParent params) throws MoodleRestFileException, UnsupportedEncodingException, MoodleRestException {
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_GET_FILES.name():MoodleServices.CORE_FILES_GET_FILES.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_GET_FILES.toString():MoodleServices.CORE_FILES_GET_FILES.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestFileException(MoodleRestException.AUTH_NULL);
     else
@@ -98,7 +98,7 @@ public class MoodleRestFile implements Serializable {
 
   public MoodleFileGetFiles __getFiles(String url, String token, MoodleFileParent params) throws MoodleRestFileException, UnsupportedEncodingException, MoodleRestException {
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_GET_FILES.name():MoodleServices.CORE_FILES_GET_FILES.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_GET_FILES.toString():MoodleServices.CORE_FILES_GET_FILES.toString();
     data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
     data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
     if (params.contextid!=null) data.append("&").append(URLEncoder.encode("contextid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.contextid, MoodleServices.ENCODING.toString())); else throw new MoodleRestFileException(MoodleRestException.REQUIRED_PARAMETER+": contextid");
@@ -160,7 +160,7 @@ public class MoodleRestFile implements Serializable {
    */
   public static MoodleFileFile upload(MoodleFileContent params) throws MoodleRestFileException, UnsupportedEncodingException, MoodleRestException {
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_UPLOAD.name():MoodleServices.CORE_FILES_UPLOAD.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_UPLOAD.toString():MoodleServices.CORE_FILES_UPLOAD.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestFileException(MoodleRestException.AUTH_NULL);
     else
@@ -195,7 +195,7 @@ public class MoodleRestFile implements Serializable {
 
   public MoodleFileFile __upload(String url, String token, MoodleFileContent params) throws MoodleRestFileException, UnsupportedEncodingException, MoodleRestException {
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_UPLOAD.name():MoodleServices.CORE_FILES_UPLOAD.name();
+    String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_FILE_UPLOAD.toString():MoodleServices.CORE_FILES_UPLOAD.toString();
     data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
     data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
     if (params.contextid!=null) data.append("&").append(URLEncoder.encode("contextid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.contextid, MoodleServices.ENCODING.toString())); else throw new MoodleRestFileException(MoodleRestException.REQUIRED_PARAMETER+": contextid");

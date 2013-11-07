@@ -34,7 +34,7 @@ public class MoodleRestCalendar implements Serializable {
   public static MoodleCalendar[] createCalendarEvents(MoodleCalendar[] calendar) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_CALENDAR_CREATE_CALENDAR_EVENTS.name();
+    String functionCall=MoodleServices.CORE_CALENDAR_CREATE_CALENDAR_EVENTS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else
@@ -99,7 +99,7 @@ public class MoodleRestCalendar implements Serializable {
   public static void deleteCalendarEvents(MoodleCalendar[] calendar) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_CALENDAR_DELETE_CALENDAR_EVENTS.name();
+    String functionCall=MoodleServices.CORE_CALENDAR_DELETE_CALENDAR_EVENTS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else
@@ -123,7 +123,7 @@ public class MoodleRestCalendar implements Serializable {
   public static MoodleCalendar[] getCalendarEvents(MoodleCalendar[] calendar, int userevents, int siteevents, long timestart, long timeend, int ignorehidden) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_CALENDAR_GET_CALENDAR_EVENTS.name();
+    String functionCall=MoodleServices.CORE_CALENDAR_GET_CALENDAR_EVENTS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
       throw new MoodleRestCalendarException();
     else

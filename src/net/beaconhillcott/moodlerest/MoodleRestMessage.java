@@ -68,7 +68,7 @@ public class MoodleRestMessage implements Serializable {
     public static MoodleMessage[] sendInstantMessages(MoodleMessage[] messages) throws MoodleRestMessageException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestMessageException(MoodleRestException.NO_LEGACY);
         StringBuilder data = new StringBuilder();
-        String functionCall=MoodleServices.CORE_MESSAGE_SEND_INSTANT_MESSAGES.name();
+        String functionCall=MoodleServices.CORE_MESSAGE_SEND_INSTANT_MESSAGES.toString();
         try {
             if (MoodleCallRestWebService.getAuth() == null) {
                 throw new MoodleRestMessageException();
@@ -109,7 +109,7 @@ public class MoodleRestMessage implements Serializable {
     public MoodleMessage[] __sendInstantMessages(String url, String token, MoodleMessage[] messages) throws MoodleRestMessageException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestMessageException(MoodleRestException.NO_LEGACY);
         StringBuilder data = new StringBuilder();
-        String functionCall=MoodleServices.CORE_MESSAGE_SEND_INSTANT_MESSAGES.name();
+        String functionCall=MoodleServices.CORE_MESSAGE_SEND_INSTANT_MESSAGES.toString();
         try {
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
@@ -152,7 +152,7 @@ public class MoodleRestMessage implements Serializable {
 		if (MoodleCallRestWebService.isLegacy())
 			throw new MoodleRestException(MoodleRestException.NO_LEGACY);
 		else
-			functionCall = MoodleServices.CORE_MESSAGE_GET_CONTACTS.name();
+			functionCall = MoodleServices.CORE_MESSAGE_GET_CONTACTS.toString();
 
 		try {
 			if (MoodleCallRestWebService.getAuth() == null)
@@ -218,7 +218,7 @@ public class MoodleRestMessage implements Serializable {
 					for (MoodleContactState state : MoodleContactState.values()) {
 						if ((parentNodeName != null)
 								&& (parentNodeName.equalsIgnoreCase(state
-										.name()))) {
+										.toString()))) {
 							nodeState = state;
 							break;
 						}
@@ -290,16 +290,16 @@ public class MoodleRestMessage implements Serializable {
 		else {
 			switch (action) {
 			case DELETE:
-				functionCall = MoodleServices.CORE_MESSAGE_DELETE_CONTACTS.name();
+				functionCall = MoodleServices.CORE_MESSAGE_DELETE_CONTACTS.toString();
 				break;
 			case CREATE:
-				functionCall = MoodleServices.CORE_MESSAGE_CREATE_CONTACTS.name();
+				functionCall = MoodleServices.CORE_MESSAGE_CREATE_CONTACTS.toString();
 				break;
 			case BLOCK:
-				functionCall = MoodleServices.CORE_MESSAGE_BLOCK_CONTACTS.name();
+				functionCall = MoodleServices.CORE_MESSAGE_BLOCK_CONTACTS.toString();
 				break;
 			case UNBLOCK:
-				functionCall = MoodleServices.CORE_MESSAGE_UNBLOCK_CONTACTS.name();
+				functionCall = MoodleServices.CORE_MESSAGE_UNBLOCK_CONTACTS.toString();
 				break;
 			}
 		}

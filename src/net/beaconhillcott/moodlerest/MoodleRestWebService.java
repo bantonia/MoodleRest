@@ -41,7 +41,7 @@ public class MoodleRestWebService implements Serializable {
      */
     public static MoodleWebService getSiteInfo() throws MoodleRestWebServiceException, MoodleRestException {
         MoodleWebService service=null;
-        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.name() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.name();
+        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.toString() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.toString();
         StringBuilder data = new StringBuilder();
         try {
             if (MoodleCallRestWebService.getAuth() == null) {
@@ -101,7 +101,7 @@ public class MoodleRestWebService implements Serializable {
 
     public MoodleWebService __getSiteInfo(String url, String token) throws MoodleRestWebServiceException, MoodleRestException {
         MoodleWebService service=null;
-        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.name() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.name();
+        String functionCall = MoodleCallRestWebService.isLegacy() ? MoodleServices.MOODLE_WEBSERVICE_GET_SITEINFO.toString() : MoodleServices.CORE_WEBSERVICE_GET_SITE_INFO.toString();
         StringBuilder data = new StringBuilder();
         try {
             data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));

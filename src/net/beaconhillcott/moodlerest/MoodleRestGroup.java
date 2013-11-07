@@ -72,7 +72,7 @@ public class MoodleRestGroup implements Serializable {
     public static MoodleGroup[] createGroups(MoodleGroup[] group) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         Hashtable hash=new Hashtable();
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_CREATE_GROUPS.name():MoodleServices.CORE_GROUP_CREATE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_CREATE_GROUPS.toString():MoodleServices.CORE_GROUP_CREATE_GROUPS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -102,7 +102,7 @@ public class MoodleRestGroup implements Serializable {
     public MoodleGroup[] __createGroups(String url, String token, MoodleGroup[] group) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         Hashtable hash=new Hashtable();
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_CREATE_GROUPS.name():MoodleServices.CORE_GROUP_CREATE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_CREATE_GROUPS.toString():MoodleServices.CORE_GROUP_CREATE_GROUPS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<group.length;i++) {
@@ -162,7 +162,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroup group;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPS.name():MoodleServices.CORE_GROUP_GET_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPS.toString():MoodleServices.CORE_GROUP_GET_GROUPS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -203,7 +203,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroup group;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPS.name():MoodleServices.CORE_GROUP_GET_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPS.toString():MoodleServices.CORE_GROUP_GET_GROUPS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groupids.length;i++) {
@@ -250,7 +250,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroup group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_COURSE_GROUPS.name():MoodleServices.CORE_GROUP_GET_COURSE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_COURSE_GROUPS.toString():MoodleServices.CORE_GROUP_GET_COURSE_GROUPS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -287,7 +287,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroup group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_COURSE_GROUPS.name():MoodleServices.CORE_GROUP_GET_COURSE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_COURSE_GROUPS.toString():MoodleServices.CORE_GROUP_GET_COURSE_GROUPS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (id<1) throw new MoodleRestGroupException(); else  data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(id);
@@ -347,7 +347,7 @@ public class MoodleRestGroup implements Serializable {
      */
     public static void deleteGroupsById(Long[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPS.name():MoodleServices.CORE_GROUP_DELETE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPS.toString():MoodleServices.CORE_GROUP_DELETE_GROUPS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -362,7 +362,7 @@ public class MoodleRestGroup implements Serializable {
 
     public void __deleteGroupsById(String url, String token, Long[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPS.name():MoodleServices.CORE_GROUP_DELETE_GROUPS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPS.toString():MoodleServices.CORE_GROUP_DELETE_GROUPS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groupids.length;i++) {
@@ -406,7 +406,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupUser user;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_GET_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_GET_GROUP_MEMBERS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -438,7 +438,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupUser user;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_GET_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_GET_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_GET_GROUP_MEMBERS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groupids.length;i++) {
@@ -492,7 +492,7 @@ public class MoodleRestGroup implements Serializable {
      */
     public static void addMembersToGroups(MoodleGroupUser[] users) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_ADD_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_ADD_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_ADD_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_ADD_GROUP_MEMBERS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -509,7 +509,7 @@ public class MoodleRestGroup implements Serializable {
 
     public void __addMembersToGroups(String url, String token, MoodleGroupUser[] users) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_ADD_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_ADD_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_ADD_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_ADD_GROUP_MEMBERS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<users.length;i++) {
@@ -551,7 +551,7 @@ public class MoodleRestGroup implements Serializable {
      */
     public static void deleteMembersOfGroups(MoodleGroupUser[] users) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_DELETE_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_DELETE_GROUP_MEMBERS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -568,7 +568,7 @@ public class MoodleRestGroup implements Serializable {
 
     public void __deleteMembersOfGroups(String url, String token, MoodleGroupUser[] users) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPMEMBERS.name():MoodleServices.CORE_GROUP_DELETE_GROUP_MEMBERS.name();
+        String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_GROUP_DELETE_GROUPMEMBERS.toString():MoodleServices.CORE_GROUP_DELETE_GROUP_MEMBERS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<users.length;i++) {
@@ -583,7 +583,7 @@ public class MoodleRestGroup implements Serializable {
     public static void assignGrouping(MoodleGroupGrouping[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_ASSIGN_GROUPING.name();
+        String functionCall=MoodleServices.CORE_GROUP_ASSIGN_GROUPING.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -601,7 +601,7 @@ public class MoodleRestGroup implements Serializable {
     public void __assignGrouping(String url, String token, MoodleGroupGrouping[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_ASSIGN_GROUPING.name();
+        String functionCall=MoodleServices.CORE_GROUP_ASSIGN_GROUPING.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groups.length;i++) {
@@ -616,7 +616,7 @@ public class MoodleRestGroup implements Serializable {
     public static MoodleGroupGroupings[] createGroupings(MoodleGroupGroupings[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_CREATE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_CREATE_GROUPINGS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -641,7 +641,7 @@ public class MoodleRestGroup implements Serializable {
     public MoodleGroupGroupings[] __createGroupings(String url, String token, MoodleGroupGroupings[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_CREATE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_CREATE_GROUPINGS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groups.length;i++) {
@@ -675,7 +675,7 @@ public class MoodleRestGroup implements Serializable {
     public static void deleteGroupingsById(Long[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_DELETE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_DELETE_GROUPINGS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -691,7 +691,7 @@ public class MoodleRestGroup implements Serializable {
     public void __deleteGroupingsById(String url, String token, Long[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_DELETE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_DELETE_GROUPINGS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groupids.length;i++) {
@@ -706,7 +706,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_GET_COURSE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_GET_COURSE_GROUPINGS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -744,7 +744,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_GET_COURSE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_GET_COURSE_GROUPINGS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (id<1 || id==null) throw new MoodleRestGroupException(); else  data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(id);
@@ -779,7 +779,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_GET_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_GET_GROUPINGS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -818,7 +818,7 @@ public class MoodleRestGroup implements Serializable {
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_GET_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_GET_GROUPINGS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0; i<ids.length;i++)
@@ -864,7 +864,7 @@ public class MoodleRestGroup implements Serializable {
     public static void unassignGroupings(MoodleGroupGrouping[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_UNASSIGN_GROUPING.name();
+        String functionCall=MoodleServices.CORE_GROUP_UNASSIGN_GROUPING.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -881,7 +881,7 @@ public class MoodleRestGroup implements Serializable {
     public void __unassignGroupings(String url, String token, MoodleGroupGrouping[] groupids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_UNASSIGN_GROUPING.name();
+        String functionCall=MoodleServices.CORE_GROUP_UNASSIGN_GROUPING.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groupids.length;i++) {
@@ -907,7 +907,7 @@ public class MoodleRestGroup implements Serializable {
     public static void updateGroupings(MoodleGroupGroupings[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_UPDATE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_UPDATE_GROUPINGS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestGroupException();
         else
@@ -927,7 +927,7 @@ public class MoodleRestGroup implements Serializable {
     public void __updateGroupings(String url, String token, MoodleGroupGroupings[] groups) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.CORE_GROUP_UPDATE_GROUPINGS.name();
+        String functionCall=MoodleServices.CORE_GROUP_UPDATE_GROUPINGS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         for (int i=0;i<groups.length;i++) {
