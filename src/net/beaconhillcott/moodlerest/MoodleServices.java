@@ -96,8 +96,8 @@ public enum MoodleServices implements Serializable {
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes
-        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // Not yet implemented
-        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // Not yet implemented
+        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes
+        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // Not yet implemented
 
         // WEBSERVICE

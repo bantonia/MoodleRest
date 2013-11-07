@@ -137,4 +137,73 @@ public class MoodleRestNotes implements Serializable {
     }
     return notes;
   }
+  
+  public static void deleteNotes(Long[] ids) throws MoodleRestNotesException, MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestNotesException(MoodleRestException.NO_LEGACY);
+    //MoodleWarning[] warnings=null;
+    String functionCall=MoodleServices.CORE_NOTES_DELETE_NOTES.toString();
+
+      StringBuilder data=new StringBuilder();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestNotesException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      for (int i=0;i<ids.length;i++) {
+        if (ids[i]==null) throw new MoodleRestNotesException(); else data.append("&").append(URLEncoder.encode("notes["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(ids[i]);
+      }
+      data.trimToSize();
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+    //return warnings;
+  }
+  
+  public static void getNotes(Long[] ids) throws MoodleRestNotesException, MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestNotesException(MoodleRestException.NO_LEGACY);
+    //MoodleWarning[] warnings=null;
+    String functionCall=MoodleServices.CORE_NOTES_GET_NOTES.toString();
+
+      StringBuilder data=new StringBuilder();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestNotesException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      for (int i=0;i<ids.length;i++) {
+        if (ids[i]==null) throw new MoodleRestNotesException(); else data.append("&").append(URLEncoder.encode("notes["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(ids[i]);
+      }
+      data.trimToSize();
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+    //return warnings;
+  }
+  
+  public static void __deleteNotes(String url, String token, Long[] ids) throws MoodleRestNotesException, MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestNotesException(MoodleRestException.NO_LEGACY);
+    //MoodleWarning[] warnings=null;
+    String functionCall=MoodleServices.CORE_NOTES_DELETE_NOTES.toString();
+    StringBuilder data=new StringBuilder();
+    data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0;i<ids.length;i++) {
+      if (ids[i]==null) throw new MoodleRestNotesException(); else data.append("&").append(URLEncoder.encode("notes["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(ids[i]);
+    }
+    data.trimToSize();
+    NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
+    //return warnings;
+  }
+  
+  public static void __getNotes(String url, String token, Long[] ids) throws MoodleRestNotesException, MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestNotesException(MoodleRestException.NO_LEGACY);
+    //MoodleWarning[] warnings=null;
+    String functionCall=MoodleServices.CORE_NOTES_GET_NOTES.toString();
+    StringBuilder data=new StringBuilder();
+    data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0;i<ids.length;i++) {
+      if (ids[i]==null) throw new MoodleRestNotesException(); else data.append("&").append(URLEncoder.encode("notes["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(ids[i]);
+    }
+    data.trimToSize();
+    NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
+    //return warnings;
+  }
+  
 }
