@@ -114,7 +114,7 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_GET_SUBMISSIONS("core_assign_get_submissions"), // MoodleRestModAssign
 
         // COHORT
-        CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // Not yet implemented
+        CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort
         CORE_COHORT_DELETE_COHORTS("core_cohort_delete_cohorts"), // MoodleRestCohort
         CORE_COHORT_GET_COHORTS("core_cohort_get_cohorts"), // MoodleRestCohort
         CORE_COHORT_UPDATE_COHORTS("core_cohort_update_cohorts"), // Not yet implemented

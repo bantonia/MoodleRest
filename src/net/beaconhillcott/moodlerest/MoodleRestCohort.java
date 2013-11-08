@@ -204,4 +204,78 @@ public class MoodleRestCohort implements Serializable {
     cohortsMembers.put(cohort, cohortMembers);
     deleteCohortsMembers(cohortsMembers);
   }
+  
+  public static MoodleCohort[] createCohorts(MoodleCohort[] cohorts) throws UnsupportedEncodingException, MoodleRestCohortException, MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_COHORT_CREATE_COHORTS.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCohortException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (cohorts!=null) {
+      Hashtable<String, MoodleCohort> source=new Hashtable<String, MoodleCohort>();
+      for (int i=0; i<cohorts.length; i++) {
+        source.put(cohorts[i].getName(), cohorts[i]);
+      }
+      for (int i=0; i<cohorts.length; i++) {
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][categorytype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getCategoryTypeType(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][categorytype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getCategoryTypeValue(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getName(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescription(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][descriptionformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescriptionFormat(), MoodleServices.ENCODING.toString()));    
+      }
+      data.trimToSize();
+      NodeList elements = MoodleCallRestWebService.call(data.toString());
+      String content=null;
+      String nodeName=null;
+      Long id=null;
+      for (int j=0;j<elements.getLength();j++) {
+        content=elements.item(j).getTextContent();
+        nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (nodeName.equals("id"))
+          id=Long.parseLong(content);
+        if (nodeName.equals("name"))
+          source.get(content).setId(id);
+      }
+    }
+    return cohorts;
+  }
+  
+  public static MoodleCohort createCohort(MoodleCohort cohort) throws MoodleRestException, UnsupportedEncodingException {
+    MoodleCohort[] cohorts=new MoodleCohort[1];
+    cohorts[0]=cohort;
+    MoodleCohort[] createCohorts = createCohorts(cohorts);
+    return createCohorts[0];
+  }
+  
+  public static void addCohortMembers(CohortMember[] members) throws MoodleRestCohortException, UnsupportedEncodingException, MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_COHORT_ADD_COHORT_MEMBERS.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCohortException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (members!=null) {
+      for (int i=0; i<members.length; i++) {
+        data.append("&").append(URLEncoder.encode("members["+i+"][cohorttype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getCohortTypeId().toString(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][cohorttype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getCohortIdValue(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("members["+i+"][usertype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getUserTypeId().toString(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][usertype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getUserIdValue(), MoodleServices.ENCODING.toString()));
+      }
+      data.trimToSize();
+      MoodleCallRestWebService.call(data.toString());
+    }
+  }
+  
+  public static void addCohortMember(CohortMember member) throws MoodleRestException, UnsupportedEncodingException {
+    CohortMember[] members=new CohortMember[1];
+    members[0]=member;
+    addCohortMembers(members);
+  }
+  
 }

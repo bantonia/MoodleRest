@@ -16,5 +16,9 @@ class MoodleRestCohortException extends MoodleRestException implements Serializa
 
   public MoodleRestCohortException(String string) {
   }
+
+  MoodleRestCohortException() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
   
 }
