@@ -24,9 +24,10 @@ import java.io.Serializable;
  *
  * @author Bill Antonia
  */
-public class UserRole implements Serializable {
+public final class UserRole implements Serializable {
 
-  private Long roleid=null;
+  private Role role=null;
+  //private Long roleid=null;
   private String name=null;
   private String shortname=null;
   private Integer sortorder=null;
@@ -43,8 +44,9 @@ public class UserRole implements Serializable {
    * @param shortname
    * @param sortorder
    */
-  public UserRole(long roleid, String name, String shortname, int sortorder) {
-    this.roleid=roleid;
+  public UserRole(long roleid, String name, String shortname, int sortorder) throws MoodleUserRoleException {
+    this.setRoleId(roleid);
+    //this.roleid=roleid;
     this.name=name;
     this.shortname=shortname;
     this.sortorder=sortorder;
@@ -52,10 +54,35 @@ public class UserRole implements Serializable {
   
   /**
    *
+   * @param role
+   * @param name
+   * @param shortname
+   * @param sortorder
+   */
+  public UserRole(Role role, String name, String shortname, int sortorder) throws MoodleUserRoleException {
+    this.role=role;
+    this.name=name;
+    this.shortname=shortname;
+    this.sortorder=sortorder;
+  }
+  
+  public Role getRole(Long roleid) {
+    // some code here
+    
+    return role;
+  }
+  
+  public void setRole(Role role) {
+    this.role=role;
+  }
+  
+  /**
+   *
    * @return Long
    */
   public Long getRoleId() {
-    return roleid;
+    return role.toLongValue();
+    //return roleid;
   }
   
   /**
@@ -86,8 +113,18 @@ public class UserRole implements Serializable {
    *
    * @param roleid
    */
-  public void setRoleId(Long roleid) {
-    this.roleid=roleid;
+  public void setRoleId(Long roleid) throws MoodleUserRoleException {
+    boolean flag=false;
+    for(Role r : Role.values()) {
+      if (r.toLongValue()==roleid) {
+        role=r;
+        flag=true;
+      }
+    }
+    if (!flag) {
+      throw new MoodleUserRoleException(MoodleUserRoleException.INVALID_ROLE);
+    }
+    //this.roleid=roleid;
   }
   
   /**
@@ -119,11 +156,11 @@ public class UserRole implements Serializable {
    * @param nodeName
    * @param content
    */
-  public void setUserRoleField(String nodeName,String content) {
-    if (nodeName.equals("roleid")) setRoleId(Long.valueOf(content));
-    if (nodeName.equals("name")) setName(content);
-    if (nodeName.equals("shortname")) setShortName(content);
-    if (nodeName.equals("sortorder")) setSortOrder(Integer.valueOf(content));
+  public void setUserRoleField(String nodeName,String content) throws MoodleUserRoleException {
+    if (nodeName.equals("roleid")) { setRoleId(Long.valueOf(content));}
+    if (nodeName.equals("name")) { setName(content);}
+    if (nodeName.equals("shortname")) { setShortName(content);}
+    if (nodeName.equals("sortorder")) { setSortOrder(Integer.valueOf(content));}
   }
   
 }

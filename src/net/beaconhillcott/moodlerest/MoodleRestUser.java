@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.logging.*;
 import org.w3c.dom.NodeList;
-import java.io.Serializable;
 
 /**
  * <p>Class containing the static routines to create, update and delete Moodle users.</p>
@@ -619,7 +618,7 @@ public class MoodleRestUser implements Serializable {
      * @throws UnsupportedEncodingException
      * @throws MoodleRestException
      */
-    public static MoodleUser[] getCourseUserProfiles(UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+    public static MoodleUser[] getCourseUserProfiles(UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
@@ -773,7 +772,7 @@ public class MoodleRestUser implements Serializable {
         return users;
     }
 
-    public MoodleUser[] __getCourseUserProfiles(String url, String token, UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException {
+    public MoodleUser[] __getCourseUserProfiles(String url, String token, UserList[] userList) throws MoodleRestUserException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
@@ -924,7 +923,7 @@ public class MoodleRestUser implements Serializable {
         return users;
     }
 
-    public static MoodleUser[] getUsers(Criteria[] criteria) throws MoodleRestUserException, MoodleRestException {
+    public static MoodleUser[] getUsers(Criteria[] criteria) throws MoodleRestUserException, MoodleRestException, MoodleUserRoleException {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);
@@ -1011,28 +1010,32 @@ public class MoodleRestUser implements Serializable {
                                             role.setUserRoleField(nodeName, content);
                                         } else {
                                             if (parent.equals("roles")) {
-                                              if (role==null)
+                                              if (role==null) {
                                                 throw new MoodleRestUserException();
+                                              }
                                               role.setUserRoleField(nodeName, content);
                                             } else {
                                                 if (parent.equals("preferences") && nodeName.equals("name")) {
                                                     if (preference!=null) {
-                                                      if (user==null)
+                                                      if (user==null) {
                                                         throw new MoodleRestUserException();
+                                                      }
                                                       user.addPreference(preference);
                                                     }
                                                     preference=new UserPreference();
                                                     preference.setType(content);
                                                 } else {
                                                     if (parent.equals("preferences")) {
-                                                      if (preference==null)
+                                                      if (preference==null) {
                                                         throw new MoodleRestUserException();
+                                                      }
                                                       preference.setValue(content);
                                                     } else {
                                                         if (parent.equals("enrolledcourses") && nodeName.equals("id")) {
                                                           if (enrolledCourse!=null) {
-                                                            if (user==null)
+                                                            if (user==null) {
                                                               throw new MoodleRestUserException();
+                                                            }
                                                             user.addEnrolledCourse(enrolledCourse);
                                                           }
                                                           enrolledCourse=new UserEnrolledCourse(Long.parseLong(content));
@@ -1077,7 +1080,7 @@ public class MoodleRestUser implements Serializable {
         return users;
     }
 
-    public MoodleUser[] __getUsers(String url, String token, Criteria[] criteria) throws MoodleRestUserException, MoodleRestException {
+    public MoodleUser[] __getUsers(String url, String token, Criteria[] criteria) throws MoodleRestUserException, MoodleRestException, MoodleUserRoleException {
         Vector v=new Vector();
         MoodleUser user;
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestUserException(MoodleRestException.NO_LEGACY);

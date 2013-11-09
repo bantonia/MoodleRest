@@ -215,11 +215,20 @@ public class MoodleUser implements Serializable {
      * @param shortname
      * @param sortorder
      */
-    public void addRole(Long roleid, String name, String shortname, Integer sortorder) {
-      if (roles==null)
+    public void addRole(Long roleid, String name, String shortname, Integer sortorder) throws MoodleUserRoleException {
+      if (roles==null) {
         roles=new ArrayList();
+      }
       UserRole role=new UserRole(roleid, name, shortname, sortorder);
       roles.add(role);
+    }
+    
+    public void addRole(Role role, String name, String shortname, Integer sortorder) throws MoodleUserRoleException {
+      if (roles==null) {
+        roles=new ArrayList();
+      }
+      UserRole roleN=new UserRole(role, name, shortname, sortorder);
+      roles.add(roleN);
     }
     
     /**
@@ -227,8 +236,9 @@ public class MoodleUser implements Serializable {
      * @param role
      */
     public void addRole(UserRole role) {
-      if (roles==null)
+      if (roles==null) {
         roles=new ArrayList();
+      }
       roles.add(role);
     }
     
