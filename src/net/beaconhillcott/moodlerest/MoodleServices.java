@@ -118,7 +118,7 @@ public enum MoodleServices implements Serializable {
         CORE_COHORT_DELETE_COHORTS("core_cohort_delete_cohorts"), // MoodleRestCohort
         CORE_COHORT_GET_COHORTS("core_cohort_get_cohorts"), // MoodleRestCohort
         CORE_COHORT_UPDATE_COHORTS("core_cohort_update_cohorts"), // Not yet implemented
-        CORE_COHORT_ADD_COHORT_MEMBERS("core_cohort_add_cohort_members"), // Not yet implemented
+        CORE_COHORT_ADD_COHORT_MEMBERS("core_cohort_add_cohort_members"), // MoodleRestCohort
         CORE_COHORT_DELETE_COHORT_MEMBERS("core_cohort_delete_cohort_members"), // MoodleRestCohort
         CORE_COHORT_GET_COHORT_MEMBERS("core_cohort_get_cohort_members"), // MoodleRestCohort
 

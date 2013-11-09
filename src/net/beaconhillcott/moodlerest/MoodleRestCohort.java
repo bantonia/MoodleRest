@@ -263,9 +263,9 @@ public class MoodleRestCohort implements Serializable {
     if (members!=null) {
       for (int i=0; i<members.length; i++) {
         data.append("&").append(URLEncoder.encode("members["+i+"][cohorttype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getCohortTypeId().toString(), MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("cohorts["+i+"][cohorttype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getCohortIdValue(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("members["+i+"][cohorttype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getCohortIdValue(), MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("members["+i+"][usertype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getUserTypeId().toString(), MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("cohorts["+i+"][usertype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getUserIdValue(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("members["+i+"][usertype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+members[i].getUserIdValue(), MoodleServices.ENCODING.toString()));
       }
       data.trimToSize();
       MoodleCallRestWebService.call(data.toString());
