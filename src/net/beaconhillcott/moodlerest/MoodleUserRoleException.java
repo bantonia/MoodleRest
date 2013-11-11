@@ -14,9 +14,9 @@ public class MoodleUserRoleException extends MoodleException implements Serializ
   
   public static final String INVALID_ROLE="Invalid role";
     
-    MoodleUserRoleException() {}
+    public MoodleUserRoleException() {}
 
-    MoodleUserRoleException(String msg) {
+    public MoodleUserRoleException(String msg) {
         super(msg);
     }
 

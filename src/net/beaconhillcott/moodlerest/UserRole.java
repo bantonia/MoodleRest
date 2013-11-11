@@ -66,9 +66,7 @@ public final class UserRole implements Serializable {
     this.sortorder=sortorder;
   }
   
-  public Role getRole(Long roleid) {
-    // some code here
-    
+  public Role getRole() {
     return role;
   }
   
