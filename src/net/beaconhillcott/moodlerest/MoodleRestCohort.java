@@ -87,7 +87,7 @@ public class MoodleRestCohort implements Serializable {
     return cohortsMemberIds.get(cohortId);
   }
 
-  public static MoodleCohort[] getCohorts(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleCohort[] getCohorts(Long[] cohortIds) throws MoodleRestException, UnsupportedEncodingException, MoodleCohortException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_COHORT_GET_COHORTS.toString();
@@ -121,10 +121,12 @@ public class MoodleRestCohort implements Serializable {
           cohort.setMoodleCohortField(nodeName, content);
         }
       } else {
-        if (cohort!=null)
+        if (cohort!=null) {
           cohort.setMoodleCohortField(nodeName, content);
-        else
+        }
+        else {
           throw new MoodleRestCalendarException(MoodleRestCohortException.INCONSISTENT_DATA_PARSE);
+        }
       }
     }
     if (cohorts!=null) {
@@ -140,7 +142,7 @@ public class MoodleRestCohort implements Serializable {
     return cohorts.toArray(returnData);
   }
 
-  public static MoodleCohort getCohort(Long cohortId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleCohort getCohort(Long cohortId) throws MoodleRestException, UnsupportedEncodingException, MoodleCohortException {
     Long[] cohortIds=new Long[1];
     cohortIds[0]=cohortId;
     MoodleCohort[] cohorts = getCohorts(cohortIds);
@@ -276,6 +278,34 @@ public class MoodleRestCohort implements Serializable {
     CohortMember[] members=new CohortMember[1];
     members[0]=member;
     addCohortMembers(members);
+  }
+  
+  public static void updateCohorts(MoodleCohort[] cohorts) throws MoodleRestCohortException, UnsupportedEncodingException, MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestCohortException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_COHORT_UPDATE_COHORTS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestCohortException();
+    }
+    else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (cohorts!=null) {
+      for (int i=0; i<cohorts.length; i++) {
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][id]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getId(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][categorytype][type]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getCategoryTypeType(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][categorytype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getCategoryTypeValue(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getName(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getIdNumber(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescription(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][descriptionformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescriptionFormat(), MoodleServices.ENCODING.toString()));    
+      }
+      data.trimToSize();
+      MoodleCallRestWebService.call(data.toString());
+    }
   }
   
 }

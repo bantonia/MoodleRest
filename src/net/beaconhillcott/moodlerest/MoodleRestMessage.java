@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Vector;
 import org.w3c.dom.Node;
 
@@ -477,4 +478,57 @@ public class MoodleRestMessage implements Serializable {
 			MoodleRestException {
 		actionContacts(contacts, MoodleContactAction.UNBLOCK);
 	}
+  
+  public static MoodleContact[] searchContacts(String searchText, boolean onlyMyCourses) throws MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestMessageException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data = new StringBuilder();
+    String functionCall=MoodleServices.CORE_MESSAGE_SEARCH_CONTACTS.toString();
+    MoodleContact[] results = null;
+    try {
+      if (MoodleCallRestWebService.getAuth() == null) {
+        throw new MoodleRestMessageException();
+      } else {
+        data.append(MoodleCallRestWebService.getAuth());
+      }
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("searchtext", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(searchText, MoodleServices.ENCODING.toString()));
+      if (onlyMyCourses) {
+        data.append("&").append(URLEncoder.encode("onlymycourses", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode("1", MoodleServices.ENCODING.toString()));
+      }
+      data.trimToSize();
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      String content;
+      String nodeName;
+      ArrayList<MoodleContact> moodleContacts=null;
+      MoodleContact contact=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        content=elements.item(j).getTextContent();
+        nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (nodeName.equals("id")) {
+          if (contact!=null) {
+            moodleContacts.add(contact);
+            contact=new MoodleContact();
+            contact.getContactProfile().setId(Long.parseLong(content));
+          } else {
+            contact=new MoodleContact();
+            contact.getContactProfile().setId(Long.parseLong(content));
+          }
+        } else {
+          if (nodeName.equals("fullname") || nodeName.equals("profileimageurl") || nodeName.equals("profileimageurlsmall")) {
+            contact.getContactProfile().setMoodleUserField(nodeName, content);
+          }
+        }
+      }
+      if (moodleContacts!=null) {
+        moodleContacts.add(contact);
+        results=new MoodleContact[1];
+        results = moodleContacts.toArray(results);
+      }
+    } catch (UnsupportedEncodingException ex) {
+        Logger.getLogger(MoodleRestMessage.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return results;
+  }
 }

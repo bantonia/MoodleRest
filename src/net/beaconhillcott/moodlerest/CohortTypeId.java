@@ -10,9 +10,10 @@ import java.io.Serializable;
  *
  * @author root
  */
-public enum CohortTypeId implements Serializable{
+public enum CohortTypeId implements Serializable {
   ID("id"),
-  ID_NUMBER("idnumber");
+  ID_NUMBER("idnumber"),
+  SYSTEM("system");
   
   private CohortTypeId(String value) {
     this.value=value;

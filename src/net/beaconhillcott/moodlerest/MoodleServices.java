@@ -49,7 +49,7 @@ public enum MoodleServices implements Serializable {
         CORE_GROUP_UNASSIGN_GROUPING("core_group_unassign_grouping"), // MoodleRestGroup
 
         // FILES API
-        CORE_FILES_GET_FILES("core_files_get_files"), //MoodleRestFile
+        CORE_FILES_GET_FILES("core_files_get_fNot yet implementediles"), //MoodleRestFile
         CORE_FILES_UPLOAD("core_files_upload"), //MoodleRestFile
 
         // USER API
@@ -76,7 +76,7 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_GET_COURSES("core_course_get_courses"), // MoodleRestCourse
         CORE_COURSE_CREATE_COURSES("core_course_create_courses"), // MoodleRestCourse
         CORE_COURSE_DELETE_COURSES("core_course_delete_courses"), // MoodleRestCourse
-        CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_ccourse"), // Not yet implemented
+        CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_course"), // Not yet implemented
         CORE_COURSE_GET_CATEGORIES("core_course_get_categories"), // MoodleRestCourse
         CORE_COURSE_CREATE_CATEGORIES("core_course_create_categories"), // MoodleRestCourse
         CORE_COURSE_UPDATE_CATEGORIES("core_course_update_categories"), // MoodleRestCourse
@@ -92,12 +92,12 @@ public enum MoodleServices implements Serializable {
         CORE_MESSAGE_BLOCK_CONTACTS("core_message_block_contacts"), // MoodleRestMessage
         CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage
         CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // Not yet implemented
+        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Moodle bug?)
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes
-        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes
-        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes
+        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes (Moodle bug)
+        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes (Moodle bug)
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // Not yet implemented
 
         // WEBSERVICE
@@ -117,7 +117,7 @@ public enum MoodleServices implements Serializable {
         CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort
         CORE_COHORT_DELETE_COHORTS("core_cohort_delete_cohorts"), // MoodleRestCohort
         CORE_COHORT_GET_COHORTS("core_cohort_get_cohorts"), // MoodleRestCohort
-        CORE_COHORT_UPDATE_COHORTS("core_cohort_update_cohorts"), // Not yet implemented
+        CORE_COHORT_UPDATE_COHORTS("core_cohort_update_cohorts"), // MoodleRestCohort (Dodgy Moodle parameter definition for id)
         CORE_COHORT_ADD_COHORT_MEMBERS("core_cohort_add_cohort_members"), // MoodleRestCohort
         CORE_COHORT_DELETE_COHORT_MEMBERS("core_cohort_delete_cohort_members"), // MoodleRestCohort
         CORE_COHORT_GET_COHORT_MEMBERS("core_cohort_get_cohort_members"), // MoodleRestCohort

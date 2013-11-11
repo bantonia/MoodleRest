@@ -16,7 +16,7 @@ public class MoodleGroupGroupings implements Serializable {
   private Long courseid=null;
   private String name=null;
   private String description=null;
-  private Integer descriptionformat=DescriptionFormat.HTML;
+  private DescriptionFormat descriptionformat=DescriptionFormat.HTML;
 
   public MoodleGroupGroupings() {
   }
@@ -27,14 +27,14 @@ public class MoodleGroupGroupings implements Serializable {
     this.description=description;
   }
   
-  public MoodleGroupGroupings(Long courseid, String name, String description, Integer descriptionformat) {
+  public MoodleGroupGroupings(Long courseid, String name, String description, DescriptionFormat descriptionformat) {
     this.courseid=courseid;
     this.name=name;
     this.description=description;
     this.descriptionformat=descriptionformat;
   }
   
-  public MoodleGroupGroupings(Long id, Long courseid, String name, String description, Integer descriptionformat) {
+  public MoodleGroupGroupings(Long id, Long courseid, String name, String description, DescriptionFormat descriptionformat) {
     this.id=id;
     this.courseid=courseid;
     this.name=name;
@@ -46,12 +46,14 @@ public class MoodleGroupGroupings implements Serializable {
     this.id=id;
   }
   
-  public void setMoodleGroupGroupingsField(String nodeName,String content) {
+  public void setMoodleGroupGroupingsField(String nodeName,String content) throws MoodleGroupGroupingsException {
     if (nodeName.equals("id")) setId(Long.valueOf(content));
     if (nodeName.equals("courseid")) setCourseid(Long.valueOf(content));
     if (nodeName.equals("name")) setName(content);
     if (nodeName.equals("description")) setDescription(content);
-    if (nodeName.equals("descriptionformat")) setDescriptionformat(Integer.valueOf(content));
+    if (nodeName.equals("descriptionformat")) {
+      setDescriptionformat(Integer.parseInt(content));
+    }
   }
 
   public Long getId() {
@@ -78,12 +80,25 @@ public class MoodleGroupGroupings implements Serializable {
     this.description = description;
   }
 
-  public Integer getDescriptionformat() {
+  public DescriptionFormat getDescriptionformat() {
     return descriptionformat;
   }
 
-  public void setDescriptionformat(Integer descriptionformat) {
+  public void setDescriptionformat(DescriptionFormat descriptionformat) {
     this.descriptionformat = descriptionformat;
+  }
+  
+  public void setDescriptionformat(Integer descriptionformat) throws MoodleGroupGroupingsException {
+    boolean flag=false;
+    for(DescriptionFormat d : DescriptionFormat.values()) {
+      if (d.toInt()==descriptionformat) {
+        this.descriptionformat=d;
+        flag=true;
+      }
+    }
+    if (!flag) {
+      throw new MoodleGroupGroupingsException();
+    }
   }
 
   public String getName() {

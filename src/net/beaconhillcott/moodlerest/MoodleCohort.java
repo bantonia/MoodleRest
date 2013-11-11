@@ -12,27 +12,18 @@ import java.io.Serializable;
  */
 public class MoodleCohort implements Serializable {
   
-  public static final int DESCRIPTION_FORMAT_MOODLE=0;
-  public static final int DESCRIPTION_FORMAT_HTML=1;
-  public static final int DESCRIPTION_FORMAT_PLAIN=2;
-  public static final int DESCRIPTION_FORMAT_MARKDOWN=4;
-  
-  public static final String CATEGORY_TYPE_COURSE_CATEGORY_ID="id";
-  public static final String CATEGORY_TYPE_COURSE_ID="idnumber";
-  public static final String CATEGORY_TYPE_SYSTEM="system";
-  
   private Long id=null;
   private String name=null;
   private String idnumber=null;
   private String description=null;
-  private Integer descriptionformat=DESCRIPTION_FORMAT_HTML;
-  private String categorytypetype=null;
+  private DescriptionFormat descriptionformat=DescriptionFormat.HTML;
+  private CohortTypeId categorytypetype=null;
   private String categorytypevalue=null;
 
   public MoodleCohort() {
   }
 
-  public void setMoodleCohortField(String nodeName, String content) {
+  public void setMoodleCohortField(String nodeName, String content) throws MoodleCohortException {
     if (nodeName.equals("id")) setId(Long.parseLong(content.trim()));
     if (nodeName.equals("name")) setName(content);
     if (nodeName.equals("idnumber")) setIdNumber(content);
@@ -42,12 +33,25 @@ public class MoodleCohort implements Serializable {
     if (nodeName.equals("categorytypevalue")) setCategoryTypeValue(content);
   }
 
-  public String getCategoryTypeType() {
+  public CohortTypeId getCategoryTypeType() {
     return categorytypetype;
   }
 
-  public void setCategoryTypeType(String categorytypetype) {
+  public void setCategoryTypeType(CohortTypeId categorytypetype) {
     this.categorytypetype = categorytypetype;
+  }
+  
+  public void setCategoryTypeType(String categorytypetype) throws MoodleCohortException {
+    boolean flag=false;
+    for (CohortTypeId c : CohortTypeId.values()) {
+      if (c.toString().equals(categorytypetype)) {
+        this.categorytypetype = c;
+        flag=true;
+      }
+    }
+    if (!flag) {
+      throw new MoodleCohortException();
+    }
   }
 
   public String getCategoryTypeValue() {
@@ -66,12 +70,29 @@ public class MoodleCohort implements Serializable {
     this.description = description;
   }
 
-  public Integer getDescriptionFormat() {
+  /*public Integer getDescriptionFormat() {
+    return descriptionformat.toInt();
+  }*/
+  
+  public DescriptionFormat getDescriptionFormat() {
     return descriptionformat;
   }
 
-  public void setDescriptionFormat(Integer descriptionformat) {
+  public void setDescriptionFormat(DescriptionFormat descriptionformat) {
     this.descriptionformat = descriptionformat;
+  }
+  
+  public void setDescriptionFormat(Integer descriptionformat) throws MoodleCohortException {
+    boolean flag=false;
+    for(DescriptionFormat d : DescriptionFormat.values()) {
+      if (d.toInt()==descriptionformat) {
+        this.descriptionformat=d;
+        flag=true;
+      }
+    }
+    if (!flag) {
+      throw new MoodleCohortException();
+    }
   }
 
   public Long getId() {

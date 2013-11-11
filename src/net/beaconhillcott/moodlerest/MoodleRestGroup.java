@@ -701,7 +701,7 @@ public class MoodleRestGroup implements Serializable {
         (new MoodleCallRestWebService()).__call(url,data.toString());
     }
     
-    public static MoodleGroupGroupings[] getGroupGroupingsFromCourseId(Long id) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
+    public static MoodleGroupGroupings[] getGroupGroupingsFromCourseId(Long id) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException, MoodleGroupGroupingsException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
@@ -739,7 +739,7 @@ public class MoodleRestGroup implements Serializable {
         return groups;
     }
 
-    public MoodleGroupGroupings[] __getGroupGroupingsFromCourseId(String url, String token, Long id) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
+    public MoodleGroupGroupings[] __getGroupGroupingsFromCourseId(String url, String token, Long id) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException, MoodleGroupGroupingsException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
@@ -774,7 +774,7 @@ public class MoodleRestGroup implements Serializable {
         return groups;
     }
     
-    public static MoodleGroupGroupings[] getGroupGroupingsFromCourseId(Long[] ids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
+    public static MoodleGroupGroupings[] getGroupGroupingsFromCourseId(Long[] ids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException, MoodleGroupGroupingsException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
@@ -813,7 +813,7 @@ public class MoodleRestGroup implements Serializable {
         return groups;
     }
 
-    public MoodleGroupGroupings[] __getGroupGroupingsFromCourseId(String url, String token, Long[] ids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException {
+    public MoodleGroupGroupings[] __getGroupGroupingsFromCourseId(String url, String token, Long[] ids) throws MoodleRestGroupException, UnsupportedEncodingException, MoodleRestException, MoodleGroupGroupingsException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestGroupException(MoodleRestException.NO_LEGACY);
         Vector v=new Vector();
         MoodleGroupGroupings group=null;
