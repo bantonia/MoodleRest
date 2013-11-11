@@ -79,6 +79,10 @@ public class MoodleRestEnrol implements Serializable {
         return users;
     }
 
+  public static void getMoodleUsersWithCapability(Object object, Object object0) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
     public MoodleCourseUser[] __getEnrolledUsers(String url, String token, Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
         Vector v=new Vector();
@@ -428,4 +432,34 @@ public class MoodleRestEnrol implements Serializable {
       return courses;
     }
 
+    public static MoodleUser[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
+      StringBuilder data=new StringBuilder();
+      Vector<MoodleCourse> v=new Vector();
+      String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestEnrolException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      if (courseCapabilities!=null) {
+        for (int i=0; i<courseCapabilities.length; i++) {
+          data.append("&").append(URLEncoder.encode("coursecapabilities["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseCapabilities[i].getCourseId(), MoodleServices.ENCODING.toString()));
+          int j=0;
+          for (Capability capability : courseCapabilities[i].getCapabilities()) {
+            data.append("&").append(URLEncoder.encode("coursecapabilities["+i+"][capabilities]["+(j++)+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+capability.toString(), MoodleServices.ENCODING.toString()));
+          }
+        }
+        if (options!=null) {
+          for (int i=0; i<options.length; i++) {
+            data.append("&").append(URLEncoder.encode("options["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getName(), MoodleServices.ENCODING.toString()));
+            data.append("&").append(URLEncoder.encode("options["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getValue(), MoodleServices.ENCODING.toString()));
+          }
+        }
+      }
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      // Need to process return data
+      
+      return null;
+    }
 }

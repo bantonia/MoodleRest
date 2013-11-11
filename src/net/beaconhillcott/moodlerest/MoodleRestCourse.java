@@ -929,4 +929,20 @@ public class MoodleRestCourse implements Serializable {
       (new MoodleCallRestWebService()).__call(url,data.toString());
     }
     
+    public void deleteModules(Long[] moduleIds) throws MoodleRestException, UnsupportedEncodingException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.CORE_COURSE_DELETE_MODULES.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestCourseException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      if (moduleIds!=null) {
+        for (int i=0; i<moduleIds.length; i++) {
+          if (moduleIds[i]==null) throw new MoodleRestCourseException(MoodleRestException.REQUIRED_PARAMETER+" id"); data.append("&").append(URLEncoder.encode("cmids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+moduleIds[i], MoodleServices.ENCODING.toString()));
+        }
+        MoodleCallRestWebService.call(data.toString());
+      }
+    }
 }

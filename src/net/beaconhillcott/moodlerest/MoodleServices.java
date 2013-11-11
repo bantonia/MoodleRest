@@ -82,7 +82,7 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_UPDATE_CATEGORIES("core_course_update_categories"), // MoodleRestCourse
         CORE_COURSE_DELETE_CATEGORIES("core_course_delete_categories"), // MoodleRestCourse
         CORE_COURSE_IMPORT_COURSE("core_course_import_courses"), // Not yet implemented
-        CORE_COURSE_DELETE_MODULES("core_course_delete_modules"), // Not yet implemented
+        CORE_COURSE_DELETE_MODULES("core_course_delete_modules"), // MoodleRestCourse
         CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // Not yet implemented
 
         // MESSAGE
