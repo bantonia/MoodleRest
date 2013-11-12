@@ -429,7 +429,8 @@ public class MoodleRestEnrol implements Serializable {
       return courses;
     }
 
-    public static MoodleUser[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
+    //public static MoodleUser[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
+    public static MoodleUsersWithCapability[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY.toString();
@@ -454,6 +455,8 @@ public class MoodleRestEnrol implements Serializable {
         }
       }
       NodeList elements=MoodleCallRestWebService.call(data.toString());
+      ArrayList<MoodleUsersWithCapability> usersWithCapability=null;
+      MoodleUsersWithCapability courseCapability=null;
       ArrayList<MoodleUser> users=null;
       String parent=null;
       String nodeName=null;
@@ -472,7 +475,7 @@ public class MoodleRestEnrol implements Serializable {
         }
         nodeName=elements.item(i).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
         content=elements.item(i).getTextContent();
-        int switchValue=0;
+        /*int switchValue=0;
         if (parent.equals("users")) {
           switchValue=1;
         } else {
@@ -495,78 +498,113 @@ public class MoodleRestEnrol implements Serializable {
               }
             }
           }
+        }*/
+        MoodleUserKey switchValue=null;
+        for (MoodleUserKey key : MoodleUserKey.values()) {
+          if (key.toString().equals(parent)) {
+            switchValue=key;
+            break;
+          }
         }
-        switch(switchValue) {
-          case 1: // users
-            if (nodeName.equals("id")) {
-              if (users==null) {
-                users=new ArrayList<MoodleUser>();
-                user=new MoodleUser();
-                user.setMoodleUserField(nodeName, content);
+        if (switchValue!=null) {
+          switch(switchValue) {
+            case USERS: // 1 users
+              if (nodeName.equals("id")) {
+                //if (users==null) {
+                if (courseCapability.getUsers()==null) {
+                  users=new ArrayList<MoodleUser>();
+                  courseCapability.setUsers(users);
+                  user=new MoodleUser();
+                  users.add(user);
+                  user.setMoodleUserField(nodeName, content);
+                } else {
+                  user=new MoodleUser();
+                  users.add(user);
+                  user.setMoodleUserField(nodeName, content);
+                }
               } else {
-                users.add(user);
-                user=new MoodleUser();
                 user.setMoodleUserField(nodeName, content);
               }
-            } else {
-              user.setMoodleUserField(nodeName, content);
-            }
-            break;
-          case 2: // customfields
-            if (nodeName.equals("type")) {
-              custom=new UserCustomField();
-              user.addCustomField(custom);
-              custom.setCustomFieldField(nodeName, content);
-            } else {
-              custom.setCustomFieldField(nodeName, content);
-            }
-            break;
-          case 3: // roles
-            if (nodeName.equals("roleid")) {
-                role=new UserRole();
-                user.addRole(role);
+              break;
+            case CUSTOM_FIELDS: // 2 customfields
+              if (nodeName.equals("type")) {
+                custom=new UserCustomField();
+                user.addCustomField(custom);
+                custom.setCustomFieldField(nodeName, content);
+              } else {
+                custom.setCustomFieldField(nodeName, content);
+              }
+              break;
+            case ROLES: // 3 roles
+              if (nodeName.equals("roleid")) {
+                  role=new UserRole();
+                  user.addRole(role);
+                  role.setUserRoleField(nodeName, content);
+              } else {
                 role.setUserRoleField(nodeName, content);
-            } else {
-              role.setUserRoleField(nodeName, content);
+              }
+              break;
+            case ENROLLED_COURSES: // 4 enrolledcourses
+              if (nodeName.equals("id")) {
+                enrolled=new UserEnrolledCourse();
+                user.addEnrolledCourse(enrolled);
+                enrolled.setUserEnrolledCourseField(nodeName, content);
+              } else {
+                enrolled.setUserEnrolledCourseField(nodeName, content);
+              }
+              break;
+            case GROUPS: // 5 groups
+              if (nodeName.equals("id")) {
+                group=new UserGroup();
+                user.addGroup(group);
+                group.setUserGroupField(nodeName, content);
+              } else {
+                group.setUserGroupField(nodeName, content);
+              }
+              break;
+            case PREFERENCES: // 6 preferences
+              if (nodeName.equals("name")) {
+                preference=new UserPreference();
+                user.addPreference(preference);
+                preference.setUserPreference(nodeName, content);
+              } else {
+                preference.setUserPreference(nodeName, content);
+              }
+              break;
+            default: break;
+          }
+        } else {
+          if (nodeName.equals("courseid")) {
+            if (usersWithCapability==null) {
+              usersWithCapability=new ArrayList<MoodleUsersWithCapability>();
             }
-            break;
-          case 4: //enrolledcourses
-            if (nodeName.equals("id")) {
-              enrolled=new UserEnrolledCourse();
-              user.addEnrolledCourse(enrolled);
-              enrolled.setUserEnrolledCourseField(nodeName, content);
-            } else {
-              enrolled.setUserEnrolledCourseField(nodeName, content);
+            courseCapability=new MoodleUsersWithCapability();
+            courseCapability.setCourseId(new Long(Long.parseLong(content)));
+            usersWithCapability.add(courseCapability);
+          }
+          if (nodeName.equals("capability")) {
+            Capability e=null;
+            for (Capability key : Capability.values()) {
+              if (key.toString().equals(content)) {
+                e=key;
+                break;
+              }
             }
-            break;
-          case 5: // groups
-            if (nodeName.equals("id")) {
-              group=new UserGroup();
-              user.addGroup(group);
-              group.setUserGroupField(nodeName, content);
-            } else {
-              group.setUserGroupField(nodeName, content);
-            }
-            break;
-          case 6: // preferences
-            if (nodeName.equals("name")) {
-              preference=new UserPreference();
-              user.addPreference(preference);
-              preference.setUserPreference(nodeName, content);
-            } else {
-              preference.setUserPreference(nodeName, content);
-            }
-            break;
-          default: break;
+            courseCapability.setCapability(e);
+          }
         }
       }
-      if (user!=null) {
-        users.add(user);
-      }
-      MoodleUser[] results=null;
+      /*MoodleUser[] results=null;
       if (users!=null) {
-        results=new MoodleUser[1];
-        results = users.toArray(results);
+        results=new MoodleUser[users.size()];
+        for (int i=0; i<users.size(); i++)
+          results[i] = users.get(i);
+      }*/
+      MoodleUsersWithCapability[] results=null;
+      if (usersWithCapability!=null) {
+        results=new MoodleUsersWithCapability[usersWithCapability.size()];
+        for (int i=0; i<usersWithCapability.size(); i++)
+          results[i] = usersWithCapability.get(i);
       }
       return results;
     }
