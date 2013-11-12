@@ -62,7 +62,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser
 
         // ENROL
-        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // Not yet implemented       
+        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol       
         CORE_ENROL_GET_ENROLLED_USERS("core_enrol_get_enrolled_users"), // MoodleRestEnrol       
         CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol
         ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment       
