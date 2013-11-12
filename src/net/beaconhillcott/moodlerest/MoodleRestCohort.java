@@ -39,7 +39,7 @@ public class MoodleRestCohort implements Serializable {
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_COHORT_GET_COHORT_MEMBERS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
-      throw new MoodleRestCalendarException();
+      throw new MoodleRestCohortException();
     else
       data.append(MoodleCallRestWebService.getAuth());
     data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
@@ -198,6 +198,8 @@ public class MoodleRestCohort implements Serializable {
         }
         j++;
       }
+      data.trimToSize();
+      MoodleCallRestWebService.call(data.toString());
     }
   }
 
