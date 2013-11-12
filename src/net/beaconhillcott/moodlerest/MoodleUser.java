@@ -127,7 +127,7 @@ public class MoodleUser implements Serializable {
           if (!content.equals("")) setMailFormat(Integer.parseInt(content)==0?EMAIL_FORMAT_NONE:EMAIL_FORMAT_HTML);
         }
         if (nodeName.equals("description") && content!=null) setDescription(content);
-        if (nodeName.equals("descriptionformat") && content!=null) setDescriptionFormat(Long.valueOf(content));
+        if (nodeName.equals("descriptionformat") && content!=null) if (!content.isEmpty()) { setDescriptionFormat(Long.valueOf(content));}
         if (nodeName.equals("city") && content!=null) setCity(content);
         if (nodeName.equals("country") && content!=null) setCountry(content);
         if (nodeName.equals("fullname")) { setFullname(content);}

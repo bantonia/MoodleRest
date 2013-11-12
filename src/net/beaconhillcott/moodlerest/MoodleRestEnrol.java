@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * <p>Class containing the static routines to manipulate the enrolment information within Moodle.<br />
@@ -78,10 +79,6 @@ public class MoodleRestEnrol implements Serializable {
         v.removeAllElements();
         return users;
     }
-
-  public static void getMoodleUsersWithCapability(Object object, Object object0) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
 
     public MoodleCourseUser[] __getEnrolledUsers(String url, String token, Long courseid, String withcapability, Long groupid, Boolean onlyactive) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
         StringBuilder data=new StringBuilder();
@@ -432,10 +429,9 @@ public class MoodleRestEnrol implements Serializable {
       return courses;
     }
 
-    public static MoodleUser[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException {
+    public static MoodleUser[] getMoodleUsersWithCapability(CourseEnrolledUserCapability[] courseCapabilities, OptionParameter[] options) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
-      Vector<MoodleCourse> v=new Vector();
       String functionCall=MoodleServices.CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY.toString();
       if (MoodleCallRestWebService.getAuth()==null)
         throw new MoodleRestEnrolException();
@@ -458,8 +454,120 @@ public class MoodleRestEnrol implements Serializable {
         }
       }
       NodeList elements=MoodleCallRestWebService.call(data.toString());
-      // Need to process return data
-      
-      return null;
+      ArrayList<MoodleUser> users=null;
+      String parent=null;
+      String nodeName=null;
+      String content=null;
+      MoodleUser user=null;
+      UserCustomField custom=null;
+      UserRole role=null;
+      UserEnrolledCourse enrolled=null;
+      UserGroup group=null;
+      UserPreference preference=null;
+      for (int i=0; i<elements.getLength(); i++) {
+        try {
+          parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        } catch(NullPointerException e) {
+          parent="nullPointer";
+        }
+        nodeName=elements.item(i).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        content=elements.item(i).getTextContent();
+        int switchValue=0;
+        if (parent.equals("users")) {
+          switchValue=1;
+        } else {
+          if (parent.equals("customfields")) {
+            switchValue=2;
+          } else {
+            if (parent.equals("roles")) {
+              switchValue=3;
+            } else {
+              if (parent.equals("enrolledcourses")) {
+                switchValue=4;
+              } else {
+                if (parent.equals("groups")) {
+                  switchValue=5;
+                } else {
+                  if (parent.equals("preferences")) {
+                    switchValue=6;
+                  }
+                }
+              }
+            }
+          }
+        }
+        switch(switchValue) {
+          case 1: // users
+            if (nodeName.equals("id")) {
+              if (users==null) {
+                users=new ArrayList<MoodleUser>();
+                user=new MoodleUser();
+                user.setMoodleUserField(nodeName, content);
+              } else {
+                users.add(user);
+                user=new MoodleUser();
+                user.setMoodleUserField(nodeName, content);
+              }
+            } else {
+              user.setMoodleUserField(nodeName, content);
+            }
+            break;
+          case 2: // customfields
+            if (nodeName.equals("type")) {
+              custom=new UserCustomField();
+              user.addCustomField(custom);
+              custom.setCustomFieldField(nodeName, content);
+            } else {
+              custom.setCustomFieldField(nodeName, content);
+            }
+            break;
+          case 3: // roles
+            if (nodeName.equals("roleid")) {
+                role=new UserRole();
+                user.addRole(role);
+                role.setUserRoleField(nodeName, content);
+            } else {
+              role.setUserRoleField(nodeName, content);
+            }
+            break;
+          case 4: //enrolledcourses
+            if (nodeName.equals("id")) {
+              enrolled=new UserEnrolledCourse();
+              user.addEnrolledCourse(enrolled);
+              enrolled.setUserEnrolledCourseField(nodeName, content);
+            } else {
+              enrolled.setUserEnrolledCourseField(nodeName, content);
+            }
+            break;
+          case 5: // groups
+            if (nodeName.equals("id")) {
+              group=new UserGroup();
+              user.addGroup(group);
+              group.setUserGroupField(nodeName, content);
+            } else {
+              group.setUserGroupField(nodeName, content);
+            }
+            break;
+          case 6: // preferences
+            if (nodeName.equals("name")) {
+              preference=new UserPreference();
+              user.addPreference(preference);
+              preference.setUserPreference(nodeName, content);
+            } else {
+              preference.setUserPreference(nodeName, content);
+            }
+            break;
+          default: break;
+        }
+      }
+      if (user!=null) {
+        users.add(user);
+      }
+      MoodleUser[] results=null;
+      if (users!=null) {
+        results=new MoodleUser[1];
+        results = users.toArray(results);
+      }
+      return results;
     }
 }

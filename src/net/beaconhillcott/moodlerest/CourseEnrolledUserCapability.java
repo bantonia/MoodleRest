@@ -16,8 +16,8 @@ public class CourseEnrolledUserCapability {
   private ArrayList<Capability> capabilities=null;
   
   public CourseEnrolledUserCapability() {
-    courseId=new Long(0);
-    capabilities=new ArrayList<Capability>();
+    this.courseId=new Long(0);
+    this.capabilities=new ArrayList<Capability>();
   }
 
   public CourseEnrolledUserCapability(Long courseId) {

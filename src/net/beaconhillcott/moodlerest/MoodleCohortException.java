@@ -8,7 +8,7 @@ package net.beaconhillcott.moodlerest;
  *
  * @author root
  */
-class MoodleCohortException extends Exception {
+public class MoodleCohortException extends Exception {
 
   public MoodleCohortException() {
   }
