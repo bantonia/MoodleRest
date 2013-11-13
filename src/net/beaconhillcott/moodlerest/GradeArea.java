@@ -6,6 +6,7 @@ package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 /**
  *
@@ -17,13 +18,28 @@ public class GradeArea implements Serializable {
   private Long contextId=null;
   private String component=null;
   private String activeMethod=null;
-  
   private ArrayList<GradeDefinition> definitions=null;
 
   public GradeArea() {
     definitions=new ArrayList<GradeDefinition>();
   }
 
+  public void setFieldValue(String name, Object value) {
+    if (name.equals("cmid") || name.equals("contextid")) {
+      
+    }
+    if (name.equals("component") || name.equals("activemethod")) {
+    }
+    if (name.equals("definitions")) {
+      if (value.getClass().getSimpleName().equals("GradeDefinition")) {
+        if (definitions==null) {
+          definitions=new ArrayList<GradeDefinition>();
+        }
+        definitions.add((GradeDefinition) value);
+      }
+    }
+  }
+  
   public Long getCmid() {
     return cmid;
   }
