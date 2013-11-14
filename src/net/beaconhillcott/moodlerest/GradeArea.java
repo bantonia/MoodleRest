@@ -6,7 +6,6 @@ package net.beaconhillcott.moodlerest;
 
 import java.util.ArrayList;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
 /**
  *
@@ -26,9 +25,8 @@ public class GradeArea implements Serializable {
 
   public void setFieldValue(String name, Object value) {
     if (value!=null) {
-      if (value.getClass().getSimpleName().equals("String")) {
         if (name.equals("cmid") || name.equals("contextid")) {
-          if (value!=null && !((String)value).equals("")) {
+          if (!((String)value).equals("")) {
             if (name.equals("cmid")) {
               setCmid(Long.parseLong((String)value));
             }
@@ -45,14 +43,11 @@ public class GradeArea implements Serializable {
             setActiveMethod((String)value);
           }
         }
-      }
       if (name.equals("definitions")) {
-        if (value.getClass().getSimpleName().equals("GradeDefinition")) {
-          if (definitions==null) {
-            definitions=new ArrayList<GradeDefinition>();
-          }
-          definitions.add((GradeDefinition) value);
+        if (definitions==null) {
+          definitions=new ArrayList<GradeDefinition>();
         }
+        definitions.add((GradeDefinition) value);
       }
     }
   }
@@ -123,6 +118,64 @@ public class GradeArea implements Serializable {
     public GradeDefinition() {
       guide=new ArrayList<Guide>();
       rubric=new Rubric();
+    }
+    
+    public void setFieldValue(String name, Object value) {
+      if (value!=null) {
+        if (name.equals("id") || name.equals("status") || name.equals("descriptionformat") || name.equals("copiedfromid") || name.equals("timecreated") || name.equals("usercreated") || name.equals("timemodified") || name.equals("usermodified") || name.equals("timecopied")) {
+          if (!((String)value).equals("")) {
+            if (name.equals("id")) {
+              setId(Long.parseLong((String)value));
+            }
+            if (name.equals("status")) {
+              setStatus(Integer.parseInt((String)value));
+            }
+            if (name.equals("copiedfromid")) {
+              setCopiedFromId(Long.parseLong((String)value));
+            }
+            if (name.equals("timecreated")) {
+              setTimeCreated(Long.parseLong((String)value));
+            }
+            if (name.equals("usercreated")) {
+              setUserCreated(Long.parseLong((String)value));
+            }
+            if (name.equals("timemodified")) {
+              setTimeModified(Long.parseLong((String)value));
+            }
+            if (name.equals("usermodified")) {
+              setUserModified(Long.parseLong((String)value));
+            }
+            if (name.equals("timecopied")) {
+              setTimeCopied(Long.parseLong((String)value));
+            }
+            if (name.equals("descriptionformat")) {
+              for (DescriptionFormat key : DescriptionFormat.values()) {
+                if ((""+key.toInt()).equals(value)) {
+                  setDescriptionFormat(key);
+                  break;
+                }
+              }
+            }
+          }
+        }
+        if (name.equals("name") || name.equals("description")) {
+          if (name.equals("name")) {
+            setName((String)value);
+          }
+          if (name.equals("description")) {
+            setDescription((String)value);
+          }
+        }
+        if (name.equals("guide")) {
+          if (guide==null) {
+            guide=new ArrayList<Guide>();
+          }
+          guide.add((Guide) value);
+        }
+        if (name.equals("rubric")) {
+            rubric=(Rubric) value;
+        }
+      }
     }
     
     public Guide newGuide() {
@@ -247,6 +300,25 @@ public class GradeArea implements Serializable {
       private ArrayList<GuideCriteria> guideCriteria=null;
       private ArrayList<GuideComment> guideComment=null;
       
+      public void setFieldValue(String name, Object value) {
+        if (value!=null) {
+          if (name.equals("guidecriteria") || name.equals("guidecomment")) {
+            if (name.equals("guidecriteria")) {
+              if (guideCriteria==null) {
+                guideCriteria=new ArrayList<GuideCriteria>();
+              }
+              guideCriteria.add((GuideCriteria) value);
+            }
+            if (name.equals("guidecomment")) {
+              if (guideComment==null) {
+                guideComment=new ArrayList<GuideComment>();
+              }
+              guideComment.add((GuideComment) value);
+            }
+          }
+        }
+      }
+      
       public GuideCriteria newGuideCriteria() {
         GuideCriteria guideCriteria=new GuideCriteria();
         this.guideCriteria.add(guideCriteria);
@@ -287,6 +359,32 @@ public class GradeArea implements Serializable {
         private String description=null;
         private DescriptionFormat descriptionFormat=null;
 
+        public void setFieldValue(String name, String value) {
+          if (value!=null) {
+            if (name.equals("id") || name.equals("sortorder") || name.equals("description") || name.equals("descriptionformat")) {
+              if (!(value).equals("")) {
+                if (name.equals("id")) {
+                  setId(Long.parseLong(value));
+                }
+                if (name.equals("sortorder")) {
+                  setSortOrder(Long.parseLong(value));
+                }
+                if (name.equals("descriptionformat")) {
+                  for (DescriptionFormat key : DescriptionFormat.values()) {
+                    if ((""+key.toInt()).equals(value)) {
+                      setDescriptionFormat(key);
+                      break;
+                    }
+                  }
+                }
+              }
+              if (name.equals("description")) {
+                setDescription(value);
+              }
+            }
+          }
+        }
+        
         public GuideComment() {
         }
 
@@ -332,7 +430,50 @@ public class GradeArea implements Serializable {
         private String shortName=null;
         private String descriptionMarkers=null;
         private DescriptionFormat descriptionMarkersFormat=null;
-        private Double maxscore=null;
+        private Double maxScore=null;
+        
+        public void setFieldValue(String name, String value) {
+          if (value!=null) {
+            if (name.equals("id") || name.equals("sortorder") || name.equals("description") || name.equals("descriptionformat") || name.equals("shortname") || name.equals("descriptionmarkers") || name.equals("descriptionmarkersformat") || name.equals("maxscore")) {
+              if (!(value).equals("")) {
+                if (name.equals("id")) {
+                  setId(Long.parseLong(value));
+                }
+                if (name.equals("sortorder")) {
+                  setSortOrder(Long.parseLong(value));
+                }
+                if (name.equals("descriptionformat")) {
+                  for (DescriptionFormat key : DescriptionFormat.values()) {
+                    if ((""+key.toInt()).equals(value)) {
+                      setDescriptionFormat(key);
+                      break;
+                    }
+                  }
+                }
+                if (name.equals("descriptionmarkersformat")) {
+                  for (DescriptionFormat key : DescriptionFormat.values()) {
+                    if ((""+key.toInt()).equals(value)) {
+                      setDescriptionMarkersFormat(key);
+                      break;
+                    }
+                  }
+                }
+                if (name.equals("maxscore")) {
+                  setMaxScore(Double.parseDouble(value));
+                }
+              }
+              if (name.equals("description")) {
+                setDescription(value);
+              }
+              if (name.equals("shortname")) {
+                setShortName(value);
+              }
+              if (name.equals("descriptionmarkers")) {
+                setDescriptionMarkers(value);
+              }
+            }
+          }
+        }
 
         public GuideCriteria() {
         }
@@ -393,12 +534,12 @@ public class GradeArea implements Serializable {
           this.descriptionMarkersFormat = descriptionMarkersFormat;
         }
 
-        public Double getMaxscore() {
-          return maxscore;
+        public Double getMaxScore() {
+          return maxScore;
         }
 
-        public void setMaxscore(Double maxscore) {
-          this.maxscore = maxscore;
+        public void setMaxScore(Double maxScore) {
+          this.maxScore = maxScore;
         }
 
       }
@@ -407,6 +548,17 @@ public class GradeArea implements Serializable {
     public class Rubric implements Serializable {
 
       private ArrayList<RubricCriteria> rubricCriteria=null;
+      
+      public void setFieldValue(String name, RubricCriteria value) {
+        if (value!=null) {
+          if (name.equals("rubric")) {
+            if (rubricCriteria==null) {
+              rubricCriteria=new ArrayList<RubricCriteria>();
+            }
+            rubricCriteria.add((RubricCriteria) value);
+          }
+        }
+      }
       
       public RubricCriteria newRubricCriteria() {
         RubricCriteria rubricCriteria=new RubricCriteria();
@@ -436,6 +588,32 @@ public class GradeArea implements Serializable {
           private Double score=null;
           private String definition=null;
           private DescriptionFormat definitionFormat=null;
+          
+          public void setFieldValue(String name, String value) {
+            if (value!=null) {
+              if (name.equals("id") || name.equals("score") || name.equals("definition") || name.equals("definitionformat")) {
+                if (!(value).equals("")) {
+                  if (name.equals("id")) {
+                    setId(Long.parseLong(value));
+                  }
+                  if (name.equals("score")) {
+                    setScore(Double.parseDouble(value));
+                  }
+                  if (name.equals("definitionformat")) {
+                    for (DescriptionFormat key : DescriptionFormat.values()) {
+                      if ((""+key.toInt()).equals(value)) {
+                        setDefinitionFormat(key);
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (name.equals("definition")) {
+                  setDefinition(value);
+                }
+              }
+            }
+          }
 
           public Level() {
           }
@@ -456,11 +634,11 @@ public class GradeArea implements Serializable {
             this.score = score;
           }
 
-          public String getDescription() {
-            return description;
+          public String getDefinition() {
+            return definition;
           }
 
-          public void setDescription(String definition) {
+          public void setDefinition(String definition) {
             this.definition = definition;
           }
 
