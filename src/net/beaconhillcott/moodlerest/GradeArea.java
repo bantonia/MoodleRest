@@ -25,17 +25,34 @@ public class GradeArea implements Serializable {
   }
 
   public void setFieldValue(String name, Object value) {
-    if (name.equals("cmid") || name.equals("contextid")) {
-      
-    }
-    if (name.equals("component") || name.equals("activemethod")) {
-    }
-    if (name.equals("definitions")) {
-      if (value.getClass().getSimpleName().equals("GradeDefinition")) {
-        if (definitions==null) {
-          definitions=new ArrayList<GradeDefinition>();
+    if (value!=null) {
+      if (value.getClass().getSimpleName().equals("String")) {
+        if (name.equals("cmid") || name.equals("contextid")) {
+          if (value!=null && !((String)value).equals("")) {
+            if (name.equals("cmid")) {
+              setCmid(Long.parseLong((String)value));
+            }
+            if (name.equals("contextid")) {
+              setContextId(Long.parseLong((String)value));
+            }
+          }
         }
-        definitions.add((GradeDefinition) value);
+        if (name.equals("component") || name.equals("activemethod")) {
+          if (name.equals("component")) {
+            setComponent((String)value);
+          }
+          if (name.equals("activemethod")) {
+            setActiveMethod((String)value);
+          }
+        }
+      }
+      if (name.equals("definitions")) {
+        if (value.getClass().getSimpleName().equals("GradeDefinition")) {
+          if (definitions==null) {
+            definitions=new ArrayList<GradeDefinition>();
+          }
+          definitions.add((GradeDefinition) value);
+        }
       }
     }
   }
