@@ -7,6 +7,7 @@ package net.beaconhillcott.moodlerest;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import org.w3c.dom.NodeList;
 
 /**
@@ -33,7 +34,48 @@ public class MoodleRestGrade implements Serializable {
     }
     data.trimToSize();
     NodeList elements = MoodleCallRestWebService.call(data.toString());
-    
+    ArrayList<GradeArea> areas=null;
+    GradeArea gradeArea=null;
+    GradeArea.GradeDefinition definition=null;
+    GradeArea.GradeDefinition.Rubric.RubricCriteria rubricCriteria=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("areas")) {
+        if (nodeName.equals("cmid")) {
+          if (areas==null) {
+            areas=new ArrayList<GradeArea>();
+          }
+          if (gradeArea==null) {
+            gradeArea=new GradeArea();
+            areas.add(gradeArea);
+            gradeArea.setCmid(Long.parseLong(content));
+          }
+        } else {
+          gradeArea.setFieldValue(nodeName, content);
+        }
+      } else {
+        if (parent.equals("definitions")) {
+          if (nodeName.equals("id")) {
+            definition = gradeArea.newGradeDefinition();
+            definition.setId(Long.parseLong(content));
+          } else {
+            definition.setFieldValue(nodeName, content);
+          }
+        } else {
+          if (parent.equals("rubric_criteria")) {
+            if (nodeName.equals("id")) {
+              rubricCriteria = definition.getRubric().newRubricCriteria();
+              rubricCriteria.setId(Long.parseLong(content));
+            } else {
+              rubricCriteria.setFieldValue(nodeName, content);
+            }
+            
+          }
+        }
+      }
+    }
     return null;
   }
 }

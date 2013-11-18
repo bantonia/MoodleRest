@@ -577,6 +577,32 @@ public class GradeArea implements Serializable {
         private DescriptionFormat descriptionFormat=null;
         private ArrayList<Level> levels=null;
 
+        public void setFieldValue(String name, String value) {
+          if (value!=null) {
+            if (name.equals("id") || name.equals("sortorder") || name.equals("description") || name.equals("descriptionformat")) {
+              if (!(value).equals("")) {
+                if (name.equals("id")) {
+                  setId(Long.parseLong(value));
+                }
+                if (name.equals("sortorder")) {
+                  setSortOrder(Integer.parseInt(value));
+                }
+                if (name.equals("descriptionformat")) {
+                  for (DescriptionFormat key : DescriptionFormat.values()) {
+                    if ((""+key.toInt()).equals(value)) {
+                      setDescriptionFormat(key);
+                      break;
+                    }
+                  }
+                }
+              }
+              if (name.equals("description")) {
+                setDescription(value);
+              }
+            }
+          }
+        }
+        
         public Level newLevel() {
           Level level=new Level();
           levels.add(level);
