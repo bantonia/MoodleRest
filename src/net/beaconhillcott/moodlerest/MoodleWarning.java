@@ -40,10 +40,18 @@ public class MoodleWarning implements Serializable {
   }
   
   public void setMoodleWarningField(String nodeName, String content) {
-    if (nodeName.equals("item")) setItem(content);
-    if (nodeName.equals("itemid")) setItemId(Integer.parseInt(content.trim()));
-    if (nodeName.equals("warningcode")) setWarningCode(content);
-    if (nodeName.equals("message")) setMessage(content);
+    if (nodeName.equals("item")) {
+      setItem(content);
+    }
+    if (nodeName.equals("itemid")) {
+      setItemId(Integer.parseInt(content.trim()));
+    }
+    if (nodeName.equals("warningcode")) {
+      setWarningCode(content);
+    }
+    if (nodeName.equals("message")) {
+      setMessage(content);
+    }
   }
 
   public String getItem() {

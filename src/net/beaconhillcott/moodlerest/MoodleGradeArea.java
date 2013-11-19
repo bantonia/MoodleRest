@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author root
  */
-public class GradeArea implements Serializable {
+public class MoodleGradeArea implements Serializable {
   
   private Long cmid=null;
   private Long contextId=null;
@@ -19,7 +19,7 @@ public class GradeArea implements Serializable {
   private String activeMethod=null;
   private ArrayList<GradeDefinition> definitions=null;
 
-  public GradeArea() {
+  public MoodleGradeArea() {
     definitions=new ArrayList<GradeDefinition>();
   }
 
@@ -112,11 +112,11 @@ public class GradeArea implements Serializable {
     private Long timeModified=null;
     private Long userModified=null;
     private Long timeCopied=null;
-    private ArrayList<Guide> guide=null;
+    private Guide guide=null;
     private Rubric rubric=null;
 
     public GradeDefinition() {
-      guide=new ArrayList<Guide>();
+      guide=new Guide();
       rubric=new Rubric();
     }
     
@@ -168,9 +168,9 @@ public class GradeArea implements Serializable {
         }
         if (name.equals("guide")) {
           if (guide==null) {
-            guide=new ArrayList<Guide>();
+            guide=new Guide();
           }
-          guide.add((Guide) value);
+          guide=((Guide) value);
         }
         if (name.equals("rubric")) {
             rubric=(Rubric) value;
@@ -179,9 +179,8 @@ public class GradeArea implements Serializable {
     }
     
     public Guide newGuide() {
-      Guide newGuide=new Guide();
-      guide.add(newGuide);
-      return newGuide;
+      guide=new Guide();
+      return guide;
     }
 
     public Long getId() {
@@ -280,12 +279,12 @@ public class GradeArea implements Serializable {
       this.timeCopied = timeCopied;
     }
 
-    public ArrayList<Guide> getGuide() {
+    public Guide getGuide() {
       return guide;
     }
 
-    public void setGuide(ArrayList<Guide> guide) {
-      this.guide = guide;
+    public void setGuide(Guide guide) {
+      guide = guide;
     }
 
     public Rubric getRubric() {

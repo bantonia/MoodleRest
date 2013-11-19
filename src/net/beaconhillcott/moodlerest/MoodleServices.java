@@ -123,7 +123,7 @@ public enum MoodleServices implements Serializable {
         CORE_COHORT_GET_COHORT_MEMBERS("core_cohort_get_cohort_members"), // MoodleRestCohort
 
         // GRADE
-        CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // Not yet implemented
+        CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // MoodleRestGrade
 
         // CALENDAR
         CORE_CALENDAR_DELETE_CALENDAR_EVENTS("core_calendar_delete_calendar_events"), //MoodleRestCalendar
