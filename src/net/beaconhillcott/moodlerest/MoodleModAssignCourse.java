@@ -35,7 +35,7 @@ public class MoodleModAssignCourse implements Serializable {
     if (name.equals("id") || name.equals("timemodified")) {
       if (value!=null && !value.isEmpty()) {
         if (name.equals("id")) { setId(Long.parseLong(value));}
-        if (name.equals("timemodified")) { setId(Long.parseLong(value));}
+        if (name.equals("timemodified")) { setTimeModified(Long.parseLong(value));}
       }
     }
     if (name.equals("fullname") || name.equals("shortname")) {
@@ -94,17 +94,17 @@ public class MoodleModAssignCourse implements Serializable {
     private Integer submissionDrafts=null;
     private Integer sendNotifications=null;
     private Integer sendLateNotifications=null;
-    private Integer dueDate=null;
-    private Integer allowSubmissionsFromDate=null;
+    private Long dueDate=null;
+    private Long allowSubmissionsFromDate=null;
     private Integer grade=null;
-    private Integer timeModified=null;
+    private Long timeModified=null;
     private Integer completionSubmit=null;
-    private Integer cutOffDate=null;
+    private Long cutOffDate=null;
     private Integer teamSubmission=null;
     private Integer requireAllTeamMembersSubmit=null;
-    private Integer teamSubmissionGroupingId=null;
+    private Long teamSubmissionGroupingId=null;
     private Integer blindMarking=null;
-    private Integer revealIdenties=null;
+    private Integer revealIdentities=null;
     private Integer requireSubmissionStatement=null;
     private ArrayList<Config> configs=null;
     
@@ -113,7 +113,38 @@ public class MoodleModAssignCourse implements Serializable {
     }
     
     public void setFieldValue(String name, String value) {
-      
+      if (name.equals("id") || name.equals("course") || name.equals("nosubmissions") || name.equals("submissiondrafts")
+           || name.equals("sendnotifications") || name.equals("sendlatenotifications") || name.equals("duedate")
+           || name.equals("allowsubmissionsfromdate") || name.equals("grade") || name.equals("timemodified")
+           || name.equals("completionsubmit") || name.equals("cutoffdate") || name.equals("teamsubmission")
+           || name.equals("requireallteammemberssubmit") || name.equals("teamsubmissiongroupingid")
+           || name.equals("blindmarking") || name.equals("revealidentities") || name.equals("requiresubmissionstatement")) {
+          if (value!=null && !value.isEmpty()) {
+            if (name.equals("id")) { setId(Long.parseLong(value));}
+            if (name.equals("course")) { setCourse(Long.parseLong(value));}
+            if (name.equals("nosubmissions")) { setNoSubmissions(Integer.parseInt(value));}
+            if (name.equals("submissiondrafts")) { setSubmissionDrafts(Integer.parseInt(value));}
+            if (name.equals("sendnotifications")) { setSendNotifications(Integer.parseInt(value));}
+            if (name.equals("sendlatenotifications")) { setSendLateNotifications(Integer.parseInt(value));}
+            if (name.equals("duedate")) { setDueDate(Long.parseLong(value));}
+            if (name.equals("allowsubmissionsfromdate")) { setAllowSubmissionsFromDate(Long.parseLong(value));}
+            if (name.equals("grade")) { setGrade(Integer.parseInt(value));}
+            if (name.equals("timemodified")) { setTimeModified(Long.parseLong(value));}
+            if (name.equals("completionsubmit")) { setCompletionSubmit(Integer.parseInt(value));}
+            if (name.equals("cutoffdate")) { setCutOffDate(Long.parseLong(value));}
+            if (name.equals("teamsubmission")) { setTeamSubmission(Integer.parseInt(value));}
+            if (name.equals("requireallteammemberssubmit")) { setRequireAllTeamMembersSubmit(Integer.parseInt(value));}
+            if (name.equals("teamsubmissiongroupingid")) { setTeamSubmissionGroupingId(Long.parseLong(value));}
+            if (name.equals("blindmarking")) { setBlindMarking(Integer.parseInt(value));}
+            if (name.equals("revealidentities")) { setRevealIdentities(Integer.parseInt(value));}
+            if (name.equals("requiresubmissionstatement")) { setRequireSubmissionStatement(Integer.parseInt(value));}
+          }
+        }
+        if (name.equals("name") || name.equals("value")) {
+          if (value!=null) {
+            if (name.equals("name")) { setName(value);}
+          }
+        }
     }
     
     public Config newConfig() {
@@ -181,19 +212,19 @@ public class MoodleModAssignCourse implements Serializable {
       this.sendLateNotifications = sendlatenotifications;
     }
 
-    public Integer getDueDate() {
+    public Long getDueDate() {
       return dueDate;
     }
 
-    public void setDueDate(Integer duedate) {
+    public void setDueDate(Long duedate) {
       this.dueDate = duedate;
     }
 
-    public Integer getAllowSubmissionsFromDate() {
+    public Long getAllowSubmissionsFromDate() {
       return allowSubmissionsFromDate;
     }
 
-    public void setAllowSubmissionsFromDate(Integer allowsubmissionsfromdate) {
+    public void setAllowSubmissionsFromDate(Long allowsubmissionsfromdate) {
       this.allowSubmissionsFromDate = allowsubmissionsfromdate;
     }
 
@@ -205,11 +236,11 @@ public class MoodleModAssignCourse implements Serializable {
       this.grade = grade;
     }
 
-    public Integer getTimeModified() {
+    public Long getTimeModified() {
       return timeModified;
     }
 
-    public void setTimeModified(Integer timemodified) {
+    public void setTimeModified(Long timemodified) {
       this.timeModified = timemodified;
     }
 
@@ -221,11 +252,11 @@ public class MoodleModAssignCourse implements Serializable {
       this.completionSubmit = completionsubmit;
     }
 
-    public Integer getCutOffDate() {
+    public Long getCutOffDate() {
       return cutOffDate;
     }
 
-    public void setCutOffDate(Integer cutoffdate) {
+    public void setCutOffDate(Long cutoffdate) {
       this.cutOffDate = cutoffdate;
     }
 
@@ -245,11 +276,11 @@ public class MoodleModAssignCourse implements Serializable {
       this.requireAllTeamMembersSubmit = requireallteammemberssubmit;
     }
 
-    public Integer getTeamSubmissionGroupingId() {
+    public Long getTeamSubmissionGroupingId() {
       return teamSubmissionGroupingId;
     }
 
-    public void setTeamSubmissionGroupingId(Integer teamsubmissiongroupingid) {
+    public void setTeamSubmissionGroupingId(Long teamsubmissiongroupingid) {
       this.teamSubmissionGroupingId = teamsubmissiongroupingid;
     }
 
@@ -261,12 +292,12 @@ public class MoodleModAssignCourse implements Serializable {
       this.blindMarking = blindmarking;
     }
 
-    public Integer getRevealIdenties() {
-      return revealIdenties;
+    public Integer getRevealIdentities() {
+      return revealIdentities;
     }
 
-    public void setRevealIdenties(Integer revealidenties) {
-      this.revealIdenties = revealidenties;
+    public void setRevealIdentities(Integer revealIdentities) {
+      this.revealIdentities = revealIdentities;
     }
 
     public Integer getRequireSubmissionStatement() {
@@ -296,7 +327,20 @@ public class MoodleModAssignCourse implements Serializable {
       public Config() {}
       
       public void setFieldValue(String name, String value) {
-      
+        if (name.equals("id") || name.equals("assignment")) {
+          if (value!=null && !value.isEmpty()) {
+            if (name.equals("id")) { setId(Long.parseLong(value));}
+            if (name.equals("assignment")) { setAssignment(Long.parseLong(value));}
+          }
+        }
+        if (name.equals("plugin") || name.equals("subtype") || name.equals("name") || name.equals("value")) {
+          if (value!=null) {
+            if (name.equals("plugin")) { setPlugin(value);}
+            if (name.equals("subtype")) { setSubType(value);}
+            if (name.equals("name")) { setName(value);}
+            if (name.equals("value")) { setValue(value);}
+          }
+        }
       }
 
       public Long getId() {

@@ -30,7 +30,19 @@ import java.util.ArrayList;
  */
 public class MoodleRestModAssign implements Serializable {
   
+  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds) throws MoodleRestException, UnsupportedEncodingException {
+    return getAssignments(courseIds, null, null);
+  }
+  
   public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, String[] capabilities) throws MoodleRestException, UnsupportedEncodingException {
+    return getAssignments(courseIds, capabilities, null);
+  }
+  
+  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    return getAssignments(courseIds, null, warnings);
+  }
+  
+  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, String[] capabilities, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) {
       throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
@@ -57,6 +69,8 @@ public class MoodleRestModAssign implements Serializable {
     ArrayList<MoodleModAssignCourse.Assignment> assignments=null;
     MoodleModAssignCourse.Assignment assignment=null;
     MoodleModAssignCourse.Assignment.Config config=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
     for (int j=0; j<elements.getLength(); j++) {
       String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       String content=elements.item(j).getTextContent();
@@ -78,7 +92,7 @@ public class MoodleRestModAssign implements Serializable {
             assignment = course.newAssignment();
             assignment.setId(Long.parseLong(content));
           } else {
-            assignment.setFieldValue(nodeName, parent);
+            assignment.setFieldValue(nodeName, content);
           }
         } else {
           if (parent.equals("configs")) {
@@ -88,11 +102,35 @@ public class MoodleRestModAssign implements Serializable {
             } else {
               config.setFieldValue(nodeName, content);
             }
+          } else {
+            if (parent.equals("warnings")) {
+              if (nodeName.equals("item")) {
+                if (warn==null) {
+                  warn=new ArrayList<MoodleWarning>();
+                }
+                warning=new MoodleWarning();
+                warn.add(warning);
+                warning.setItem(content);
+              } else {
+                warning.setMoodleWarningField(nodeName, content);
+              }
+            }
           }
         }
       }
     }
-    return null;
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+    MoodleModAssignCourse[] results=null;
+    if (courses!=null) {
+      results=new MoodleModAssignCourse[courses.size()];
+      results=courses.toArray(results);
+    }
+    return results;
   }
 
     /*public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
