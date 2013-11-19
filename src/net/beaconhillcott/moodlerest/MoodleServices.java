@@ -109,9 +109,9 @@ public enum MoodleServices implements Serializable {
         CORE_GET_COMPONENT_STRINGS("core_get_component_strings"), // Not yet implemented
 
         // ASSIGN
-        MOD_ASSIGN_GET_GRADES("core_assign_get_grades"), // Not yet implemented
-        MOD_ASSIGN_GET_ASSIGNMENTS("core_assign_get_assignments"), // MoodleRestModAssign
-        MOD_ASSIGN_GET_SUBMISSIONS("core_assign_get_submissions"), // MoodleRestModAssign
+        MOD_ASSIGN_GET_GRADES("mod_assign_get_grades"), // Not yet implemented
+        MOD_ASSIGN_GET_ASSIGNMENTS("mod_assign_get_assignments"), // MoodleRestModAssign
+        MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // MoodleRestModAssign
 
         // COHORT
         CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort

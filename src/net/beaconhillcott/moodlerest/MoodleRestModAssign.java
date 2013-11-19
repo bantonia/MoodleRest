@@ -22,14 +22,80 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
  * @author root
  */
 public class MoodleRestModAssign implements Serializable {
+  
+  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, String[] capabilities) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<courseIds.length; i++) {
+      data.append("&").append(URLEncoder.encode("courseids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseIds[i], MoodleServices.ENCODING.toString()));
+    }
+    if (capabilities!=null) {
+      for (int i=0; i<capabilities.length; i++) {
+        data.append("&").append(URLEncoder.encode("capabilities["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+capabilities[i], MoodleServices.ENCODING.toString()));
+      }
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleModAssignCourse> courses=null;
+    MoodleModAssignCourse course=null;
+    ArrayList<MoodleModAssignCourse.Assignment> assignments=null;
+    MoodleModAssignCourse.Assignment assignment=null;
+    MoodleModAssignCourse.Assignment.Config config=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("courses")) {
+        if (courses==null) {
+          courses=new ArrayList<MoodleModAssignCourse>();
+        }
+        if (nodeName.equals("id")) {
+          course=new MoodleModAssignCourse();
+          courses.add(course);
+          course.setId(Long.parseLong(content));
+        } else {
+          course.setFieldValue(nodeName, content);
+        }
+      } else {
+        if (parent.equals("assignments")) {
+          if (nodeName.equals("id")) {
+            assignment = course.newAssignment();
+            assignment.setId(Long.parseLong(content));
+          } else {
+            assignment.setFieldValue(nodeName, parent);
+          }
+        } else {
+          if (parent.equals("configs")) {
+            if (nodeName.equals("id")) {
+              config = assignment.newConfig();
+              config.setId(Long.parseLong(content));
+            } else {
+              config.setFieldValue(nodeName, content);
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
 
-    public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
+    /*public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
@@ -437,10 +503,10 @@ public class MoodleRestModAssign implements Serializable {
         return results;
     }
     
-    /*public static MoodleModAssignGradeReturn getAssignments(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
+    public static MoodleModAssignGradeReturn getAssignments(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS;
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS.toString();
         if (MoodleCallRestWebService.getAuth()==null)
             throw new MoodleRestModAssignException();
         else
@@ -503,10 +569,10 @@ public class MoodleRestModAssign implements Serializable {
         return results;
     }
 
-    public MoodleModAssignGradeReturn __getgetAssignments(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
+    public MoodleModAssignGradeReturn __getAssignments(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS;
+        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
         if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
