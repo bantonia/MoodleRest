@@ -19,53 +19,76 @@
 package net.beaconhillcott.moodlerest;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * 
  * @author Bill Antonia
  */
-class MoodleModAssignGrade implements Serializable {
+public class MoodleModAssignGrade implements Serializable {
 
+  private Long assignmentId=null;
+  private ArrayList<Grade> grades=null;
+  
+  public MoodleModAssignGrade() { grades=new ArrayList<Grade>();}
+  public MoodleModAssignGrade(Long assignmentId) { this.assignmentId=assignmentId; grades=new ArrayList<Grade>();}
+  
+  public Grade newGrade() {
+    if (grades==null) {
+      grades=new ArrayList<Grade>();
+    }
+    Grade grade=new Grade();
+    grades.add(grade);
+    return grade;
+  }
+
+  public Long getAssignmentId() {
+    return assignmentId;
+  }
+
+  public void setAssignmentId(Long assignmentId) {
+    this.assignmentId = assignmentId;
+  }
+
+  public ArrayList<Grade> getGrades() {
+    return grades;
+  }
+
+  public void setGrades(ArrayList<Grade> grades) {
+    this.grades = grades;
+  }
+  
+  public class Grade {
     private Long id=null;
-    private Long userid=null;
-    private Long timecreated=null;
-    private Long timemodified=null;
+    private Long userId=null;
+    private Long timeCreated=null;
+    private Long timeModified=null;
     private Long grader=null;
     private String grade=null;
-    private Boolean locked;
-    private Boolean mailed;
-
-    public MoodleModAssignGrade() {}
-    public MoodleModAssignGrade(Long id) { this.id=id; }
-
+    
     public void setId(Long id) { this.id=id; }
-    public void setUserId(Long userid) { this.userid=userid; }
-    public void setTimeCreated(Long timecreated) { this.timecreated=timecreated; }
-    public void setTimeModified(Long timemodified) { this.timemodified=timemodified; }
+    public void setUserId(Long userId) { this.userId=userId; }
+    public void setTimeCreated(Long timeCreated) { this.timeCreated=timeCreated; }
+    public void setTimeModified(Long timeModified) { this.timeModified=timeModified; }
     public void setGrader(Long grader) { this.grader=grader; }
     public void setGrade(String grade) { this.grade=grade; }
-    public void setLocked(Boolean locked) { this.locked=locked; }
-    public void setMailed(Boolean mailed) { this.mailed=mailed; }
 
     public Long getId() { return id; }
-    public Long getUserId() { return userid; }
-    public Long getTimeCreated() { return timecreated; }
-    public Long getTimeModified() { return timemodified; }
+    public Long getUserId() { return userId; }
+    public Long getTimeCreated() { return timeCreated; }
+    public Long getTimeModified() { return timeModified; }
     public Long getGrader() { return grader; }
     public String getGrade() { return grade; }
-    public boolean getLocked() { return locked; }
-    public boolean getMailed() { return mailed; }
 
-    public void setField(String field, String value) {
-        if (field!=null && !field.isEmpty()) {
-            if (field.equals("id")) setId(Long.parseLong(value));
-            if (field.equals("userid")) setUserId(Long.parseLong(value));
-            if (field.equals("timecreated")) setTimeCreated(Long.parseLong(value));
-            if (field.equals("timemodified")) setTimeModified(Long.parseLong(value));
-            if (field.equals("grader")) setGrader(Long.parseLong(value));
-            if (field.equals("grade")) setGrade(value);
-            if (field.equals("locked")) setLocked(value.equals("1"));
-            if (field.equals("mailed")) setMailed(value.equals("1"));
-        }
+    public void setFieldValue(String field, String value) {
+      if (field!=null && !field.isEmpty()) {
+        if (field.equals("id")) { setId(Long.parseLong(value)); }
+        if (field.equals("userid")) { setUserId(Long.parseLong(value)); }
+        if (field.equals("timecreated")) { setTimeCreated(Long.parseLong(value)); }
+        if (field.equals("timemodified")) { setTimeModified(Long.parseLong(value)); }
+        if (field.equals("grader")) { setGrader(Long.parseLong(value)); }
+        if (field.equals("grade")) { setGrade(value); }
+      }
     }
+  }
 }
