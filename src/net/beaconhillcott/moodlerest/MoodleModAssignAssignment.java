@@ -27,187 +27,313 @@ import java.io.Serializable;
  */
 public class MoodleModAssignAssignment implements Serializable {
   
-    private Long id=null;
-    private Long course=null;
-    private String name=null;
-    private Integer nosubmissions=null;
-    private Integer submissiondrafts=null;
-    private Integer sendnotifications=null;
-    private Integer sendlatenotifications=null;
-    private Integer duedate=null;
-    private Integer allowsubmissionsfromdate=null;
-    private Integer grade=null;
-    private Integer timemodified=null;
-    private Integer completionsubmit=null;
-    private Integer cutoffdate=null;
-    private Integer teamsubmission=null;
-    private Integer requireallteammemberssubmit=null;
-    private Integer teamsubmissiongroupingid=null;
-    private Integer blindmarking=null;
-    private Integer revealidenties=null;
-    private Integer requiresubmissionstatement=null;
-    private ArrayList<MoodleModAssignAssignmentConfig> configs=null;
+  private Long assignmentId=null;
+  private ArrayList<Submission>submissions=null;
+  
+  public MoodleModAssignAssignment() {}
+  public MoodleModAssignAssignment(Long assignmentId) { this.assignmentId=assignmentId; }
 
-    public MoodleModAssignAssignment() {}
-
-    public MoodleModAssignAssignment(Long id) { this.id=id; }
-
-  public ArrayList<MoodleModAssignAssignmentConfig> getConfigs() {
-    return configs;
-  }
-
-
-  public void setId(Long id) { this.id=id; }
-  public Long getId() { return id; }
-
-  public Integer getAllowsubmissionsfromdate() {
-    return allowsubmissionsfromdate;
-  }
-
-  public void setAllowsubmissionsfromdate(Integer allowsubmissionsfromdate) {
-    this.allowsubmissionsfromdate = allowsubmissionsfromdate;
-  }
-
-  public Integer getBlindmarking() {
-    return blindmarking;
-  }
-
-  public void setBlindmarking(Integer blindmarking) {
-    this.blindmarking = blindmarking;
-  }
-
-  public Integer getCompletionsubmit() {
-    return completionsubmit;
-  }
-
-  public void setCompletionsubmit(Integer completionsubmit) {
-    this.completionsubmit = completionsubmit;
-  }
-
-  public Long getCourse() {
-    return course;
-  }
-
-  public void setCourse(Long course) {
-    this.course = course;
-  }
-
-  public Integer getCutoffdate() {
-    return cutoffdate;
-  }
-
-  public void setCutoffdate(Integer cutoffdate) {
-    this.cutoffdate = cutoffdate;
-  }
-
-  public Integer getDuedate() {
-    return duedate;
-  }
-
-  public void setDuedate(Integer duedate) {
-    this.duedate = duedate;
-  }
-
-  public Integer getGrade() {
-    return grade;
-  }
-
-  public void setGrade(Integer grade) {
-    this.grade = grade;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getNosubmissions() {
-    return nosubmissions;
-  }
-
-  public void setNosubmissions(Integer nosubmissions) {
-    this.nosubmissions = nosubmissions;
-  }
-
-  public Integer getRequireallteammemberssubmit() {
-    return requireallteammemberssubmit;
-  }
-
-  public void setRequireallteammemberssubmit(Integer requireallteammemberssubmit) {
-    this.requireallteammemberssubmit = requireallteammemberssubmit;
-  }
-
-  public Integer getRequiresubmissionstatement() {
-    return requiresubmissionstatement;
-  }
-
-  public void setRequiresubmissionstatement(Integer requiresubmissionstatement) {
-    this.requiresubmissionstatement = requiresubmissionstatement;
-  }
-
-  public Integer getRevealidenties() {
-    return revealidenties;
-  }
-
-  public void setRevealidenties(Integer revealidenties) {
-    this.revealidenties = revealidenties;
-  }
-
-  public Integer getSendlatenotifications() {
-    return sendlatenotifications;
-  }
-
-  public void setSendlatenotifications(Integer sendlatenotifications) {
-    this.sendlatenotifications = sendlatenotifications;
-  }
-
-  public Integer getSendnotifications() {
-    return sendnotifications;
-  }
-
-  public void setSendnotifications(Integer sendnotifications) {
-    this.sendnotifications = sendnotifications;
-  }
-
-  public Integer getSubmissiondrafts() {
-    return submissiondrafts;
-  }
-
-  public void setSubmissiondrafts(Integer submissiondrafts) {
-    this.submissiondrafts = submissiondrafts;
-  }
-
-  public Integer getTeamsubmission() {
-    return teamsubmission;
-  }
-
-  public void setTeamsubmission(Integer teamsubmission) {
-    this.teamsubmission = teamsubmission;
-  }
-
-  public Integer getTeamsubmissiongroupingid() {
-    return teamsubmissiongroupingid;
-  }
-
-  public void setTeamsubmissiongroupingid(Integer teamsubmissiongroupingid) {
-    this.teamsubmissiongroupingid = teamsubmissiongroupingid;
-  }
-
-  public Integer getTimemodified() {
-    return timemodified;
-  }
-
-  public void setTimemodified(Integer timemodified) {
-    this.timemodified = timemodified;
+  public void setAssignmentId(Long assignmentId) { this.assignmentId=assignmentId; }
+  public Long getAssignmentId() { return assignmentId; }
+  public ArrayList<Submission> getSubmissions() { return submissions; }
+  public void setSubmissions(ArrayList<Submission> submissions) { this.submissions = submissions; }
+  public Submission newSubmission() {
+    if (submissions==null) { submissions=new ArrayList<Submission>(); }
+    Submission submission=new Submission();
+    submissions.add(submission);
+    return submission;
   }
   
-  public void addConfig(MoodleModAssignAssignmentConfig config) {
-    if (configs==null)
-      configs=new ArrayList<MoodleModAssignAssignmentConfig>();
-    configs.add(config);
+  public void setFieldValue(String name, String value) {
+    if (value!=null) {
+      if (!value.isEmpty()) {
+          if (name.equals("assignmentid")) { setAssignmentId(Long.parseLong(value)); }
+      }
+    }
   }
+
+  public class Submission {
     
+    private Long id=null;
+    private Long userId=null;
+    private Long timeCreated=null;
+    private Long timeModified=null;
+    private String status=null;
+    private Long groupId=null;
+    private ArrayList<Plugin> plugins=null;
+
+    public Submission() {}
+    
+    public Plugin newPlugin() {
+      if (plugins==null) { plugins=new ArrayList<Plugin>(); }
+      Plugin plugin=new Plugin();
+      plugins.add(plugin);
+      return plugin;
+    }
+    
+    public void setFieldValue(String name, String value) {
+      if (value!=null) {
+        if (!value.isEmpty()) {
+          if (name.equals("id") || name.equals("userid") || name.equals("timecreated")|| name.equals("timemodified")|| name.equals("groupid")) {
+            if (name.equals("id")) { setId(Long.parseLong(value)); }
+            if (name.equals("userid")) { setUserId(Long.parseLong(value)); }
+            if (name.equals("timecreated")) { setTimeCreated(Long.parseLong(value)); }
+            if (name.equals("timemodified")) { setTimeModified(Long.parseLong(value)); }
+            if (name.equals("groupid")) { setGroupId(Long.parseLong(value)); }
+          } else {
+            if (name.equals("status")) {
+              setStatus(value);
+            }
+          }
+        }
+      }
+    }
+
+    public Long getId() {
+      return id;
+    }
+
+    public void setId(Long id) {
+      this.id = id;
+    }
+
+    public Long getUserId() {
+      return userId;
+    }
+
+    public void setUserId(Long userId) {
+      this.userId = userId;
+    }
+
+    public Long getTimeCreated() {
+      return timeCreated;
+    }
+
+    public void setTimeCreated(Long timeCreated) {
+      this.timeCreated = timeCreated;
+    }
+
+    public Long getTimeModified() {
+      return timeModified;
+    }
+
+    public void setTimeModified(Long timeModified) {
+      this.timeModified = timeModified;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
+    }
+
+    public Long getGroupId() {
+      return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+      this.groupId = groupId;
+    }
+
+    public ArrayList<Plugin> getPlugins() {
+      return plugins;
+    }
+
+    public void setPlugins(ArrayList<Plugin> plugins) {
+      this.plugins = plugins;
+    }
+  
+    public class Plugin {
+
+      private String type=null;
+      private String name=null;
+      private ArrayList<FileArea> areas=null;
+      private ArrayList<EditorField> editorFields=null;
+      
+      public Plugin(){}
+      
+      public void setFieldValue(String name, String value) {
+        if (value!=null) {
+          if (name.equals("type")) {
+            setType(value);
+          }
+          if (name.equals("Name")) {
+            setName(value);
+          }
+        }
+      }
+
+      public FileArea newFileArea() {
+        if (areas==null) { areas=new ArrayList<FileArea>(); }
+        FileArea area=new FileArea();
+        areas.add(area);
+        return area;
+      }
+      
+      public EditorField newEditorField() {
+        if (editorFields==null) { editorFields=new ArrayList<EditorField>(); }
+        EditorField field=new EditorField();
+        editorFields.add(field);
+        return field;
+      }
+      
+      public String getType() {
+        return type;
+      }
+
+      public void setType(String type) {
+        this.type = type;
+      }
+
+      public String getName() {
+        return name;
+      }
+
+      public void setName(String name) {
+        this.name = name;
+      }
+
+      public ArrayList<FileArea> getAreas() {
+        return areas;
+      }
+
+      public void setAreas(ArrayList<FileArea> areas) {
+        this.areas = areas;
+      }
+
+      public ArrayList<EditorField> getEditorFields() {
+        return editorFields;
+      }
+
+      public void setEditorFields(ArrayList<EditorField> editorFields) {
+        this.editorFields = editorFields;
+      }
+      
+      public class FileArea {
+        
+        public String area=null;
+        public ArrayList<File>files=null;
+        
+        public FileArea(){}
+        
+        public void setFieldValue(String name, String value) {
+          if (value!=null) {
+            if (name.equals("area")) {
+              setArea(value);
+            }
+          }
+        }
+
+        public String getArea() {
+          return area;
+        }
+
+        public void setArea(String area) {
+          this.area = area;
+        }
+
+        public ArrayList<File> getFiles() {
+          return files;
+        }
+
+        public void setFiles(ArrayList<File> files) {
+          this.files = files;
+        }
+        
+        public File newFile() {
+          if (files==null) { files=new ArrayList<File>(); }
+          File file=new File();
+          files.add(file);
+          return file;
+        }
+        
+        public class File {
+          
+          private String filePath=null;
+          
+          public File(){}
+
+          public void setFieldValue(String name, String value) {
+            if (value!=null) {
+              if (name.equals("filepath")) {
+                setFilePath(value);
+              }
+            }
+          }
+          
+          public String getFilePath() {
+            return filePath;
+          }
+
+          public void setFilePath(String filePath) {
+            this.filePath = filePath;
+          }
+          
+        }
+      }
+      
+      public class EditorField {
+        
+        private String name=null;
+        private String description=null;
+        private String text=null;
+        private Integer format=null;
+
+        public EditorField() {}
+
+        public void setFieldValue(String name, String value) {
+          if (value!=null) {
+            if (!value.isEmpty()) {
+              if (name.equals("format")) { setFormat(Integer.parseInt(value)); }
+            } else {
+              if (name.equals("name")) {
+                setName(value);
+              }
+              if (name.equals("description")) {
+                setDescription(value);
+              }
+              if (name.equals("text")) {
+                setText(value);
+              }
+            }
+          }
+        }
+        
+        public String getName() {
+          return name;
+        }
+
+        public void setName(String name) {
+          this.name = name;
+        }
+
+        public String getDescription() {
+          return description;
+        }
+
+        public void setDescription(String description) {
+          this.description = description;
+        }
+
+        public String getText() {
+          return text;
+        }
+
+        public void setText(String text) {
+          this.text = text;
+        }
+
+        public Integer getFormat() {
+          return format;
+        }
+
+        public void setFormat(Integer format) {
+          this.format = format;
+        }
+        
+      }
+    }
+  }
 }

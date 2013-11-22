@@ -111,7 +111,7 @@ public enum MoodleServices implements Serializable {
         // ASSIGN
         MOD_ASSIGN_GET_GRADES("mod_assign_get_grades"), // MoodleRestModAssign (Untested)
         MOD_ASSIGN_GET_ASSIGNMENTS("mod_assign_get_assignments"), // MoodleRestModAssign
-        MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // Not yet implemented
+        MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // MoodleRestModAssign
 
         // COHORT
         CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort

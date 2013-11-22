@@ -23,6 +23,11 @@ import java.net.URLEncoder;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
 import java.util.ArrayList;
+import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission;
+import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin;
+import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.EditorField;
+import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.FileArea;
+import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.FileArea.File;
 import net.beaconhillcott.moodlerest.MoodleModAssignGrade.Grade;
 
 /**
@@ -221,541 +226,181 @@ public class MoodleRestModAssign implements Serializable {
     }
     return results;
   }
-
-    /*public static MoodleModAssignSubmissionReturn getSubmissions(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
-        if (MoodleCallRestWebService.getAuth()==null)
-            throw new MoodleRestModAssignException();
-        else
-            data.append(MoodleCallRestWebService.getAuth());
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=MoodleCallRestWebService.call(data.toString());
-        MoodleModAssignSubmissionReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignSubmissions submissions=null;
-        MoodleModAssignSubmission submission=null;
-        MoodleModAssignFile file=null;
-        MoodleModAssignOnlineText onlineText=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignSubmissionReturn();
-            }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (submissions!=null) {
-                       if (submission!=null) {
-                           if (file!=null) {
-                               submission.addFile(file);
-                               file=null;
-                           }
-                           if (onlineText!=null) {
-                               submission.addOnlineText(onlineText);
-                               onlineText=null;
-                           }
-                           submissions.addSubmission(submission);
-                           submission=null;
-                       }
-                       if (results==null)
-                         throw new MoodleRestModAssignException();
-                       results.addAssignment(submissions);
-                   }
-                   submissions=new MoodleModAssignSubmissions();
-                   submissions.setAssignmentId(Long.parseLong(content));
-               }
-            }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null) {
-                        if (results==null)
-                          throw new MoodleRestModAssignException();
-                        results.addWarning(warning);
-                    }
-                    warning=new MoodleModAssignWarning();
-                }
-                if (warning==null)
-                  throw new MoodleRestModAssignException();
-                warning.setField(nodeName, content);
-            }
-            if (parent.equals("submissions")) {
-                if (nodeName.equals("id")) {
-                    if (submission!=null) {
-                        if (file!=null) {
-                            submission.addFile(file);
-                            file=null;
-                        }
-                        if (onlineText!=null) {
-                            submission.addOnlineText(onlineText);
-                            onlineText=null;
-                        }
-                        if (submissions==null)
-                          throw new MoodleRestModAssignException();
-                        submissions.addSubmission(submission);
-                    }
-                    submission=new MoodleModAssignSubmission();
-                }
-                if (submission==null)
-                  throw new MoodleRestModAssignException();
-                submission.setField(nodeName, content);
-            }
-            if (parent.equals("files")) {
-                if (nodeName.equals("id")) {
-                    if (file!=null) {
-                      if (submission==null)
-                        throw new MoodleRestModAssignException();
-                      submission.addFile(file);
-                    }
-                    file=new MoodleModAssignFile();
-                }
-                if (file==null)
-                  throw new MoodleRestModAssignException();
-                file.setField(nodeName, content);
-            }
-            if (parent.equals("onlinetext")) {
-                if (nodeName.equals("id")) {
-                    if (onlineText!=null) {
-                      if (submission==null)
-                        throw new MoodleRestModAssignException();
-                      submission.addOnlineText(onlineText);
-                    }
-                    onlineText=new MoodleModAssignOnlineText();
-                }
-                if (onlineText==null)
-                  throw new MoodleRestModAssignException();
-                onlineText.setField(nodeName, content);
-            }
-        }
-        if (results!=null) {
-            if (submissions!=null) {
-                if (submission!=null) {
-                    if (file!=null)
-                        submission.addFile(file);
-                    if (onlineText!=null)
-                        submission.addOnlineText(onlineText);
-                    submissions.addSubmission(submission);
-                }
-                results.addAssignment(submissions);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
+  
+  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    return getSubmissions(assignmentIds, null, null, null, warnings);
+  }
+  
+  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, String status, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    return getSubmissions(assignmentIds, status, null, null, warnings);
+  }
+  
+  public static MoodleModAssignAssignment[] getSubmissionsBefore(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    return getSubmissions(assignmentIds, status, null, time, warnings);
+  }
+  
+  public static MoodleModAssignAssignment[] getSubmissionsSince(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    return getSubmissions(assignmentIds, status, time, null, warnings);
+  }
+  
+  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, String status, Long since, Long before, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
-
-    public MoodleModAssignSubmissionReturn __getSubmissions(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
-        data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
-        MoodleModAssignSubmissionReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignSubmissions submissions=null;
-        MoodleModAssignSubmission submission=null;
-        MoodleModAssignFile file=null;
-        MoodleModAssignOnlineText onlineText=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignSubmissionReturn();
-            }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (submissions!=null) {
-                       if (submission!=null) {
-                           if (file!=null) {
-                               submission.addFile(file);
-                               file=null;
-                           }
-                           if (onlineText!=null) {
-                               submission.addOnlineText(onlineText);
-                               onlineText=null;
-                           }
-                           submissions.addSubmission(submission);
-                           submission=null;
-                       }
-                       if (results==null)
-                         throw new MoodleRestModAssignException();
-                       results.addAssignment(submissions);
-                   }
-                   submissions=new MoodleModAssignSubmissions();
-                   submissions.setAssignmentId(Long.parseLong(content));
-               }
-            }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null) {
-                      if (results==null)
-                        throw new MoodleRestModAssignException();
-                      results.addWarning(warning);
-                    }
-                    warning=new MoodleModAssignWarning();
-                }
-                if (warning==null)
-                  throw new MoodleRestModAssignException();
-                warning.setField(nodeName, content);
-            }
-            if (parent.equals("submissions")) {
-                if (nodeName.equals("id")) {
-                    if (submission!=null) {
-                        if (file!=null) {
-                            submission.addFile(file);
-                            file=null;
-                        }
-                        if (onlineText!=null) {
-                            submission.addOnlineText(onlineText);
-                            onlineText=null;
-                        }
-                        if (submissions==null)
-                          throw new MoodleRestModAssignException();
-                        submissions.addSubmission(submission);
-                    }
-                    submission=new MoodleModAssignSubmission();
-                }
-                if (submission==null)
-                  throw new MoodleRestModAssignException();
-                submission.setField(nodeName, content);
-            }
-            if (parent.equals("files")) {
-                if (nodeName.equals("id")) {
-                    if (file!=null) {
-                      if (submission==null)
-                        throw new MoodleRestModAssignException();
-                      submission.addFile(file);
-                    }
-                    file=new MoodleModAssignFile();
-                }
-                if (file==null)
-                  throw new MoodleRestModAssignException();
-                file.setField(nodeName, content);
-            }
-            if (parent.equals("onlinetext")) {
-                if (nodeName.equals("id")) {
-                    if (onlineText!=null) {
-                      if (submission==null)
-                        throw new MoodleRestModAssignException();
-                      submission.addOnlineText(onlineText);
-                    }
-                    onlineText=new MoodleModAssignOnlineText();
-                }
-                if (onlineText==null)
-                  throw new MoodleRestModAssignException();
-                onlineText.setField(nodeName, content);
-            }
-        }
-        if (results!=null) {
-            if (submissions!=null) {
-                if (submission!=null) {
-                    if (file!=null)
-                        submission.addFile(file);
-                    if (onlineText!=null)
-                        submission.addOnlineText(onlineText);
-                    submissions.addSubmission(submission);
-                }
-                results.addAssignment(submissions);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
     }
-    
-    public static MoodleModAssignGradeReturn getGrades(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
-        if (MoodleCallRestWebService.getAuth()==null)
-            throw new MoodleRestModAssignException();
-        else
-            data.append(MoodleCallRestWebService.getAuth());
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=MoodleCallRestWebService.call(data.toString());
-        MoodleModAssignGradeReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignGrades grades=null;
-        MoodleModAssignGrade grade=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignGradeReturn();
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<assignmentIds.length; i++) {
+      data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
+    }
+    if (status!=null) {
+      data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+status, MoodleServices.ENCODING.toString()));
+    }
+    if (since!=null) {
+      data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+since, MoodleServices.ENCODING.toString()));
+    }
+    if (before!=null) {
+      data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+before, MoodleServices.ENCODING.toString()));
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleModAssignAssignment> assignments=null;
+    MoodleModAssignAssignment assignment=null;
+    ArrayList<Submission> submissions=null;
+    Submission submission=null;
+    ArrayList<Plugin> plugins=null;
+    Plugin plugin=null;
+    ArrayList<FileArea> areas=null;
+    FileArea area=null;
+    ArrayList<File> files=null;
+    File file=null;
+    ArrayList<EditorField> fields=null;
+    EditorField field=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("assignments")) {
+        if (nodeName.equals("assignmentid")) {
+          if (assignments==null) {
+            assignments=new ArrayList<MoodleModAssignAssignment>();
+          }
+          assignment=new MoodleModAssignAssignment();
+          assignments.add(assignment);
+          assignment.setAssignmentId(Long.parseLong(content));
+          submissions=null;
+          plugins=null;
+          areas=null;
+          files=null;
+          fields=null;
+        }
+      } else {
+        if (parent.equals("submissions")) {
+          if (nodeName.equals("id")) {
+            if (submissions==null) {
+              submissions=new ArrayList<Submission>();
             }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (grades!=null) {
-                       if (grade!=null) {
-                           grades.addSubmission(grade);
-                           grade=null;
-                       }
-                       if (results==null)
-                         throw new MoodleRestModAssignException();
-                       results.addAssignment(grades);
-                   }
-                   grades=new MoodleModAssignGrades();
-                   grades.setAssignmentId(Long.parseLong(content));
-               }
+            submission = assignment.newSubmission();
+            submissions.add(submission);
+            submission.setId(Long.parseLong(content));
+            plugins=null;
+            areas=null;
+            files=null;
+            fields=null;
+          } else {
+            submission.setFieldValue(nodeName, content);
+          }
+        } else {
+          if (parent.equals("plugins")) {
+            if (nodeName.equals("type")) {
+              if (plugins==null) {
+                plugins=new ArrayList<Plugin>();
+              }
+              plugin = submission.newPlugin();
+              plugins.add(plugin);
+              plugin.setType(content);
+              areas=null;
+              files=null;
+              fields=null;
+            } else {
+              plugin.setFieldValue(nodeName, content);
             }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null) {
-                      if (results==null)
-                        throw new MoodleRestModAssignException();
-                      results.addWarning(warning);
+          } else {
+            if (parent.equals("fileareas")) {
+              if (nodeName.equals("area")) {
+                if (areas==null) {
+                  areas=new ArrayList<FileArea>();
+                }
+                area = plugin.newFileArea();
+                areas.add(area);
+                area.setArea(content);
+                files=null;
+              } else {
+                area.setFieldValue(nodeName, content);
+              }
+            } else {
+              if (parent.equals("files")) {
+                if (nodeName.equals("filepath")) {
+                  if (files==null) {
+                    files=new ArrayList<File>();
+                  }
+                  file = area.newFile();
+                  files.add(file);
+                  file.setFieldValue(nodeName, content);
+                } else {
+                  file.setFieldValue(nodeName, content);
+                }
+              } else {
+                if (parent.equals("editorfields")) {
+                  if (nodeName.equals("name")) {
+                    if (fields==null) {
+                      fields=new ArrayList<EditorField>();
                     }
-                    warning=new MoodleModAssignWarning();
-                }
-                if (warning==null)
-                  throw new MoodleRestModAssignException();
-                warning.setField(nodeName, content);
-            }
-        }
-        if (results!=null) {
-            if (grades!=null) {
-                if (grade!=null) {
-                    grades.addSubmission(grade);
-                }
-                results.addAssignment(grades);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
-    }
-
-    public MoodleModAssignGradeReturn __getGrades(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_SUBMISSIONS.toString();
-        data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
-        MoodleModAssignGradeReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignGrades grades=null;
-        MoodleModAssignGrade grade=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignGradeReturn();
-            }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (grades!=null) {
-                       if (grade!=null) {
-                           grades.addSubmission(grade);
-                           grade=null;
-                       }
-                       if (results==null)
-                         throw new MoodleRestModAssignException();
-                       results.addAssignment(grades);
-                   }
-                   grades=new MoodleModAssignGrades();
-                   grades.setAssignmentId(Long.parseLong(content));
-               }
-            }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null) {
-                      if (results==null)
-                        throw new MoodleRestModAssignException();
-                      results.addWarning(warning);
+                    field = plugin.newEditorField();
+                    fields.add(field);
+                    field.setFieldValue(nodeName, content);
+                  } else {
+                    field.setFieldValue(nodeName, content);
+                  }
+                } else {
+                  if (parent.equals("warnings")) {
+                    if (nodeName.equals("item")) {
+                      if (warn==null) {
+                        warn=new ArrayList<MoodleWarning>();
+                      }
+                      warning=new MoodleWarning();
+                      warn.add(warning);
+                      warning.setItem(content);
+                    } else {
+                      warning.setMoodleWarningField(nodeName, content);
                     }
-                    warning=new MoodleModAssignWarning();
+                  }
                 }
-                if (warning==null)
-                  throw new MoodleRestModAssignException();
-                warning.setField(nodeName, content);
+              }
             }
+          }
         }
-        if (results!=null) {
-            if (grades!=null) {
-                if (grade!=null) {
-                    grades.addSubmission(grade);
-                }
-                results.addAssignment(grades);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
+      }
     }
-    
-    public static MoodleModAssignGradeReturn getAssignments(MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS.toString();
-        if (MoodleCallRestWebService.getAuth()==null)
-            throw new MoodleRestModAssignException();
-        else
-            data.append(MoodleCallRestWebService.getAuth());
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=MoodleCallRestWebService.call(data.toString());
-        MoodleModAssignGradeReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignGrades grades=null;
-        MoodleModAssignGrade grade=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignGradeReturn();
-            }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (grades!=null) {
-                       if (grade!=null) {
-                           grades.addSubmission(grade);
-                           grade=null;
-                       }
-                       results.addAssignment(grades);
-                   }
-                   grades=new MoodleModAssignGrades();
-                   grades.setAssignmentId(Long.parseLong(content));
-               }
-            }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null)
-                        results.addWarning(warning);
-                    warning=new MoodleModAssignWarning();
-                }
-                warning.setField(nodeName, content);
-            }
-        }
-        if (results!=null) {
-            if (grades!=null) {
-                if (grade!=null) {
-                    grades.addSubmission(grade);
-                }
-                results.addAssignment(grades);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
     }
-
-    public MoodleModAssignGradeReturn __getAssignments(String url, String token, MoodleModAssignSubmissionParam params) throws MoodleRestException, UnsupportedEncodingException {
-        if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
-        StringBuilder data=new StringBuilder();
-        String functionCall=MoodleServices.MOD_ASSIGN_GET_ASSIGNMENTS.toString();
-        data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        if (params.getAssignmentIds()==null || params.getAssignmentIds().length==0) throw new MoodleRestModAssignException(MoodleRestModAssignException.REQUIRED_PARAMETER);
-        MoodleModAssignAssignment[] assignmentIds = params.getAssignmentIds();
-        for (int i=0; i<assignmentIds.length; i++) data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
-        if (!params.getStatus().isEmpty()) data.append("&").append(URLEncoder.encode("status", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.getStatus(), MoodleServices.ENCODING.toString()));
-        if (!(params.getSince()==0)) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getSince(), MoodleServices.ENCODING.toString()));
-        if (!(params.getBefore()==0)) data.append("&").append(URLEncoder.encode("before", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.getBefore(), MoodleServices.ENCODING.toString()));
-        data.trimToSize();
-        NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
-        MoodleModAssignGradeReturn results=null;
-        MoodleModAssignWarning warning=null;
-        MoodleModAssignGrades grades=null;
-        MoodleModAssignGrade grade=null;
-        for (int j=0;j<elements.getLength();j++) {
-            String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-            if (parent.equals("KEY"))
-                parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-            if (parent.equals("RESPONSE") && ((nodeName.equals("assignments")) || nodeName.equals("warnings"))) {
-                if (results==null) results=new  MoodleModAssignGradeReturn();
-            }
-            if (parent.equals("assignments")) {
-               if (nodeName.equals("assignmentid")) {
-                   if (grades!=null) {
-                       if (grade!=null) {
-                           grades.addSubmission(grade);
-                           grade=null;
-                       }
-                       results.addAssignment(grades);
-                   }
-                   grades=new MoodleModAssignGrades();
-                   grades.setAssignmentId(Long.parseLong(content));
-               }
-            }
-            if (parent.equals("warnings")) {
-                if (nodeName.equals("element")) {
-                    if (warning!=null)
-                        results.addWarning(warning);
-                    warning=new MoodleModAssignWarning();
-                }
-                warning.setField(nodeName, content);
-            }
-        }
-        if (results!=null) {
-            if (grades!=null) {
-                if (grade!=null) {
-                    grades.addSubmission(grade);
-                }
-                results.addAssignment(grades);
-            }
-            if (warning!=null) {
-                results.addWarning(warning);
-            }
-        }
-        return results;
-    }*/
+    MoodleModAssignAssignment[] results=null;
+    if (assignments!=null) {
+      results=new MoodleModAssignAssignment[assignments.size()];
+      results=assignments.toArray(results);
+    }
+    return results;
+  }
+  
 }
