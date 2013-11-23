@@ -60,12 +60,15 @@ public enum MoodleServices implements Serializable {
         CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser       
         CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser       
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser
+        CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 Not yet implemented
 
         // ENROL
         CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol       
         CORE_ENROL_GET_ENROLLED_USERS("core_enrol_get_enrolled_users"), // MoodleRestEnrol       
         CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol
-        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment       
+        CORE_ENROL_GET_COURSE_ENROLMENT_METHODS("core_enrol_get_course_enrolment_methods"), // Moodle 2.6 Not yet implemented
+        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment
+        ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 Not yet implemented
 
         // ROLE
         CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol       
@@ -112,7 +115,18 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_GET_GRADES("mod_assign_get_grades"), // MoodleRestModAssign (Untested)
         MOD_ASSIGN_GET_ASSIGNMENTS("mod_assign_get_assignments"), // MoodleRestModAssign
         MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // MoodleRestModAssign
-
+        MOD_ASSIGN_GET_USER_FLAGS("mod_assign_get_user_flags"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_GET_USER_MAPPINGS("mod_assign_get_user_mappings"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_LOCK_SUBMISSIONS("mod_assign_lock_submissions"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_REVEAL_IDENTITIES("mod_assign_reveal_identities"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_REVERT_SUBMISSIONS_TO_DRAFT("mod_assign_revert_submissions_to_draft"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SAVE_GRADE("mod_assign_save_grade"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SAVE_SUBMISSION("mod_assign_save_submission"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SAVE_USER_EXTENSIONS("mod_assign_save_user_extensions"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SET_USER_FLAGS("mod_assign_set_user_flags"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SUBMIT_FOR_GRADING("mod_assign_submit_for_grading"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_UNLOCK_SUBMISSIONS("mod_assign_unlock_submissions"), // Moodle 2.6 Not yet implemented
+        
         // COHORT
         CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort
         CORE_COHORT_DELETE_COHORTS("core_cohort_delete_cohorts"), // MoodleRestCohort
@@ -133,6 +147,10 @@ public enum MoodleServices implements Serializable {
         // FORUM
         MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // Not yet implemented
         MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // Not yet implemented
+        
+        // GRADING
+        CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 Not yet implemented
+        CORE_GRADING_GET_GRADINGFORM("core_grading_get_gradingform_instances"), // Moodle 2.6 Not yet implemented
 
         
         // ####################
