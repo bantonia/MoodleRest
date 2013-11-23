@@ -18,17 +18,17 @@
 
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import org.w3c.dom.NodeList;
-import java.io.Serializable;
 import java.util.ArrayList;
-import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission;
-import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin;
-import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.EditorField;
-import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.FileArea;
-import net.beaconhillcott.moodlerest.MoodleModAssignAssignment.Submission.Plugin.FileArea.File;
-import net.beaconhillcott.moodlerest.MoodleModAssignGrade.Grade;
+import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission;
+import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin;
+import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin.EditorField;
+import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin.FileArea;
+import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin.FileArea.File;
+import net.beaconhillcott.moodlerest.MoodleModAssignGrades.Grade;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -36,19 +36,19 @@ import net.beaconhillcott.moodlerest.MoodleModAssignGrade.Grade;
  */
 public class MoodleRestModAssign implements Serializable {
   
-  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignAssignments[] getAssignments(Long[] courseIds) throws MoodleRestException, UnsupportedEncodingException {
     return getAssignments(courseIds, null, null);
   }
   
-  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, String[] capabilities) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignAssignments[] getAssignments(Long[] courseIds, String[] capabilities) throws MoodleRestException, UnsupportedEncodingException {
     return getAssignments(courseIds, capabilities, null);
   }
   
-  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignAssignments[] getAssignments(Long[] courseIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getAssignments(courseIds, null, warnings);
   }
   
-  public static MoodleModAssignCourse[] getAssignments(Long[] courseIds, String[] capabilities, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignAssignments[] getAssignments(Long[] courseIds, String[] capabilities, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) {
       throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
@@ -70,11 +70,11 @@ public class MoodleRestModAssign implements Serializable {
     }
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ArrayList<MoodleModAssignCourse> courses=null;
-    MoodleModAssignCourse course=null;
-    ArrayList<MoodleModAssignCourse.Assignment> assignments=null;
-    MoodleModAssignCourse.Assignment assignment=null;
-    MoodleModAssignCourse.Assignment.Config config=null;
+    ArrayList<MoodleModAssignAssignments> courses=null;
+    MoodleModAssignAssignments course=null;
+    ArrayList<MoodleModAssignAssignments.Assignment> assignments=null;
+    MoodleModAssignAssignments.Assignment assignment=null;
+    MoodleModAssignAssignments.Assignment.Config config=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     for (int j=0; j<elements.getLength(); j++) {
@@ -83,10 +83,10 @@ public class MoodleRestModAssign implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (parent.equals("courses")) {
         if (courses==null) {
-          courses=new ArrayList<MoodleModAssignCourse>();
+          courses=new ArrayList<MoodleModAssignAssignments>();
         }
         if (nodeName.equals("id")) {
-          course=new MoodleModAssignCourse();
+          course=new MoodleModAssignAssignments();
           courses.add(course);
           course.setId(Long.parseLong(content));
         } else {
@@ -131,27 +131,27 @@ public class MoodleRestModAssign implements Serializable {
         warnings=warn.toArray(warnings);
       }
     }
-    MoodleModAssignCourse[] results=null;
+    MoodleModAssignAssignments[] results=null;
     if (courses!=null) {
-      results=new MoodleModAssignCourse[courses.size()];
+      results=new MoodleModAssignAssignments[courses.size()];
       results=courses.toArray(results);
     }
     return results;
   }
   
-  public static MoodleModAssignGrade[] getGrades(Long[] assignmentIds) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignGrades[] getGrades(Long[] assignmentIds) throws MoodleRestException, UnsupportedEncodingException {
     return getGrades(assignmentIds, null, null);
   }
   
-  public static MoodleModAssignGrade[] getGrades(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignGrades[] getGrades(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getGrades(assignmentIds, null, warnings);
   }
   
-  public static MoodleModAssignGrade[] getGrades(Long[] assignmentIds, Long since) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignGrades[] getGrades(Long[] assignmentIds, Long since) throws MoodleRestException, UnsupportedEncodingException {
     return getGrades(assignmentIds, since, null);
   }
   
-  public static MoodleModAssignGrade[] getGrades(Long[] assignmentIds, Long since, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignGrades[] getGrades(Long[] assignmentIds, Long since, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) {
       throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
@@ -171,8 +171,8 @@ public class MoodleRestModAssign implements Serializable {
     }
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ArrayList<MoodleModAssignGrade> assignments=null;
-    MoodleModAssignGrade assignment=null;
+    ArrayList<MoodleModAssignGrades> assignments=null;
+    MoodleModAssignGrades assignment=null;
     Grade grade=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
@@ -183,9 +183,9 @@ public class MoodleRestModAssign implements Serializable {
       if (parent.equals("assignments")) {
         if (nodeName.equals("assignmentid")) {
           if (assignments==null) {
-            assignments=new ArrayList<MoodleModAssignGrade>();
+            assignments=new ArrayList<MoodleModAssignGrades>();
           }
-          assignment=new MoodleModAssignGrade();
+          assignment=new MoodleModAssignGrades();
           assignments.add(assignment);
           assignment.setAssignmentId(Long.parseLong(content));
         }
@@ -219,31 +219,31 @@ public class MoodleRestModAssign implements Serializable {
         warnings=warn.toArray(warnings);
       }
     }
-    MoodleModAssignGrade[] results=null;
+    MoodleModAssignGrades[] results=null;
     if (assignments!=null) {
-      results=new MoodleModAssignGrade[assignments.size()];
+      results=new MoodleModAssignGrades[assignments.size()];
       results=assignments.toArray(results);
     }
     return results;
   }
   
-  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignSubmissions[] getSubmissions(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getSubmissions(assignmentIds, null, null, null, warnings);
   }
   
-  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, String status, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignSubmissions[] getSubmissions(Long[] assignmentIds, String status, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getSubmissions(assignmentIds, status, null, null, warnings);
   }
   
-  public static MoodleModAssignAssignment[] getSubmissionsBefore(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignSubmissions[] getSubmissionsBefore(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getSubmissions(assignmentIds, status, null, time, warnings);
   }
   
-  public static MoodleModAssignAssignment[] getSubmissionsSince(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignSubmissions[] getSubmissionsSince(Long[] assignmentIds, String status, Long time, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     return getSubmissions(assignmentIds, status, time, null, warnings);
   }
   
-  public static MoodleModAssignAssignment[] getSubmissions(Long[] assignmentIds, String status, Long since, Long before, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleModAssignSubmissions[] getSubmissions(Long[] assignmentIds, String status, Long since, Long before, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) {
       throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
@@ -269,8 +269,8 @@ public class MoodleRestModAssign implements Serializable {
     }
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ArrayList<MoodleModAssignAssignment> assignments=null;
-    MoodleModAssignAssignment assignment=null;
+    ArrayList<MoodleModAssignSubmissions> assignments=null;
+    MoodleModAssignSubmissions assignment=null;
     ArrayList<Submission> submissions=null;
     Submission submission=null;
     ArrayList<Plugin> plugins=null;
@@ -290,82 +290,53 @@ public class MoodleRestModAssign implements Serializable {
       if (parent.equals("assignments")) {
         if (nodeName.equals("assignmentid")) {
           if (assignments==null) {
-            assignments=new ArrayList<MoodleModAssignAssignment>();
+            assignments=new ArrayList<MoodleModAssignSubmissions>();
           }
-          assignment=new MoodleModAssignAssignment();
+          assignment=new MoodleModAssignSubmissions(Long.parseLong(content));
           assignments.add(assignment);
-          assignment.setAssignmentId(Long.parseLong(content));
-          submissions=null;
-          plugins=null;
-          areas=null;
-          files=null;
-          fields=null;
         }
       } else {
         if (parent.equals("submissions")) {
           if (nodeName.equals("id")) {
-            if (submissions==null) {
-              submissions=new ArrayList<Submission>();
-            }
-            submission = assignment.newSubmission();
+            submissions=assignment.getSubmissions();
+            submission = assignment.newSubmission(Long.parseLong(content));
             submissions.add(submission);
-            submission.setId(Long.parseLong(content));
-            plugins=null;
-            areas=null;
-            files=null;
-            fields=null;
           } else {
             submission.setFieldValue(nodeName, content);
           }
         } else {
           if (parent.equals("plugins")) {
             if (nodeName.equals("type")) {
-              if (plugins==null) {
-                plugins=new ArrayList<Plugin>();
-              }
-              plugin = submission.newPlugin();
+              plugins=submission.getPlugins();
+              plugin = submission.newPlugin(content);
               plugins.add(plugin);
-              plugin.setType(content);
-              areas=null;
-              files=null;
-              fields=null;
             } else {
               plugin.setFieldValue(nodeName, content);
             }
           } else {
             if (parent.equals("fileareas")) {
               if (nodeName.equals("area")) {
-                if (areas==null) {
-                  areas=new ArrayList<FileArea>();
-                }
-                area = plugin.newFileArea();
+                areas=plugin.getAreas();
+                area = plugin.newFileArea(content);
                 areas.add(area);
-                area.setArea(content);
-                files=null;
               } else {
                 area.setFieldValue(nodeName, content);
               }
             } else {
               if (parent.equals("files")) {
                 if (nodeName.equals("filepath")) {
-                  if (files==null) {
-                    files=new ArrayList<File>();
-                  }
-                  file = area.newFile();
+                  files=area.getFiles();
+                  file = area.newFile(content);
                   files.add(file);
-                  file.setFieldValue(nodeName, content);
                 } else {
                   file.setFieldValue(nodeName, content);
                 }
               } else {
                 if (parent.equals("editorfields")) {
                   if (nodeName.equals("name")) {
-                    if (fields==null) {
-                      fields=new ArrayList<EditorField>();
-                    }
-                    field = plugin.newEditorField();
+                    fields=plugin.getEditorFields();
+                    field = plugin.newEditorField(content);
                     fields.add(field);
-                    field.setFieldValue(nodeName, content);
                   } else {
                     field.setFieldValue(nodeName, content);
                   }
@@ -375,9 +346,8 @@ public class MoodleRestModAssign implements Serializable {
                       if (warn==null) {
                         warn=new ArrayList<MoodleWarning>();
                       }
-                      warning=new MoodleWarning();
+                      warning=new MoodleWarning(content);
                       warn.add(warning);
-                      warning.setItem(content);
                     } else {
                       warning.setMoodleWarningField(nodeName, content);
                     }
@@ -395,9 +365,9 @@ public class MoodleRestModAssign implements Serializable {
         warnings=warn.toArray(warnings);
       }
     }
-    MoodleModAssignAssignment[] results=null;
+    MoodleModAssignSubmissions[] results=null;
     if (assignments!=null) {
-      results=new MoodleModAssignAssignment[assignments.size()];
+      results=new MoodleModAssignSubmissions[assignments.size()];
       results=assignments.toArray(results);
     }
     return results;

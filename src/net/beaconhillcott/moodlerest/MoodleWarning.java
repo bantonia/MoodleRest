@@ -33,6 +33,10 @@ public class MoodleWarning implements Serializable {
 
   public MoodleWarning() {
   }
+  
+  public MoodleWarning(String warningcode) {
+    this.warningcode=warningcode;
+  }
 
   public MoodleWarning(String warningcode, String message) {
     this.warningcode=warningcode;

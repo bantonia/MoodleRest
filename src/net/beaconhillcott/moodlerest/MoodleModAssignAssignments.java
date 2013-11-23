@@ -11,14 +11,14 @@ import java.util.ArrayList;
  *
  * @author root
  */
-public class MoodleModAssignCourse implements Serializable {
+public class MoodleModAssignAssignments implements Serializable {
   private Long id=null;
   private String fullName=null;
   private String shortName=null;
   private Long timeModified=null;
   private ArrayList<Assignment> assignments=null;
   
-  public MoodleModAssignCourse() {
+  public MoodleModAssignAssignments() {
     assignments=new ArrayList<Assignment>();
   }
   

@@ -25,13 +25,13 @@ import java.util.ArrayList;
  * 
  * @author Bill Antonia
  */
-public class MoodleModAssignGrade implements Serializable {
+public class MoodleModAssignGrades implements Serializable {
 
   private Long assignmentId=null;
   private ArrayList<Grade> grades=null;
   
-  public MoodleModAssignGrade() { grades=new ArrayList<Grade>();}
-  public MoodleModAssignGrade(Long assignmentId) { this.assignmentId=assignmentId; grades=new ArrayList<Grade>();}
+  public MoodleModAssignGrades() { grades=new ArrayList<Grade>();}
+  public MoodleModAssignGrades(Long assignmentId) { this.assignmentId=assignmentId; grades=new ArrayList<Grade>();}
   
   public Grade newGrade() {
     if (grades==null) {

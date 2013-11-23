@@ -25,21 +25,29 @@ import java.io.Serializable;
  *
  * @author root
  */
-public class MoodleModAssignAssignment implements Serializable {
+public class MoodleModAssignSubmissions implements Serializable {
   
   private Long assignmentId=null;
   private ArrayList<Submission>submissions=null;
   
-  public MoodleModAssignAssignment() {}
-  public MoodleModAssignAssignment(Long assignmentId) { this.assignmentId=assignmentId; }
+  public MoodleModAssignSubmissions() { submissions=new ArrayList<Submission>(); submissions=new ArrayList<Submission>(); }
+  public MoodleModAssignSubmissions(Long assignmentId) { this.assignmentId=assignmentId; submissions=new ArrayList<Submission>(); submissions=new ArrayList<Submission>(); }
 
   public void setAssignmentId(Long assignmentId) { this.assignmentId=assignmentId; }
   public Long getAssignmentId() { return assignmentId; }
   public ArrayList<Submission> getSubmissions() { return submissions; }
   public void setSubmissions(ArrayList<Submission> submissions) { this.submissions = submissions; }
+  
   public Submission newSubmission() {
     if (submissions==null) { submissions=new ArrayList<Submission>(); }
     Submission submission=new Submission();
+    submissions.add(submission);
+    return submission;
+  }
+  
+  public Submission newSubmission(Long id) {
+    if (submissions==null) { submissions=new ArrayList<Submission>(); }
+    Submission submission=new Submission(id);
     submissions.add(submission);
     return submission;
   }
@@ -62,11 +70,19 @@ public class MoodleModAssignAssignment implements Serializable {
     private Long groupId=null;
     private ArrayList<Plugin> plugins=null;
 
-    public Submission() {}
+    public Submission() { plugins=new ArrayList<Plugin>(); }
+    public Submission(Long id) { this.id=id; plugins=new ArrayList<Plugin>(); }
     
     public Plugin newPlugin() {
       if (plugins==null) { plugins=new ArrayList<Plugin>(); }
       Plugin plugin=new Plugin();
+      plugins.add(plugin);
+      return plugin;
+    }
+    
+    public Plugin newPlugin(String type) {
+      if (plugins==null) { plugins=new ArrayList<Plugin>(); }
+      Plugin plugin=new Plugin(type);
       plugins.add(plugin);
       return plugin;
     }
@@ -152,7 +168,8 @@ public class MoodleModAssignAssignment implements Serializable {
       private ArrayList<FileArea> areas=null;
       private ArrayList<EditorField> editorFields=null;
       
-      public Plugin(){}
+      public Plugin() { areas=new ArrayList<FileArea>(); editorFields=new ArrayList<EditorField>(); }
+      public Plugin(String type) { this.type=type; areas=new ArrayList<FileArea>(); editorFields=new ArrayList<EditorField>(); }
       
       public void setFieldValue(String name, String value) {
         if (value!=null) {
@@ -172,9 +189,23 @@ public class MoodleModAssignAssignment implements Serializable {
         return area;
       }
       
+      public FileArea newFileArea(String areaName) {
+        if (areas==null) { areas=new ArrayList<FileArea>(); }
+        FileArea area=new FileArea(areaName);
+        areas.add(area);
+        return area;
+      }
+      
       public EditorField newEditorField() {
         if (editorFields==null) { editorFields=new ArrayList<EditorField>(); }
         EditorField field=new EditorField();
+        editorFields.add(field);
+        return field;
+      }
+      
+      public EditorField newEditorField(String name) {
+        if (editorFields==null) { editorFields=new ArrayList<EditorField>(); }
+        EditorField field=new EditorField(name);
         editorFields.add(field);
         return field;
       }
@@ -216,7 +247,8 @@ public class MoodleModAssignAssignment implements Serializable {
         public String area=null;
         public ArrayList<File>files=null;
         
-        public FileArea(){}
+        public FileArea(){ files=new ArrayList<File>(); }
+        public FileArea(String area){ this.area=area; files=new ArrayList<File>(); }
         
         public void setFieldValue(String name, String value) {
           if (value!=null) {
@@ -249,11 +281,19 @@ public class MoodleModAssignAssignment implements Serializable {
           return file;
         }
         
+        public File newFile(String filePath) {
+          if (files==null) { files=new ArrayList<File>(); }
+          File file=new File(filePath);
+          files.add(file);
+          return file;
+        }
+        
         public class File {
           
           private String filePath=null;
           
           public File(){}
+          public File(String filePath){ this.filePath=filePath; }
 
           public void setFieldValue(String name, String value) {
             if (value!=null) {
@@ -282,6 +322,7 @@ public class MoodleModAssignAssignment implements Serializable {
         private Integer format=null;
 
         public EditorField() {}
+        public EditorField(String name) { this.name=name; }
 
         public void setFieldValue(String name, String value) {
           if (value!=null) {
