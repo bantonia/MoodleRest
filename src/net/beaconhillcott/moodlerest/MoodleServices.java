@@ -117,7 +117,7 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // MoodleRestModAssign (Untested)
         MOD_ASSIGN_GET_USER_FLAGS("mod_assign_get_user_flags"), // Moodle 2.6 Not yet implemented
         MOD_ASSIGN_GET_USER_MAPPINGS("mod_assign_get_user_mappings"), // Moodle 2.6 Not yet implemented
-        MOD_ASSIGN_LOCK_SUBMISSIONS("mod_assign_lock_submissions"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_LOCK_SUBMISSIONS("mod_assign_lock_submissions"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_REVEAL_IDENTITIES("mod_assign_reveal_identities"), // Moodle 2.6 Not yet implemented
         MOD_ASSIGN_REVERT_SUBMISSIONS_TO_DRAFT("mod_assign_revert_submissions_to_draft"), // Moodle 2.6 Not yet implemented
         MOD_ASSIGN_SAVE_GRADE("mod_assign_save_grade"), // Moodle 2.6 Not yet implemented
