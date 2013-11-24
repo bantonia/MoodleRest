@@ -397,16 +397,14 @@ public class MoodleRestModAssign implements Serializable {
       String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       String content=elements.item(j).getTextContent();
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-      if (parent.equals("warnings")) {
-        if (nodeName.equals("item")) {
-          if (warn==null) {
-            warn=new ArrayList<MoodleWarning>();
-          }
-          warning=new MoodleWarning(content);
-          warn.add(warning);
-        } else {
-          warning.setMoodleWarningField(nodeName, content);
+      if (nodeName.equals("item")) {
+        if (warn==null) {
+          warn=new ArrayList<MoodleWarning>();
         }
+        warning=new MoodleWarning(content);
+        warn.add(warning);
+      } else {
+        warning.setMoodleWarningField(nodeName, content);
       }
     }
     if (warn!=null) {
