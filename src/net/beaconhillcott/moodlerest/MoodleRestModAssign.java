@@ -28,6 +28,8 @@ import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugi
 import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin.FileArea;
 import net.beaconhillcott.moodlerest.MoodleModAssignSubmissions.Submission.Plugin.FileArea.File;
 import net.beaconhillcott.moodlerest.MoodleModAssignGrades.Grade;
+import net.beaconhillcott.moodlerest.MoodleModAssignUserFlags.UserFlags;
+import net.beaconhillcott.moodlerest.MoodleModAssignUserMappings.UserMappings;
 import org.w3c.dom.NodeList;
 
 /**
@@ -374,22 +376,22 @@ public class MoodleRestModAssign implements Serializable {
   }
   
   public static void lockSubmissions(Long assignmentId, Long[] userIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
-    common(MoodleServices.MOD_ASSIGN_LOCK_SUBMISSIONS, assignmentId, userIds, warnings);
+    common(MoodleServices.MOD_ASSIGN_LOCK_SUBMISSIONS, assignmentId, userIds, null, warnings);
   }
   
   public static void revealIdentities(Long assignmentId, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
-    common(MoodleServices.MOD_ASSIGN_REVEAL_IDENTITIES, assignmentId, null, warnings);
+    common(MoodleServices.MOD_ASSIGN_REVEAL_IDENTITIES, assignmentId, null, null, warnings);
   }
   
   public static void revertSubmissionsToDraft(Long assignmentId, Long[] userIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
-    common(MoodleServices.MOD_ASSIGN_REVERT_SUBMISSIONS_TO_DRAFT, assignmentId, userIds, warnings);
+    common(MoodleServices.MOD_ASSIGN_REVERT_SUBMISSIONS_TO_DRAFT, assignmentId, userIds, null, warnings);
   }
   
   public static void unlockSubmissions(Long assignmentId, Long[] userIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
-    common(MoodleServices.MOD_ASSIGN_UNLOCK_SUBMISSIONS, assignmentId, userIds, warnings);
+    common(MoodleServices.MOD_ASSIGN_UNLOCK_SUBMISSIONS, assignmentId, userIds, null, warnings);
   }
   
-  private static void common(MoodleServices service, Long assignmentId, Long[] userIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+  private static void common(MoodleServices service, Long assignmentId, Long[] userIds, Object results, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) {
       throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     }
@@ -431,5 +433,151 @@ public class MoodleRestModAssign implements Serializable {
         warnings=warn.toArray(warnings);
       }
     }
+  }
+  
+  public static MoodleModAssignUserFlags[] getUserFlags(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_GET_USER_FLAGS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<assignmentIds.length; i++) {
+      data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleModAssignUserFlags> assignments=null;
+    MoodleModAssignUserFlags assignment=null;
+    ArrayList<UserFlags> userFlags=null;
+    UserFlags flags=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("assignments")) {
+        if (nodeName.equals("assignmentid")) {
+          if (assignments==null) {
+            assignments=new ArrayList<MoodleModAssignUserFlags>();
+          }
+          assignment=new MoodleModAssignUserFlags(Long.parseLong(content));
+          assignments.add(assignment);
+        }
+      } else {
+        if (parent.equals("userflags")) {
+          if (nodeName.equals("id")) {
+            userFlags=assignment.getUserFlags();
+            flags = assignment.newUserFlags(Long.parseLong(content));
+            userFlags.add(flags);
+          } else {
+            flags.setFieldValue(nodeName, content);
+          }
+        } else {
+          if (parent.equals("warnings")) {
+            if (nodeName.equals("item")) {
+              if (warn==null) {
+                warn=new ArrayList<MoodleWarning>();
+              }
+              warning=new MoodleWarning(content);
+              warn.add(warning);
+            } else {
+              warning.setMoodleWarningField(nodeName, content);
+            }
+          }
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+    MoodleModAssignUserFlags[] results=null;
+    if (assignments!=null) {
+      results=new MoodleModAssignUserFlags[assignments.size()];
+      results=assignments.toArray(results);
+    }
+    return results;
+  }
+  
+  public static MoodleModAssignUserMappings[] getUserMappings(Long[] assignmentIds, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_GET_USER_FLAGS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<assignmentIds.length; i++) {
+      data.append("&").append(URLEncoder.encode("assignmentids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentIds[i], MoodleServices.ENCODING.toString()));
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleModAssignUserMappings> assignments=null;
+    MoodleModAssignUserMappings assignment=null;
+    ArrayList<UserMappings> userMappings=null;
+    UserMappings mappings=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("assignments")) {
+        if (nodeName.equals("assignmentid")) {
+          if (assignments==null) {
+            assignments=new ArrayList<MoodleModAssignUserMappings>();
+          }
+          assignment=new MoodleModAssignUserMappings(Long.parseLong(content));
+          assignments.add(assignment);
+        }
+      } else {
+        if (parent.equals("mappings")) {
+          if (nodeName.equals("id")) {
+            userMappings=assignment.getUserMappings();
+            mappings = assignment.newUserMappings(Long.parseLong(content));
+            userMappings.add(mappings);
+          } else {
+            mappings.setFieldValue(nodeName, content);
+          }
+        } else {
+          if (parent.equals("warnings")) {
+            if (nodeName.equals("item")) {
+              if (warn==null) {
+                warn=new ArrayList<MoodleWarning>();
+              }
+              warning=new MoodleWarning(content);
+              warn.add(warning);
+            } else {
+              warning.setMoodleWarningField(nodeName, content);
+            }
+          }
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+    MoodleModAssignUserMappings[] results=null;
+    if (assignments!=null) {
+      results=new MoodleModAssignUserMappings[assignments.size()];
+      results=assignments.toArray(results);
+    }
+    return results;
   }
 }

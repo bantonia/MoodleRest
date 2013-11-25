@@ -95,12 +95,12 @@ public enum MoodleServices implements Serializable {
         CORE_MESSAGE_BLOCK_CONTACTS("core_message_block_contacts"), // MoodleRestMessage
         CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage
         CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Moodle bug?)
+        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Moodle bug 2.5?)
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes
-        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes (Moodle bug)
-        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes (Moodle bug)
+        CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes (Moodle bug 2.5)
+        CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes (Moodle bug 2.5)
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // Not yet implemented
 
         // WEBSERVICE
@@ -115,8 +115,8 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_GET_GRADES("mod_assign_get_grades"), // MoodleRestModAssign (Untested)
         MOD_ASSIGN_GET_ASSIGNMENTS("mod_assign_get_assignments"), // MoodleRestModAssign
         MOD_ASSIGN_GET_SUBMISSIONS("mod_assign_get_submissions"), // MoodleRestModAssign (Untested)
-        MOD_ASSIGN_GET_USER_FLAGS("mod_assign_get_user_flags"), // Moodle 2.6 Not yet implemented
-        MOD_ASSIGN_GET_USER_MAPPINGS("mod_assign_get_user_mappings"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_GET_USER_FLAGS("mod_assign_get_user_flags"), // Moodle 2.6 MoodleRestModAssign (Untested)
+        MOD_ASSIGN_GET_USER_MAPPINGS("mod_assign_get_user_mappings"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_LOCK_SUBMISSIONS("mod_assign_lock_submissions"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_REVEAL_IDENTITIES("mod_assign_reveal_identities"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_REVERT_SUBMISSIONS_TO_DRAFT("mod_assign_revert_submissions_to_draft"), // Moodle 2.6 MoodleRestModAssign (Untested)
