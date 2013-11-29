@@ -68,7 +68,7 @@ public enum MoodleServices implements Serializable {
         CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol
         CORE_ENROL_GET_COURSE_ENROLMENT_METHODS("core_enrol_get_course_enrolment_methods"), // Moodle 2.6 MoodleRestEnrol (Tested but returned no results, Moodle bug?)
         ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment
-        ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 Not yet implemented
+        ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 MoodleRestEnrol (Untested)
 
         // ROLE
         CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol       

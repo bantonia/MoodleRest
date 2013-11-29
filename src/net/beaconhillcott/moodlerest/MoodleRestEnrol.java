@@ -644,4 +644,30 @@ public class MoodleRestEnrol implements Serializable {
       }
       return results;
     }
+    
+    public static MoodleEnrolInstance enrolSelfGetInstanceInfo(Long courseId) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.ENROL_SELF_GET_INSTANCE_INFO.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestEnrolException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      MoodleEnrolInstance instance=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (nodeName!=null) {
+          if (nodeName.equals("id")) {
+            instance=new MoodleEnrolInstance(Long.parseLong(content));
+          } else {
+            instance.setFieldValue(nodeName, content);
+          }
+        }
+      }
+      return instance;
+    }
 }
