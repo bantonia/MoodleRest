@@ -60,7 +60,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser       
         CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser       
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser
-        CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 Not yet implemented
+        CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
 
         // ENROL
         CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol       

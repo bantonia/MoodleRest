@@ -20,6 +20,7 @@ package net.beaconhillcott.moodlerest;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 import java.util.logging.*;
@@ -1483,4 +1484,43 @@ public class MoodleRestUser implements Serializable {
         v.removeAllElements();
         return users;
     }
+    
+    public static void addUserDevice(String appId, String deviceName, String deviceModel, String devicePlatform, String deviceVersion, String pushId, String uuId, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+      if (MoodleCallRestWebService.isLegacy()) { throw new MoodleRestException(MoodleRestException.NO_LEGACY); }
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.CORE_USER_ADD_USER_DEVICE.toString();
+      if (MoodleCallRestWebService.getAuth()==null) { throw new MoodleRestModAssignException(); } else { data.append(MoodleCallRestWebService.getAuth()); }
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      if (appId==null || deviceName==null || deviceModel==null || devicePlatform==null || deviceVersion==null || pushId==null || uuId==null) { throw new MoodleRestException(MoodleRestException.PARAMETER_CANNOT_BE_NULL); }
+      if (appId.isEmpty() || deviceName.isEmpty() || deviceModel.isEmpty() || devicePlatform.isEmpty() || deviceVersion.isEmpty() || pushId.isEmpty() || uuId.isEmpty()) { throw new MoodleRestException(MoodleRestException.REQUIRED_PARAMETER); }
+      data.append("&").append(URLEncoder.encode("appid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+appId, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("name", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+deviceName, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("model", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+deviceModel, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("platform", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+devicePlatform, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("version", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+deviceVersion, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("pushid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+pushId, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("uuid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+uuId, MoodleServices.ENCODING.toString()));
+      data.trimToSize();
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      ArrayList<MoodleWarning> warn=null;
+      MoodleWarning warning=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (parent.equals("warnings")) {
+          if (nodeName.equals("item")) {
+            if (warn==null) {
+              warn=new ArrayList<MoodleWarning>();
+            }
+            warning=new MoodleWarning();
+            warn.add(warning);
+            warning.setItem(content);
+          } else {
+            warning.setMoodleWarningField(nodeName, content);
+          }
+        }
+      }
+    }
+    
 }

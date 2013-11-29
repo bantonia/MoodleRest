@@ -40,6 +40,8 @@ public class MoodleRestException extends Exception {
      *
      */
     public static final String PARAMETER_RANGE="Parameter in not within an accepted range";
+    
+    public static final String PARAMETER_CANNOT_BE_NULL="Parameter cannot be null";
 
     MoodleRestException() {}
 

@@ -17,7 +17,6 @@
  */
 package net.beaconhillcott.moodlerest;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.logging.Level;
