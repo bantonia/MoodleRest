@@ -645,7 +645,7 @@ public class MoodleRestEnrol implements Serializable {
       return results;
     }
     
-    public static MoodleEnrolInstance enrolSelfGetInstanceInfo(Long courseId) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
+    public static MoodleEnrolInstance enrolSelfGetInstanceInfo(Long instanceId) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       String functionCall=MoodleServices.ENROL_SELF_GET_INSTANCE_INFO.toString();
@@ -654,7 +654,7 @@ public class MoodleRestEnrol implements Serializable {
       else
         data.append(MoodleCallRestWebService.getAuth());
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-      data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("instanceid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+instanceId, MoodleServices.ENCODING.toString()));
       NodeList elements=MoodleCallRestWebService.call(data.toString());
       MoodleEnrolInstance instance=null;
       for (int j=0; j<elements.getLength(); j++) {
