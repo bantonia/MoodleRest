@@ -608,4 +608,40 @@ public class MoodleRestEnrol implements Serializable {
       }
       return results;
     }
+    
+    public static MoodleEnrolmentMethod[] getCourseEnrolmentMethods(Long courseId) throws MoodleRestEnrolException, UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.CORE_ENROL_GET_COURSE_ENROLMENT_METHODS.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestEnrolException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      ArrayList<MoodleEnrolmentMethod> methods=null;
+      MoodleEnrolmentMethod method=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (nodeName!=null) {
+          if (nodeName.equals("id")) {
+            if (methods==null) {
+              methods=new ArrayList<MoodleEnrolmentMethod>();
+            }
+            method=new MoodleEnrolmentMethod(Long.parseLong(content));
+            methods.add(method);
+          } else {
+            method.setFieldValue(nodeName, content);
+          }
+        }
+      }
+      MoodleEnrolmentMethod[] results=null;
+      if (methods!=null) {
+        results=new MoodleEnrolmentMethod[methods.size()];
+        results=methods.toArray(results);
+      }
+      return results;
+    }
 }
