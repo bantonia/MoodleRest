@@ -81,14 +81,25 @@ public class MoodleUser implements Serializable {
     /**
      *
      */
-    public MoodleUser() {}
+    public MoodleUser() {
+      customfields=new ArrayList<UserCustomField>();
+      groups=new ArrayList<UserGroup>();
+      roles=new ArrayList<UserRole>();
+      preferences=new ArrayList<UserPreference>();
+      enrolledcourses=new ArrayList<UserEnrolledCourse>();
+    }
 
     /**
      *
      * @param id
      */
     public MoodleUser(Long id) {
-        this.id=id;
+      this.id=id;
+      customfields=new ArrayList<UserCustomField>();
+      groups=new ArrayList<UserGroup>();
+      roles=new ArrayList<UserRole>();
+      preferences=new ArrayList<UserPreference>();
+      enrolledcourses=new ArrayList<UserEnrolledCourse>();
     }
 
     /**
@@ -100,11 +111,16 @@ public class MoodleUser implements Serializable {
      * @param email
      */
     public MoodleUser(String username, String password, String firstname, String lastname, String email) {
-        this.username=username;
-        this.password=password;
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.email=email;
+      this.username=username;
+      this.password=password;
+      this.firstname=firstname;
+      this.lastname=lastname;
+      this.email=email;
+      customfields=new ArrayList<UserCustomField>();
+      groups=new ArrayList<UserGroup>();
+      roles=new ArrayList<UserRole>();
+      preferences=new ArrayList<UserPreference>();
+      enrolledcourses=new ArrayList<UserEnrolledCourse>();
     }
 
     /**

@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author Bill Antonia
  */
 public class UserPreference implements Serializable {
-  
+  private String name=null;
   private String type=null;
   private String value=null;
   
@@ -56,4 +56,13 @@ public class UserPreference implements Serializable {
     this.type=type;
     this.value=value;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
 }
