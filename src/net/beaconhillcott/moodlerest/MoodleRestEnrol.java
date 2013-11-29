@@ -220,19 +220,6 @@ public class MoodleRestEnrol implements Serializable {
               }
             }
           }
-          /*  if (user!=null && elements.item(j).getNodeName().equals("id")) {
-              v.add(user);
-              user=new MoodleUser();
-            } else {
-              if (elements.item(j).getNodeName().equals("id")) {
-                user=new MoodleUser();
-              }
-            }
-            //if (elements!=null && elements.item(j)!=null && elements.item(j).getNodeName()!=null && elements.item(j).getTextContent()!=null)
-            if (user==null)
-              throw new MoodleRestEnrolException();
-            user.setMoodleUserField(elements.item(j).getNodeName(), elements.item(j).getTextContent());
-        }*/
         }
         MoodleUser[] results=null;
         if (users!=null) {
@@ -242,7 +229,7 @@ public class MoodleRestEnrol implements Serializable {
         return results;
     }
 
-    public MoodleUser[] __getEnrolledUsers(String url, String token, Long courseid, OptionParameter[] options) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException {
+    public MoodleUser[] __getEnrolledUsers(String url, String token, Long courseid, OptionParameter[] options) throws MoodleRestEnrolException , UnsupportedEncodingException, MoodleRestException, MoodleUserRoleException {
         if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestEnrolException(MoodleRestException.NO_LEGACY);
         StringBuilder data=new StringBuilder();
         Vector<MoodleUser> v=new Vector();
@@ -256,27 +243,100 @@ public class MoodleRestEnrol implements Serializable {
             data.append("&").append(URLEncoder.encode("options["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(options[i].getValue(), MoodleServices.ENCODING.toString()));
           }
         NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
+        ArrayList<MoodleUser> users=null;
+        UserRole role=null;
+        UserEnrolledCourse course=null;
+        UserGroup group=null;
+        UserCustomField custom=null;
+        UserPreference preference=null;
         MoodleUser user=null;
+        String parent=null;
+        String content=null;
+        String nodeName=null;
         for (int j=0;j<elements.getLength();j++) {
-            if (user!=null && elements.item(j).getNodeName().equals("id")) {
-              v.add(user);
-              user=new MoodleUser();
+          try {
+            parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException e) {
+            parent=null;
+          }
+          try {
+            content=elements.item(j).getTextContent();
+          } catch (java.lang.NullPointerException e) {
+            content=null;
+          }
+          try {
+            nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException e) {
+            nodeName=null;
+          }
+          if (nodeName.equals("id") && parent==null) {
+            if (users==null) {
+              users=new ArrayList<MoodleUser>();
+            }
+            user=new MoodleUser();
+            user.setId(Long.parseLong(content));
+            users.add(user);
+          } else {
+            if (parent==null) {
+              user.setMoodleUserField(nodeName, content);
             } else {
-              if (elements.item(j).getNodeName().equals("id")) {
-                user=new MoodleUser();
+              if (parent.equals("roles")) {
+                if (nodeName.equals("roleid")) {
+                  role=new UserRole();
+                  role.setRoleId(Long.parseLong(content));
+                  user.addRole(role);
+                } else {
+                  role.setUserRoleField(nodeName, content);
+                }
+              } else {
+                if (parent.equals("enrolledcourses")) {
+                  if (nodeName.equals("id")) {
+                    course=new UserEnrolledCourse();
+                    course.setId(Long.parseLong(content));
+                    user.addEnrolledCourse(course);
+                  } else {
+                    course.setUserEnrolledCourseField(nodeName, content);
+                  }
+                } else {
+                  if (parent.equals("groups")) {
+                    if (nodeName.equals("id")) {
+                      group=new UserGroup();
+                      group.setId(Long.parseLong(content));
+                      user.addGroup(group);
+                    } else {
+                      group.setUserGroupField(nodeName, content);
+                    }
+                  } else {
+                    if (parent.equals("customfields")) {
+                      if (nodeName.equals("type")) {
+                        custom=new UserCustomField();
+                        custom.setType(content);
+                        user.addCustomField(custom);
+                      } else {
+                        custom.setCustomFieldField(nodeName, content);
+                      }
+                    } else {
+                      if (parent.equals("preferences")) {
+                        if (nodeName.equals("name")) {
+                          preference=new UserPreference();
+                          preference.setName(content);
+                        } else {
+                          preference.setValue(content);
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-            //if (elements!=null && elements.item(j)!=null && elements.item(j).getNodeName()!=null && elements.item(j).getTextContent()!=null)
-            if (user==null)
-              throw new MoodleRestEnrolException();
-            user.setMoodleUserField(elements.item(j).getNodeName(), elements.item(j).getTextContent());
+          }
         }
-        MoodleUser[] users=new MoodleUser[v.size()];
-        for (int i=0;i<v.size();i++) {
-            users[i]=v.get(i);
+        MoodleUser[] results=null;
+        if (users!=null) {
+          results=new MoodleUser[users.size()];
+          results=users.toArray(results);
         }
-        v.removeAllElements();
-        return users;
+        return results;
     }
 
     /**
