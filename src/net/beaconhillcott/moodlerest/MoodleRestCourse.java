@@ -945,4 +945,52 @@ public class MoodleRestCourse implements Serializable {
         MoodleCallRestWebService.call(data.toString());
       }
     }
+    
+    public static MoodleDuplicatedCourse duplicateCourse(Long courseId, String fullName, Long categoryId) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
+      return duplicateCourse(courseId, fullName, categoryId, null, null);
+    }
+    
+    public static MoodleDuplicatedCourse duplicateCourse(Long courseId, String fullName, Long categoryId, Boolean visible) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
+      return duplicateCourse(courseId, fullName, categoryId, visible, null);
+    }
+    
+    public static MoodleDuplicatedCourse duplicateCourse(Long courseId, String fullName, Long categoryId, MoodleCourseContentOption[] options) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
+      return duplicateCourse(courseId, fullName, categoryId, null, options);
+    }
+    
+    public static MoodleDuplicatedCourse duplicateCourse(Long courseId, String fullName, Long categoryId, Boolean visible, MoodleCourseContentOption[] options) throws UnsupportedEncodingException, MoodleRestCourseException, MoodleRestException {
+      if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.CORE_COURSE_DUPLICATE_COURSE.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+          throw new MoodleRestCourseException();
+      else
+          data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      if (courseId==null || fullName==null || categoryId==null) { throw new MoodleRestException(MoodleRestException.PARAMETER_CANNOT_BE_NULL); }
+      data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("fullname", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+fullName, MoodleServices.ENCODING.toString()));
+      data.append("&").append(URLEncoder.encode("categoryid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categoryId, MoodleServices.ENCODING.toString()));
+      if (visible!=null) { data.append("&").append(URLEncoder.encode("visible", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(visible?1:0), MoodleServices.ENCODING.toString())); }
+      if (options!=null) {
+        for (int i=0; i<options.length; i++) {
+          data.append("&").append(URLEncoder.encode("options["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getName(), MoodleServices.ENCODING.toString()));
+          data.append("&").append(URLEncoder.encode("options["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getValue(), MoodleServices.ENCODING.toString()));
+        }
+      }
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      MoodleDuplicatedCourse duplicant=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (nodeName!=null) {
+          if (nodeName.equals("id")) {
+            duplicant=new MoodleDuplicatedCourse(Long.parseLong(content));
+          } else {
+            duplicant.setFieldValue(nodeName, content);
+          }
+        }
+      }
+      return duplicant;
+    }
 }

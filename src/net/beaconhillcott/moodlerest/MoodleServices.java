@@ -79,7 +79,7 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_GET_COURSES("core_course_get_courses"), // MoodleRestCourse
         CORE_COURSE_CREATE_COURSES("core_course_create_courses"), // MoodleRestCourse
         CORE_COURSE_DELETE_COURSES("core_course_delete_courses"), // MoodleRestCourse
-        CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_course"), // Not yet implemented
+        CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_course"), // MoodleRestCourse (Untested)
         CORE_COURSE_GET_CATEGORIES("core_course_get_categories"), // MoodleRestCourse
         CORE_COURSE_CREATE_CATEGORIES("core_course_create_categories"), // MoodleRestCourse
         CORE_COURSE_UPDATE_CATEGORIES("core_course_update_categories"), // MoodleRestCourse
