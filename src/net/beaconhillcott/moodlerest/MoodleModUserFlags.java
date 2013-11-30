@@ -1,0 +1,114 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package net.beaconhillcott.moodlerest;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author root
+ */
+public class MoodleModUserFlags implements Serializable {
+  private Long assignmentId=null;
+  private ArrayList<UserFlags> userFlags=null;
+
+  public MoodleModUserFlags() {
+    userFlags=new ArrayList<UserFlags>();
+  }
+  
+  public MoodleModUserFlags(Long assignmentId) {
+    this.assignmentId=assignmentId;
+    userFlags=new ArrayList<UserFlags>();
+  }
+
+  public Long getAssignmentId() {
+    return assignmentId;
+  }
+
+  public void setAssignmentId(Long assignmentId) {
+    this.assignmentId = assignmentId;
+  }
+
+  public ArrayList<UserFlags> getUserFlags() {
+    return userFlags;
+  }
+
+  public void setUserFlags(ArrayList<UserFlags> userFlags) {
+    this.userFlags = userFlags;
+  }
+  
+  public UserFlags newUserFlags() {
+    UserFlags userFlag=new UserFlags();
+    userFlags.add(userFlag);
+    return userFlag;
+  }
+  
+  public class UserFlags {
+    private Long id=null;
+    private Long userId=null;
+    private Boolean locked=null;
+    private Long extensionDueDate=null;
+    private String workflowState=null;
+    private Long allocatedMarker=null;
+
+    public UserFlags() {}
+
+    public UserFlags(Long id) {
+      this.id=id;
+    }
+
+    public Long getId() {
+      return id;
+    }
+
+    public void setId(Long id) {
+      this.id = id;
+    }
+
+    public Long getUserId() {
+      return userId;
+    }
+
+    public void setUserId(Long userId) {
+      this.userId = userId;
+    }
+
+    public Boolean isLocked() {
+      return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+      this.locked = locked;
+    }
+
+    public Long getExtensionDueDate() {
+      return extensionDueDate;
+    }
+
+    public void setExtensionDueDate(Long extensionDueDate) {
+      this.extensionDueDate = extensionDueDate;
+    }
+
+    public String getWorkflowState() {
+      return workflowState;
+    }
+
+    public void setWorkflowState(String workflowState) {
+      this.workflowState = workflowState;
+    }
+
+    public Long getAllocatedMarker() {
+      return allocatedMarker;
+    }
+
+    public void setAllocatedMarker(Long allocatedMarker) {
+      this.allocatedMarker = allocatedMarker;
+    }
+    
+  }
+}

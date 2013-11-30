@@ -72,6 +72,9 @@ public class MoodleUser implements Serializable {
     private String url=null;
     private String profileimageurlsmall=null;
     private String profileimageurl=null;
+    private String alternatename=null;
+    private String firstnamephonetic=null;
+    private String lastnamephonetic=null;
     private ArrayList<UserCustomField> customfields=null;
     private ArrayList<UserGroup> groups=null;
     private ArrayList<UserRole> roles=null;
@@ -129,51 +132,81 @@ public class MoodleUser implements Serializable {
      * @param content
      */
     public void setMoodleUserField(String nodeName,String content) {
+      if (content!=null) {
         if (nodeName.equals("id")) setId(Long.valueOf(content));
-        if (nodeName.equals("username")) setUsername(content);
-        if (nodeName.equals("firstname")) setFirstname(content);
-        if (nodeName.equals("lastname")) setLastname(content);
-        if (nodeName.equals("email")) setEmail(content);
-        if (nodeName.equals("auth")) setAuth(content);
-        if (nodeName.equals("idnumber") && content!=null) setIdNumber(content);
-        if (nodeName.equals("lang") && content!=null) setLang(content);
-        if (nodeName.equals("theme") && content!=null) setTheme(content);
-        if (nodeName.equals("timezone") && content!=null) setTimezone(content);
-        if (nodeName.equals("mailformat") && (content!=null || !content.equals(null))) {
+        if (nodeName.equals("mailformat") && (!content.equals(null))) {
           if (!content.equals("")) setMailFormat(Integer.parseInt(content)==0?EMAIL_FORMAT_NONE:EMAIL_FORMAT_HTML);
         }
-        if (nodeName.equals("description") && content!=null) setDescription(content);
-        if (nodeName.equals("descriptionformat") && content!=null) {
+        if (nodeName.equals("descriptionformat")) {
           if (!content.isEmpty()) {
             try {
               setDescriptionFormat(Long.valueOf(content));
             } catch(NumberFormatException ex) {}
           }
         }
-        if (nodeName.equals("city") && content!=null) setCity(content);
-        if (nodeName.equals("country") && content!=null) setCountry(content);
-        if (nodeName.equals("fullname")) { setFullname(content);}
-        if (nodeName.equals("address") && (content!=null || !content.equals(null))) setAddress(content);
-        if (nodeName.equals("phone1") && (content!=null || !content.equals(null))) setPhone1(content);
-        if (nodeName.equals("phone2") && (content!=null || !content.equals(null))) setPhone2(content);
-        if (nodeName.equals("icq") && (content!=null || !content.equals(null))) setICQ(content);
-        if (nodeName.equals("skype") && (content!=null || !content.equals(null))) setSkype(content);
-        if (nodeName.equals("yahoo") && (content!=null || !content.equals(null))) setYahoo(content);
-        if (nodeName.equals("msn") && (content!=null || !content.equals(null))) setMSN(content);
-        if (nodeName.equals("aim") && (content!=null || !content.equals(null))) setAim(content);
-        if (nodeName.equals("department") && (content!=null || !content.equals(null))) setDepartment(content);
-        if (nodeName.equals("institution") && (content!=null || !content.equals(null))) setInstitution(content);
-        if (nodeName.equals("interests") && (content!=null || !content.equals(null))) setInterests(content);
         if (nodeName.equals("firstaccess") && content!=null) setFirstAccess(Long.valueOf(content));
-        if (nodeName.equals("lastaccess") && content!=null) setLastAccess(Long.valueOf(content));
-        if (nodeName.equals("confirmed") && (content!=null || !content.equals(null))) {
+        if (nodeName.equals("lastaccess")) setLastAccess(Long.valueOf(content));
+        if (nodeName.equals("confirmed") && (!content.equals(null))) {
           if (!content.equals("")) setConfirmed(Double.valueOf(content));
         }
-        if (nodeName.equals("url") && content!=null) setURL(content);
-        if (nodeName.equals("profileimageurlsmall") && content!=null) setProfileImageURLSmall(content);
-        if (nodeName.equals("profileimageurl") && content!=null) setProfileImageURL(content);
+      }
+      if (nodeName.equals("username")) setUsername(content);
+      if (nodeName.equals("firstname")) setFirstname(content);
+      if (nodeName.equals("lastname")) setLastname(content);
+      if (nodeName.equals("email")) setEmail(content);
+      if (nodeName.equals("auth")) setAuth(content);
+      if (nodeName.equals("idnumber")) setIdNumber(content);
+      if (nodeName.equals("lang")) setLang(content);
+      if (nodeName.equals("theme")) setTheme(content);
+      if (nodeName.equals("timezone")) setTimezone(content);
+      if (nodeName.equals("description")) setDescription(content);
+      if (nodeName.equals("city")) setCity(content);
+      if (nodeName.equals("country")) setCountry(content);
+      if (nodeName.equals("fullname")) { setFullname(content); }
+      if (nodeName.equals("address")) setAddress(content);
+      if (nodeName.equals("phone1")) setPhone1(content);
+      if (nodeName.equals("phone2")) setPhone2(content);
+      if (nodeName.equals("icq")) setICQ(content);
+      if (nodeName.equals("skype")) setSkype(content);
+      if (nodeName.equals("yahoo")) setYahoo(content);
+      if (nodeName.equals("msn")) setMSN(content);
+      if (nodeName.equals("aim")) setAim(content);
+      if (nodeName.equals("department")) setDepartment(content);
+      if (nodeName.equals("institution")) setInstitution(content);
+      if (nodeName.equals("interests")) setInterests(content);
+      if (nodeName.equals("url")) setURL(content);
+      if (nodeName.equals("profileimageurlsmall")) setProfileImageURLSmall(content);
+      if (nodeName.equals("profileimageurl")) setProfileImageURL(content);
+      if (nodeName.equals("alternatename")) setAlternatename(content);
+      if (nodeName.equals("lastnamephonetic")) setLastnamephonetic(content);
+      if (nodeName.equals("firstnamephonetic")) setFirstnamephonetic(content);
     }
 
+  public String getAlternatename() {
+    return alternatename;
+  }
+
+  public void setAlternatename(String alternatename) {
+    this.alternatename = alternatename;
+  }
+
+  public String getFirstnamephonetic() {
+    return firstnamephonetic;
+  }
+
+  public void setFirstnamephonetic(String firstnamephonetic) {
+    this.firstnamephonetic = firstnamephonetic;
+  }
+
+  public String getLastnamephonetic() {
+    return lastnamephonetic;
+  }
+
+  public void setLastnamephonetic(String lastnamephonetic) {
+    this.lastnamephonetic = lastnamephonetic;
+  }
+
+    
   public String getFullname() {
     return fullname;
   }
