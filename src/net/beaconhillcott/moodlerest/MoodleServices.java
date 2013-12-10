@@ -123,7 +123,7 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_SAVE_GRADE("mod_assign_save_grade"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_SAVE_SUBMISSION("mod_assign_save_submission"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_SAVE_USER_EXTENSIONS("mod_assign_save_user_extensions"), // Moodle 2.6 MoodleRestModAssign (Untested)
-        MOD_ASSIGN_SET_USER_FLAGS("mod_assign_set_user_flags"), // Moodle 2.6 Not yet implemented
+        MOD_ASSIGN_SET_USER_FLAGS("mod_assign_set_user_flags"), // Moodle 2.6 Not MoodleRestModAssign (Untested)
         MOD_ASSIGN_SUBMIT_FOR_GRADING("mod_assign_submit_for_grading"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_UNLOCK_SUBMISSIONS("mod_assign_unlock_submissions"), // Moodle 2.6 MoodleRestModAssign (Untested)
         
