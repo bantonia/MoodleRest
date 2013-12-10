@@ -150,7 +150,7 @@ public enum MoodleServices implements Serializable {
         
         // GRADING
         CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 Not yet implemented
-        CORE_GRADING_GET_GRADINGFORM("core_grading_get_gradingform_instances"), // Moodle 2.6 Not yet implemented
+        CORE_GRADING_GET_GRADINGFORM_INSTANCES("core_grading_get_gradingform_instances"), // Moodle 2.6 Not yet implemented
 
         
         // ####################
