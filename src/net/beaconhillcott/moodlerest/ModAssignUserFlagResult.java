@@ -64,4 +64,5 @@ public class ModAssignUserFlagResult implements Serializable {
     this.errorMessage = errorMessage;
   }
   
+  
 }
