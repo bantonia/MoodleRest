@@ -145,8 +145,8 @@ public enum MoodleServices implements Serializable {
         CORE_CALENDAR_CREATE_CALENDAR_EVENTS("core_calendar_create_calendar_events"), //MoodleRestCalendar
 
         // FORUM
-        MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // Not yet implemented
-        MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // Not yet implemented
+        MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // MoodleRestModForum (Untested)
+        MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum (Untested)
         
         // GRADING
         CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 Not yet implemented

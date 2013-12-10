@@ -26,12 +26,16 @@ public class ModAssignUserFlagResult implements Serializable {
     if (name.equals("id") || name.equals("userid") || name.equals("errormessage")) {
       if (name.equals("id")) {
         if (value!=null) {
-          setId(Long.parseLong(value));
+          if (!value.isEmpty()) {
+            setId(Long.parseLong(value));
+          }
         }
       }
       if (name.equals("userid")) {
         if (value!=null) {
-          setUserId(Long.parseLong(value));
+          if (!value.isEmpty()) {
+            setUserId(Long.parseLong(value));
+          }
         }
       }
       if (name.equals("errormessage")) {
