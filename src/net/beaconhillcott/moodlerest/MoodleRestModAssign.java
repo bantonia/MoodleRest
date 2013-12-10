@@ -580,4 +580,168 @@ public class MoodleRestModAssign implements Serializable {
     }
     return results;
   }
+  
+  public static void saveGrade(Long assignmentId, Long userId, Double grade, Boolean addAtempt, String workFlowState, Boolean applyToAll, String feedbackText, DescriptionFormat format, Integer fileManager) throws MoodleRestException, UnsupportedEncodingException {
+    saveGrade(assignmentId,  userId,  grade, -1, addAtempt, workFlowState, applyToAll, feedbackText, format, fileManager);
+  }
+  
+  public static void saveGrade(Long assignmentId, Long userId, Double grade, Integer attemptNumber, Boolean addAtempt, String workFlowState, Boolean applyToAll, String feedbackText, DescriptionFormat format, Integer fileManager) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_SAVE_GRADE.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("assignmentid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentId, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("userid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+userId, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("grade", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+grade, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("attemptnumber", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+attemptNumber, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("addattempt", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(addAtempt?1:0), MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("workflowstate", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+workFlowState, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("applytoall", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(applyToAll?1:0), MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[assignfeedbackcomments_editor][text]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+feedbackText, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[assignfeedbackcomments_editor][format]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+format.toInt(), MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[files_filemanager]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+fileManager, MoodleServices.ENCODING.toString()));
+    data.trimToSize();
+    MoodleCallRestWebService.call(data.toString());
+  }
+  
+  public static void saveSubmission(Long assignmentId, String feedbackText, DescriptionFormat format, Integer itemId, Integer fileManager, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_SAVE_SUBMISSION.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("assignmentid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentId, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[onlinetext_editor][text]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+feedbackText, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[onlinetext_editor][format]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+format.toInt(), MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[onlinetext_editor][itemid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+itemId, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("plugindata[files_filemanager]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+fileManager, MoodleServices.ENCODING.toString()));
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("warnings")) {
+        if (nodeName.equals("item")) {
+          if (warn==null) {
+            warn=new ArrayList<MoodleWarning>();
+          }
+          warning=new MoodleWarning(content);
+          warn.add(warning);
+        } else {
+          warning.setMoodleWarningField(nodeName, content);
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+  }
+  
+    public static void saveUserExtensions(Long assignmentId, Long[] userIds, Long[] dates, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_SAVE_USER_EXTENSIONS.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("assignmentid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentId, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<userIds.length; i++) {
+      data.append("&").append(URLEncoder.encode("userids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+userIds[i], MoodleServices.ENCODING.toString()));
+    }
+    for (int i=0; i<dates.length; i++) {
+      data.append("&").append(URLEncoder.encode("dates["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+dates[i], MoodleServices.ENCODING.toString()));
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("warnings")) {
+        if (nodeName.equals("item")) {
+          if (warn==null) {
+            warn=new ArrayList<MoodleWarning>();
+          }
+          warning=new MoodleWarning(content);
+          warn.add(warning);
+        } else {
+          warning.setMoodleWarningField(nodeName, content);
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+  }
+    
+  public static void submitForGrading(Long assignmentId, Integer acceptSubmissionStatement, MoodleWarning[] warnings) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_SUBMIT_FOR_GRADING.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("assignmentid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentId, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("acceptsubmissionstatement", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+acceptSubmissionStatement, MoodleServices.ENCODING.toString()));
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("warnings")) {
+        if (nodeName.equals("item")) {
+          if (warn==null) {
+            warn=new ArrayList<MoodleWarning>();
+          }
+          warning=new MoodleWarning(content);
+          warn.add(warning);
+        } else {
+          warning.setMoodleWarningField(nodeName, content);
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+  }
 }
