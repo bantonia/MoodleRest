@@ -38,8 +38,7 @@ public class MoodleRestStrings implements Serializable {
     }
     data.trimToSize();
     NodeList elements = MoodleCallRestWebService.call(data.toString());
-    // To be completed
-    return null;
+    return elements.item(0).getTextContent();
   }
   
 }

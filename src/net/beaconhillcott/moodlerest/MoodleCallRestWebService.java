@@ -302,9 +302,14 @@ public class MoodleCallRestWebService implements Serializable {
               for (int i=0;i<elements.getLength();i++) {
                 String nodeName;
                 String content;
-                String parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
-                if (parent.equals("KEY"))
-                  parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                String parent = null;
+                try {
+                  parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getNodeName();
+                } catch (java.lang.NullPointerException ex) {}
+                if (parent!=null) {
+                  if (parent.equals("KEY"))
+                    parent=elements.item(i).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                }
                 content=elements.item(i).getTextContent();
                 if (elements.item(i).getParentNode().getAttributes().getNamedItem("name")!=null)
                   nodeName=elements.item(i).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
