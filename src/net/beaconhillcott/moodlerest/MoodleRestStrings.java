@@ -32,7 +32,7 @@ public class MoodleRestStrings implements Serializable {
     if (lang!=null) data.append("&").append(URLEncoder.encode("lang", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+lang, MoodleServices.ENCODING.toString()));
     if (options!=null) {
       for (int i=0; i<options.length; i++) {
-        data.append("&").append(URLEncoder.encode("stringparams["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getName(), MoodleServices.ENCODING.toString()));
+        if (options.length>1) data.append("&").append(URLEncoder.encode("stringparams["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getName(), MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("stringparams["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getValue(), MoodleServices.ENCODING.toString()));
       }
     }
