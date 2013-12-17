@@ -107,9 +107,9 @@ public enum MoodleServices implements Serializable {
         CORE_WEBSERVICE_GET_SITE_INFO("core_webservice_get_site_info"), // MoodleRestWebService
 
         // GET
-        CORE_GET_STRING("core_get_string"), // Not yet implemented
-        CORE_GET_STRINGS("core_get_strings"), // Not yet implemented
-        CORE_GET_COMPONENT_STRINGS("core_get_component_strings"), // Not yet implemented
+        CORE_GET_STRING("core_get_string"), // MoodleRestStrings (Bug in Moodle, will give an invalid parameter error if not altered within Moodle 2.6)
+        CORE_GET_STRINGS("core_get_strings"), // MoodleRestStrings (Untested)
+        CORE_GET_COMPONENT_STRINGS("core_get_component_strings"), // MoodleRestStrings (Tested 17/12/2013)
 
         // ASSIGN
         MOD_ASSIGN_GET_GRADES("mod_assign_get_grades"), // MoodleRestModAssign (Untested)
