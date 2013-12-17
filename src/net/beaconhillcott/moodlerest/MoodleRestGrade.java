@@ -33,7 +33,7 @@ public class MoodleRestGrade implements Serializable {
       throw new MoodleRestGradeException(MoodleRestException.NO_LEGACY);
     }
     StringBuilder data=new StringBuilder();
-    String functionCall=MoodleServices.CORE_GRADE_GET_DEFINITIONS.toString();
+    String functionCall=MoodleServices.CORE_GRADING_GET_DEFINITIONS.toString();
     if (MoodleCallRestWebService.getAuth()==null) {
       throw new MoodleRestGradeException();
     }

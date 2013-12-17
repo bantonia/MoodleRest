@@ -137,7 +137,7 @@ public enum MoodleServices implements Serializable {
         CORE_COHORT_GET_COHORT_MEMBERS("core_cohort_get_cohort_members"), // MoodleRestCohort
 
         // GRADE
-        CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // MoodleRestGrade
+        CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // MoodleRestGrade (Switched calls to use core_grading_get_definitions, core_grade_get_definitions will be deprecated anyway by Moodle)
 
         // CALENDAR
         CORE_CALENDAR_DELETE_CALENDAR_EVENTS("core_calendar_delete_calendar_events"), //MoodleRestCalendar
@@ -149,7 +149,7 @@ public enum MoodleServices implements Serializable {
         MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum (Untested)
         
         // GRADING
-        CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 Not yet implemented
+        CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 MoodleRestGrade (Untested)
         CORE_GRADING_GET_GRADINGFORM_INSTANCES("core_grading_get_gradingform_instances"), // Moodle 2.6 Not yet implemented
 
         
