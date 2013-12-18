@@ -19,6 +19,7 @@
 package net.beaconhillcott.moodlerest;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * <p>Class for MoodleCourse objects. Used when creating new courses or retrieving course details.</p>
@@ -140,7 +141,8 @@ public class MoodleCourse implements Serializable {
     private Long categoryid=null;
 
     // Required for course creation but will use the default values below unless already changed
-    private Integer summaryformat=SUMMARY_FORMAT_NO;
+    //private Integer summaryformat=SUMMARY_FORMAT_NO;
+    private DescriptionFormat summaryformat=DescriptionFormat.MOODLE;
     private String format=FORMAT_TOPICS;
     private Integer showgrades=SHOW_GRADES_YES;
     private Integer newsitems=1;
@@ -172,6 +174,8 @@ public class MoodleCourse implements Serializable {
 
     // Other stuff!!!
     private Long enrolledusercount=null;
+    
+    private ArrayList<OptionParameter> courseformatoptions=null;
     
     /**
      * <p>MoodleCourse, course object constructor with the minimum attribute settings to create a Moodle course.</p>
@@ -239,6 +243,31 @@ public class MoodleCourse implements Serializable {
         if (nodeName.equals("enrolledusercount")) setEnrolledUserCount(Long.parseLong(content.trim())); 
     }
 
+  public OptionParameter[] getCourseformatoptions() {
+    OptionParameter[] results=null;
+    if (courseformatoptions!=null) {
+      if (courseformatoptions.size()>0) {
+        results=new OptionParameter[courseformatoptions.size()];
+        courseformatoptions.toArray(results);
+      }
+    }
+    return results;
+  }
+
+  public void setCourseformatoptions(OptionParameter[] courseformatoptions) {
+    if (this.courseformatoptions==null)
+      this.courseformatoptions=new ArrayList<OptionParameter>();
+    for (int i=0; i<courseformatoptions.length; i++) {
+      this.courseformatoptions.add(courseformatoptions[i]);
+    }
+  }
+  
+  public void addCourseformatoptions(OptionParameter courseformatoption) {
+    if (this.courseformatoptions==null)
+      this.courseformatoptions=new ArrayList<OptionParameter>();
+    this.courseformatoptions.add(courseformatoption);
+  }
+
     /**
      * <p>Method to set the course id in a MoodleCourse object.</p>
      * 
@@ -303,9 +332,18 @@ public class MoodleCourse implements Serializable {
      * @param summaryformat int
      */
     public void setSummaryFormat(Integer summaryformat) {
-        this.summaryformat=summaryformat;
+      switch (summaryformat) {  
+        case 0: this.summaryformat=DescriptionFormat.MOODLE; break;
+        case 1: this.summaryformat=DescriptionFormat.HTML; break;
+        case 2: this.summaryformat=DescriptionFormat.PLAIN; break;
+        case 3: this.summaryformat=DescriptionFormat.MARKDOWN; break;
+      }
     }
 
+    public void setSummaryDescriptionFormat(DescriptionFormat summaryformat) {
+      this.summaryformat=summaryformat;
+    }
+    
     /**
      * Method to set the format of the MoodleCouse object "topics", "weekly", "social" or "scorm". There is also a "site" format but there should be only one course within the database, this is "Site home". Default "topics".
      * @param format String
@@ -527,6 +565,10 @@ public class MoodleCourse implements Serializable {
      * @return summaryformat int
      */
     public Integer getSummaryFormat() {
+        return summaryformat.toInt();
+    }
+    
+    public DescriptionFormat getSummaryDescriptionFormat() {
         return summaryformat;
     }
 

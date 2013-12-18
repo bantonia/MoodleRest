@@ -51,8 +51,6 @@ public class MoodleRestCourse implements Serializable {
      * @throws UnsupportedEncodingException
      */
     public static MoodleCourse[] getAllCourses() throws MoodleRestException, UnsupportedEncodingException {
-        
-        
         StringBuilder data=new StringBuilder();
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         if (MoodleCallRestWebService.getAuth()==null)
@@ -60,32 +58,48 @@ public class MoodleRestCourse implements Serializable {
         else
             data.append(MoodleCallRestWebService.getAuth());
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("options[ids]", MoodleServices.ENCODING.toString()));
+        //data.append("&").append(URLEncoder.encode("options[ids]", MoodleServices.ENCODING.toString()));
         NodeList elements=MoodleCallRestWebService.call(data.toString());
-
+        ArrayList<MoodleCourse> courses=null;
+        OptionParameter param=null;
         MoodleCourse course=null;
-        Vector v=new Vector();
         for (int j=0;j<elements.getLength();j++) {
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          String parent;
+          String content=elements.item(j).getTextContent();
+          String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          try {
+            parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException ex) {
+            parent="RESPONSE";
+          }
+          if (parent.equals("RESPONSE")) {
             if (nodeName.equals("id")) {
-                if (course==null)
-                    course=new MoodleCourse(Long.parseLong(content));
-                else {
-                    v.add(course);
-                    course=new MoodleCourse(Long.parseLong(content));
-                }
+              if (courses==null) {
+                courses=new ArrayList<MoodleCourse>();
+              }
+              course=new MoodleCourse(Long.parseLong(content));
+              courses.add(course);
+            } else {
+              course.setMoodleCourseField(nodeName, content);
             }
-            course.setMoodleCourseField(nodeName, content);
+          } else {
+            if (parent.equals("courseformatoptions")) {
+              if (nodeName.equals("name")) {
+                param=new OptionParameter();
+                course.addCourseformatoptions(param);
+                param.setName(content);
+              } else {
+                param.setValue(content);
+              }
+            }
+          }
         }
-        if (course!=null)
-            v.add(course);
-        MoodleCourse[] courses=new MoodleCourse[v.size()];
-        for (int i=0;i<v.size();i++) {
-            courses[i]=(MoodleCourse)v.get(i);
+        MoodleCourse[] results=null;
+        if (courses!=null) {
+          results=new MoodleCourse[courses.size()];
+          results=courses.toArray(results);
         }
-        v.removeAllElements();
-        return courses;
+        return results;
     }
 
     public MoodleCourse[] __getAllCourses(String url, String token) throws MoodleRestException, UnsupportedEncodingException {
@@ -93,31 +107,48 @@ public class MoodleRestCourse implements Serializable {
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("options[ids]", MoodleServices.ENCODING.toString()));
+        //data.append("&").append(URLEncoder.encode("options[ids]", MoodleServices.ENCODING.toString()));
         NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
+        ArrayList<MoodleCourse> courses=null;
+        OptionParameter param=null;
         MoodleCourse course=null;
-        Vector v=new Vector();
         for (int j=0;j<elements.getLength();j++) {
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          String parent;
+          String content=elements.item(j).getTextContent();
+          String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          try {
+            parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException ex) {
+            parent="RESPONSE";
+          }
+          if (parent.equals("RESPONSE")) {
             if (nodeName.equals("id")) {
-                if (course==null)
-                    course=new MoodleCourse(Long.parseLong(content));
-                else {
-                    v.add(course);
-                    course=new MoodleCourse(Long.parseLong(content));
-                }
+              if (courses==null) {
+                courses=new ArrayList<MoodleCourse>();
+              }
+              course=new MoodleCourse(Long.parseLong(content));
+              courses.add(course);
+            } else {
+              course.setMoodleCourseField(nodeName, content);
             }
-            course.setMoodleCourseField(nodeName, content);
+          } else {
+            if (parent.equals("courseformatoptions")) {
+              if (nodeName.equals("name")) {
+                param=new OptionParameter();
+                course.addCourseformatoptions(param);
+                param.setName(content);
+              } else {
+                param.setValue(content);
+              }
+            }
+          }
         }
-        if (course!=null)
-            v.add(course);
-        MoodleCourse[] courses=new MoodleCourse[v.size()];
-        for (int i=0;i<v.size();i++) {
-            courses[i]=(MoodleCourse)v.get(i);
+        MoodleCourse[] results=null;
+        if (courses!=null) {
+          results=new MoodleCourse[courses.size()];
+          results=courses.toArray(results);
         }
-        v.removeAllElements();
-        return courses;
+        return results;
     }
 
     /**
@@ -147,8 +178,6 @@ public class MoodleRestCourse implements Serializable {
      * @throws UnsupportedEncodingException
      */
     public static MoodleCourse[] getCoursesById(long[] courseids) throws MoodleRestException, UnsupportedEncodingException{
-        Vector v=new Vector();
-        MoodleCourse course=null;
         StringBuilder data=new StringBuilder();
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         if (MoodleCallRestWebService.getAuth()==null)
@@ -161,29 +190,46 @@ public class MoodleRestCourse implements Serializable {
         }
         data.trimToSize();
         NodeList elements=MoodleCallRestWebService.call(data.toString());
-        course=null;
+        ArrayList<MoodleCourse> courses=null;
+        OptionParameter param=null;
+        MoodleCourse course=null;
         for (int j=0;j<elements.getLength();j++) {
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          String parent;
+          String content=elements.item(j).getTextContent();
+          String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          try {
+            parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException ex) {
+            parent="RESPONSE";
+          }
+          if (parent.equals("RESPONSE")) {
             if (nodeName.equals("id")) {
-                if (course==null)
-                    course=new MoodleCourse(Long.parseLong(content));
-                else {
-                    v.add(course);
-                    course=new MoodleCourse(Long.parseLong(content));
-                }
+              if (courses==null) {
+                courses=new ArrayList<MoodleCourse>();
+              }
+              course=new MoodleCourse(Long.parseLong(content));
+              courses.add(course);
+            } else {
+              course.setMoodleCourseField(nodeName, content);
             }
-            course.setMoodleCourseField(nodeName, content);
+          } else {
+            if (parent.equals("courseformatoptions")) {
+              if (nodeName.equals("name")) {
+                param=new OptionParameter();
+                course.addCourseformatoptions(param);
+                param.setName(content);
+              } else {
+                param.setValue(content);
+              }
+            }
+          }
         }
-            
-        if (course!=null)
-            v.add(course);
-        MoodleCourse[] courses=new MoodleCourse[v.size()];
-        for (int i=0;i<v.size();i++) {
-            courses[i]=(MoodleCourse)v.get(i);
+        MoodleCourse[] results=null;
+        if (courses!=null) {
+          results=new MoodleCourse[courses.size()];
+          results=courses.toArray(results);
         }
-        v.removeAllElements();
-        return courses;
+        return results;
     }
 
     public MoodleCourse __getCourseFromId(String url, String token, long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
@@ -194,8 +240,6 @@ public class MoodleRestCourse implements Serializable {
     }
 
     public MoodleCourse[] __getCoursesById(String url, String token, long[] courseids) throws MoodleRestException, UnsupportedEncodingException{
-        Vector v=new Vector();
-        MoodleCourse course=null;
         StringBuilder data=new StringBuilder();
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_COURSE_GET_COURSES.toString():MoodleServices.CORE_COURSE_GET_COURSES.toString();
         data.append(URLEncoder.encode("wstoken", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(token, MoodleServices.ENCODING.toString()));
@@ -205,29 +249,46 @@ public class MoodleRestCourse implements Serializable {
         }
         data.trimToSize();
         NodeList elements=(new MoodleCallRestWebService()).__call(url,data.toString());
-        course=null;
+        ArrayList<MoodleCourse> courses=null;
+        OptionParameter param=null;
+        MoodleCourse course=null;
         for (int j=0;j<elements.getLength();j++) {
-            String content=elements.item(j).getTextContent();
-            String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          String parent;
+          String content=elements.item(j).getTextContent();
+          String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          try {
+            parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+          } catch (java.lang.NullPointerException ex) {
+            parent="RESPONSE";
+          }
+          if (parent.equals("RESPONSE")) {
             if (nodeName.equals("id")) {
-                if (course==null)
-                    course=new MoodleCourse(Long.parseLong(content));
-                else {
-                    v.add(course);
-                    course=new MoodleCourse(Long.parseLong(content));
-                }
+              if (courses==null) {
+                courses=new ArrayList<MoodleCourse>();
+              }
+              course=new MoodleCourse(Long.parseLong(content));
+              courses.add(course);
+            } else {
+              course.setMoodleCourseField(nodeName, content);
             }
-            course.setMoodleCourseField(nodeName, content);
+          } else {
+            if (parent.equals("courseformatoptions")) {
+              if (nodeName.equals("name")) {
+                param=new OptionParameter();
+                course.addCourseformatoptions(param);
+                param.setName(content);
+              } else {
+                param.setValue(content);
+              }
+            }
+          }
         }
-
-        if (course!=null)
-            v.add(course);
-        MoodleCourse[] courses=new MoodleCourse[v.size()];
-        for (int i=0;i<v.size();i++) {
-            courses[i]=(MoodleCourse)v.get(i);
+        MoodleCourse[] results=null;
+        if (courses!=null) {
+          results=new MoodleCourse[courses.size()];
+          results=courses.toArray(results);
         }
-        v.removeAllElements();
-        return courses;
+        return results;
     }
 
     /**
