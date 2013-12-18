@@ -4,11 +4,13 @@
  */
 package net.beaconhillcott.moodlerest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public class ComponentString {
+public class ComponentString implements Serializable {
   private String stringId=null;
   private String string=null;
   private String component=null;
