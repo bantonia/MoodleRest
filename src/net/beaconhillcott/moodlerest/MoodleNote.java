@@ -31,6 +31,9 @@ public class MoodleNote implements Serializable {
      * <p></p>
      */
     public static final String FORMAT_TEXT="text";
+    public static final String FORMAT_PLAIN="plain";
+    public static final String FORMAT_MOODLE="moodle";
+    public static final String FORMAT_MARKDOWN="markdown";
     /**
      * <p></p>
      */
@@ -52,7 +55,8 @@ public class MoodleNote implements Serializable {
   private String publishState=null;
   private Long courseId=null;
   private String text=null;
-  private String format=null;
+  private DescriptionFormat format=null;
+  //private String format=null;
   private String clientNoteId=null;
   private Long noteId=null;
   private String errorMessage=null;
@@ -94,6 +98,18 @@ public class MoodleNote implements Serializable {
     this.publishState=publishState;
     this.courseId=courseId;
     this.text=text;
+    if (format.toLowerCase().equals(FORMAT_TEXT) || format.toLowerCase().equals(FORMAT_PLAIN)) this.format=DescriptionFormat.PLAIN;
+    if (format.toLowerCase().equals(FORMAT_HTML)) this.format=DescriptionFormat.HTML;
+    if (format.toLowerCase().equals(FORMAT_MOODLE)) this.format=DescriptionFormat.MOODLE;
+    if (format.toLowerCase().equals(FORMAT_MARKDOWN)) this.format=DescriptionFormat.MARKDOWN;
+    this.clientNoteId=clientNoteId;
+  }
+  
+  public MoodleNote(Long userId, String publishState, Long courseId, String text, DescriptionFormat format, String clientNoteId) {
+    this.userId=userId;
+    this.publishState=publishState;
+    this.courseId=courseId;
+    this.text=text;
     this.format=format;
     this.clientNoteId=clientNoteId;
   }
@@ -131,8 +147,8 @@ public class MoodleNote implements Serializable {
    * 
    * @return String format
    */
-  public String getFormat() { return format; }
-  
+  public String getFormat() { return format.toString(); }
+  public DescriptionFormat getDescriptionFormat() { return format; }
   /**
    * <p>Method to return the user defined client id of the note.</p>
    * 
@@ -182,7 +198,16 @@ public class MoodleNote implements Serializable {
    * 
    * @param String format
    */
-  public void setFormat(String format) { this.format=format; }
+  public void setFormat(String format) {
+    if (format.toLowerCase().equals(FORMAT_TEXT) || format.toLowerCase().equals(FORMAT_PLAIN)) this.format=DescriptionFormat.PLAIN;
+    if (format.toLowerCase().equals(FORMAT_HTML)) this.format=DescriptionFormat.HTML;
+    if (format.toLowerCase().equals(FORMAT_MOODLE)) this.format=DescriptionFormat.MOODLE;
+    if (format.toLowerCase().equals(FORMAT_MARKDOWN)) this.format=DescriptionFormat.MARKDOWN;
+  }
+  
+  public void setDescriptionFormat(DescriptionFormat format) {
+    this.format=format;
+  }
   
   /**
    * <p>Method to set the user defined client note id.</p>

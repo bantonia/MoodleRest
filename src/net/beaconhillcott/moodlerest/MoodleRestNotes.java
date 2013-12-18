@@ -23,6 +23,7 @@ import java.net.*;
 import java.util.logging.*;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * <p>Class containing static Methods to call Moodle REST notes web services.</p>
@@ -206,4 +207,50 @@ public class MoodleRestNotes implements Serializable {
     //return warnings;
   }
   
+  public static void updateNotes(MoodleNote[] notes) throws MoodleRestNotesException, UnsupportedEncodingException, MoodleRestException {
+    updateNotes(notes, null);
+  }
+  
+  public static void updateNotes(MoodleNote[] notes, MoodleWarning[] warnings) throws MoodleRestNotesException, UnsupportedEncodingException, MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestNotesException(MoodleRestException.NO_LEGACY);
+    String functionCall=MoodleServices.CORE_NOTES_UPDATE_NOTES.toString();
+    StringBuilder data=new StringBuilder();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestNotesException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    for (int i=0; i<notes.length; i++) {
+      data.append("&").append(URLEncoder.encode("notes["+i+"][id]", MoodleServices.ENCODING.toString())).append("=").append(""+notes[i].getNoteId());
+      data.append("&").append(URLEncoder.encode("notes["+i+"][publishstate]", MoodleServices.ENCODING.toString())).append("=").append(notes[i].getPublishState());
+      data.append("&").append(URLEncoder.encode("notes["+i+"][text]", MoodleServices.ENCODING.toString())).append("=").append(notes[i].getText());
+      data.append("&").append(URLEncoder.encode("notes["+i+"][format]", MoodleServices.ENCODING.toString())).append("=").append(""+notes[i].getDescriptionFormat().toInt());
+    }
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("warnings")) {
+        if (nodeName.equals("item")) {
+          if (warn==null) {
+            warn=new ArrayList<MoodleWarning>();
+          }
+          warning=new MoodleWarning(content);
+          warn.add(warning);
+        } else {
+          warning.setMoodleWarningField(nodeName, content);
+        }
+      }
+    }
+    if (warn!=null) {
+      if (warnings!=null) {
+        warnings=new MoodleWarning[warn.size()];
+        warnings=warn.toArray(warnings);
+      }
+    }
+  }
 }
