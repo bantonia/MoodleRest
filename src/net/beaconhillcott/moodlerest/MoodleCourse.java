@@ -205,6 +205,39 @@ public class MoodleCourse implements Serializable {
      */
     public MoodleCourse() {
     }
+    
+    public MoodleCourse clean() {
+      id=null;
+      shortname=null;
+      fullname=null;
+      categoryid=null;
+      summaryformat=null;
+      format=null;
+      showgrades=null;
+      newsitems=null;
+      numsections=null;
+      maxbytes=null;
+      showreports=null;
+      hiddensections=null;
+      groupmode=null;
+      groupmodeforce=null;
+      defaultgroupingid=null;
+      enablecompletion=null;
+      completionstartonenrol=null;
+      completionnotify=null;
+      visible=null;
+      categorysortorder=null;
+      timecreated=null;
+      timemodified=null;
+      summary=null;
+      idnumber=null;
+      lang=null;
+      forcetheme=null;
+      startdate=null;
+      enrolledusercount=null;
+      courseformatoptions=null;
+      return this;
+    }
 
     /**
      * <p>setMoodleCourseField sets an attribute with type conversion from the name of the attribute and a value, both passed as strings.</p>
