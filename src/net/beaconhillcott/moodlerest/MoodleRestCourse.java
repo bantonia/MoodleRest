@@ -1161,4 +1161,38 @@ public class MoodleRestCourse implements Serializable {
       }
       return duplicant;
     }
+
+  public static void importCourse(Long from, Long to) throws MoodleRestException, UnsupportedEncodingException {
+    importCourse(from, to, null, null);
+  }
+  
+  public static void importCourse(Long from, Long to, OptionParameter[] options) throws MoodleRestException, UnsupportedEncodingException {
+    importCourse(from, to, null, options);
+  }
+  
+  public static void importCourse(Long from, Long to, Boolean deleteContent) throws MoodleRestException, UnsupportedEncodingException {
+    importCourse(from, to, deleteContent, null);
+  }
+  
+  public static void importCourse(Long from, Long to, Boolean deleteContent, OptionParameter[] options) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_COURSE_IMPORT_COURSE.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCourseException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (from==null || to==null) throw new MoodleRestCourseException("Parameter null");
+    data.append("&").append(URLEncoder.encode("importfrom", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+from, MoodleServices.ENCODING.toString()));
+    data.append("&").append(URLEncoder.encode("importto", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+to, MoodleServices.ENCODING.toString()));
+    if (deleteContent!=null) data.append("&").append(URLEncoder.encode("deletecontent", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(deleteContent?1:0), MoodleServices.ENCODING.toString()));
+    if (options!=null) {
+      for (int i=0; i<options.length; i++) {
+        data.append("&").append(URLEncoder.encode("options["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getName(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("options["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+options[i].getValue(), MoodleServices.ENCODING.toString()));
+      }
+    }
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+  }
 }
