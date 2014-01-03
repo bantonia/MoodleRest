@@ -54,12 +54,12 @@ public enum MoodleServices implements Serializable {
 
         // USER API
         CORE_USER_CREATE_USERS("core_user_create_users"), // MoodleRestUser       
-        CORE_USER_GET_USERS_BY_ID("core_user_get_users_by_id"), // MoodleRestUser
-        CORE_USER_GET_COURSE_USER_PROFILES("core_user_get_course_user_profiles"), // MoodleRestUser
+        CORE_USER_GET_USERS_BY_ID("core_user_get_users_by_id"), // MoodleRestUser Tested 03/01/2014
+        CORE_USER_GET_COURSE_USER_PROFILES("core_user_get_course_user_profiles"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_DELETE_USERS("core_user_delete_users"), // MoodleRestUser
         CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser       
-        CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser       
-        CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser
+        CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser Tested 03/01/2014 and modified      
+        CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
 
         // ENROL

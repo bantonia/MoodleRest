@@ -966,7 +966,7 @@ public class MoodleRestUser implements Serializable {
                     parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
                 String content=elements.item(j).getTextContent();
                 String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-                if (parent.equals("RESPONSE") && nodeName.equals("id")) {
+                if (parent.equals("users") && nodeName.equals("id")) {
                     if (user==null)
                         user=new MoodleUser(Long.parseLong(content));
                     else {
@@ -979,7 +979,7 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE")) {
+                    if (parent.equals("users")) {
                       if (user==null)
                         throw new MoodleRestUserException();
                       user.setMoodleUserField(nodeName, content);
@@ -1120,7 +1120,7 @@ public class MoodleRestUser implements Serializable {
                     parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
                 String content=elements.item(j).getTextContent();
                 String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-                if (parent.equals("RESPONSE") && nodeName.equals("id")) {
+                if (parent.equals("users") && nodeName.equals("id")) {
                     if (user==null)
                         user=new MoodleUser(Long.parseLong(content));
                     else {
@@ -1133,7 +1133,7 @@ public class MoodleRestUser implements Serializable {
                     preference=null;
                     enrolledCourse=null;
                 } else {
-                    if (parent.equals("RESPONSE")) {
+                    if (parent.equals("users")) {
                       if (user==null)
                         throw new MoodleRestUserException();
                       user.setMoodleUserField(nodeName, content);
