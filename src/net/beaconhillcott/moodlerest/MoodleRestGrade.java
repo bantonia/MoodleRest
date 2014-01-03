@@ -12,6 +12,7 @@ import net.beaconhillcott.moodlerest.MoodleGradeArea.GradeDefinition.Guide;
 import net.beaconhillcott.moodlerest.MoodleGradeArea.GradeDefinition.Guide.GuideComment;
 import net.beaconhillcott.moodlerest.MoodleGradeArea.GradeDefinition.Guide.GuideCriteria;
 import net.beaconhillcott.moodlerest.MoodleGradeArea.GradeDefinition.Rubric.RubricCriteria.Level;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -149,6 +150,110 @@ public class MoodleRestGrade implements Serializable {
     if (areas!=null) {
       results=new MoodleGradeArea[areas.size()];
       results=areas.toArray(results);
+    }
+    return results;
+  }
+  
+  public static MoodleGradeInstance[] getGradingFormInstances(Long definitionId) throws MoodleRestGradeException, UnsupportedEncodingException, MoodleRestException {
+    return getGradingFormInstances(definitionId, null, null);
+  }
+  
+  public static MoodleGradeInstance[] getGradingFormInstances(Long definitionId, Long since) throws MoodleRestGradeException, UnsupportedEncodingException, MoodleRestException {
+    return getGradingFormInstances(definitionId, since, null);
+  }
+  
+  public static MoodleGradeInstance[] getGradingFormInstances(Long definitionId, MoodleWarning[] warnings) throws MoodleRestGradeException, UnsupportedEncodingException, MoodleRestException {
+    return getGradingFormInstances(definitionId, null, warnings);
+  }
+  
+  public static MoodleGradeInstance[] getGradingFormInstances(Long definitionId, Long since, MoodleWarning[] warnings) throws MoodleRestGradeException, UnsupportedEncodingException, MoodleRestException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestGradeException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_GRADING_GET_GRADINGFORM_INSTANCES.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestGradeException();
+    }
+    else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (definitionId==null) throw new MoodleRestGradeException("Parameter null");
+    data.append("&").append(URLEncoder.encode("definitionid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+definitionId, MoodleServices.ENCODING.toString()));
+    if (since!=null) data.append("&").append(URLEncoder.encode("since", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+since, MoodleServices.ENCODING.toString()));
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    // Process returned elements
+    ArrayList<MoodleGradeInstance> instances=null;
+    MoodleGradeInstance instance=null;
+    MoodleGradeInstance.Guide guide=null;
+    MoodleGradeInstance.Rubric rubric=null;
+    MoodleGradeInstance.Criteria criteria=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String grandparent=null;
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      Node parentNode = elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name");
+      Node grandparentNode = parentNode.getParentNode();
+      if (grandparentNode!=null) {
+        grandparent = grandparentNode.getNodeValue();
+      } else {
+        grandparent=null;
+      }
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      if (parent.equals("instances")) {
+        if (nodeName.equals("id")) {
+          if (instances==null) {
+            instances=new ArrayList<MoodleGradeInstance>();
+          }
+          instance=new MoodleGradeInstance(Long.parseLong(content));
+          instances.add(instance);
+        } else {
+          instance.setFieldValue(nodeName, content);
+        }
+      } else {
+        if (parent.equals("criteria") && grandparent.equals("guide")) {
+          if (nodeName.equals("id")) {
+            guide = instance.newGuide();
+            criteria = guide.newCriteria(Long.parseLong(content));
+          } else {
+            criteria.setFieldValue(nodeName, content);
+          }
+        } else {
+          if (parent.equals("criteria") && grandparent.equals("rubric")) {
+            if (nodeName.equals("id")) {
+              rubric = instance.newRubric();
+            criteria = rubric.newCriteria(Long.parseLong(content));
+          } else {
+            criteria.setFieldValue(nodeName, content);
+          }
+          } else {
+            if (parent.equals("warning")) {
+              if (nodeName.equals("item")) {
+                if (warn==null) {
+                  warn=new ArrayList<MoodleWarning>();
+                }
+                warning=new MoodleWarning();
+                warn.add(warning);
+                warning.setItem(content);
+              } else {
+                warning.setMoodleWarningField(nodeName, content);
+              }
+            }
+          }
+        }
+      }
+    }
+    if (warn!=null) {
+      warnings=new MoodleWarning[warn.size()];
+      warnings=warn.toArray(warnings);
+    }
+    MoodleGradeInstance[] results=null;
+    if (instances!=null) {
+      results=new MoodleGradeInstance[instances.size()];
+      results=instances.toArray(results);
     }
     return results;
   }
