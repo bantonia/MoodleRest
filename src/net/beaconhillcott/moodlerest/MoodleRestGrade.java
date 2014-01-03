@@ -210,13 +210,16 @@ public class MoodleRestGrade implements Serializable {
           }
           instance=new MoodleGradeInstance(Long.parseLong(content));
           instances.add(instance);
+          guide=null;
+          rubric=null;
         } else {
           instance.setFieldValue(nodeName, content);
         }
       } else {
         if (parent.equals("criteria") && grandparent.equals("guide")) {
           if (nodeName.equals("id")) {
-            guide = instance.newGuide();
+            if (guide==null)
+              guide = instance.newGuide();
             criteria = guide.newCriteria(Long.parseLong(content));
           } else {
             criteria.setFieldValue(nodeName, content);
@@ -224,7 +227,8 @@ public class MoodleRestGrade implements Serializable {
         } else {
           if (parent.equals("criteria") && grandparent.equals("rubric")) {
             if (nodeName.equals("id")) {
-              rubric = instance.newRubric();
+              if (rubric==null)
+                rubric = instance.newRubric();
             criteria = rubric.newCriteria(Long.parseLong(content));
           } else {
             criteria.setFieldValue(nodeName, content);
