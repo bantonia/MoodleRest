@@ -53,30 +53,30 @@ public enum MoodleServices implements Serializable {
         CORE_FILES_UPLOAD("core_files_upload"), //MoodleRestFile
 
         // USER API
-        CORE_USER_CREATE_USERS("core_user_create_users"), // MoodleRestUser       
+        CORE_USER_CREATE_USERS("core_user_create_users"), // MoodleRestUser Tested 21/01/2014      
         CORE_USER_GET_USERS_BY_ID("core_user_get_users_by_id"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_GET_COURSE_USER_PROFILES("core_user_get_course_user_profiles"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_DELETE_USERS("core_user_delete_users"), // MoodleRestUser
-        CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser       
+        CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser Tested 21/01/2014       
         CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser Tested 03/01/2014 and modified      
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
 
         // ENROL
-        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol       
-        CORE_ENROL_GET_ENROLLED_USERS("core_enrol_get_enrolled_users"), // MoodleRestEnrol       
-        CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol
+        CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol Tested 21/01/2014      
+        CORE_ENROL_GET_ENROLLED_USERS("core_enrol_get_enrolled_users"), // MoodleRestEnrol Tested 21/01/2014      
+        CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol Tested 21/01/2014 (Only visible courses returned by Moodle)
         CORE_ENROL_GET_COURSE_ENROLMENT_METHODS("core_enrol_get_course_enrolment_methods"), // Moodle 2.6 MoodleRestEnrol (Tested but returned no results, Moodle bug?)
-        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment
-        ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 MoodleRestEnrol (Untested)
+        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment Cannot test as this uses a contextid as a parameter!!!!!!!!
+        ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 MoodleRestEnrol Tested 21/01/2014
 
         // ROLE
-        CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol       
-        CORE_ROLE_UNASSIGN_ROLES("core_role_unassign_roles"), //MoodleRestEnrol
+        CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol Tested 21/01/2014 but returns an invalidparameter exception when tested with no optional parameters
+        CORE_ROLE_UNASSIGN_ROLES("core_role_unassign_roles"), //MoodleRestEnrol Tested 21/01/2014 but returns an invalidparameter exception when tested with no optional parameters
 
         // COURSE
-        CORE_COURSE_GET_CONTENTS("core_course_get_contents"), // MoodleRestCourse
-        CORE_COURSE_GET_COURSES("core_course_get_courses"), // MoodleRestCourse (Tested 19/12/2013)
+        CORE_COURSE_GET_CONTENTS("core_course_get_contents"), // MoodleRestCourse Tested 21/01/2014
+        CORE_COURSE_GET_COURSES("core_course_get_courses"), // MoodleRestCourse Tested 19/12/2013
         CORE_COURSE_CREATE_COURSES("core_course_create_courses"), // MoodleRestCourse
         CORE_COURSE_DELETE_COURSES("core_course_delete_courses"), // MoodleRestCourse
         CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_course"), // MoodleRestCourse (Untested)

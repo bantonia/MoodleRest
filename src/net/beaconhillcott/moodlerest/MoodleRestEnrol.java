@@ -340,7 +340,7 @@ public class MoodleRestEnrol implements Serializable {
     }
 
     /**
-     * <p>Method to enrol a user in a Moodle course.<br />
+     * <p>Method to assign a role to a user in a Moodle course.<br />
      * Needs the contextid and roleid so problem!</p>
      * 
      * @param user MoodleEnrolUser
@@ -348,20 +348,20 @@ public class MoodleRestEnrol implements Serializable {
      * @throws MoodleRestEnrolException
      * @throws MoodleRestException
      */
-    public static void enrolUser(MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public static void assignRoleToUser(MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         MoodleEnrolUser[] a=new MoodleEnrolUser[1];
         a[0]=user;
-        enrolUsers(a);
+        assignRoleToUsers(a);
     }
 
-    public void __enrolUser(String url, String token, MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public void __assignRoleToUser(String url, String token, MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         MoodleEnrolUser[] a=new MoodleEnrolUser[1];
         a[0]=user;
-        __enrolUsers(url, token, a);
+        __assignRoleToUsers(url, token, a);
     }
 
     /**
-     * <p>Method to enrol a number of users on Moodle courses.<br />
+     * <p>Method to assign a role to a number of users on Moodle courses.<br />
      * Needs the contextids and roleids so problem!</p>
      * 
      * @param user MoodleEnrolUser[]
@@ -369,7 +369,7 @@ public class MoodleRestEnrol implements Serializable {
      * @throws MoodleRestEnrolException
      * @throws MoodleRestException
      */
-    public static void enrolUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public static void assignRoleToUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         try {
             StringBuilder data=new StringBuilder();
             String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.toString():MoodleServices.CORE_ROLE_ASSIGN_ROLES.toString();
@@ -382,7 +382,9 @@ public class MoodleRestEnrol implements Serializable {
                 if (user[i]==null) throw new MoodleRestEnrolException();
                 if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
                 if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             MoodleCallRestWebService.call(data.toString());
@@ -391,7 +393,7 @@ public class MoodleRestEnrol implements Serializable {
         }
     }
 
-    public void __enrolUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public void __assignRoleToUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         try {
             StringBuilder data=new StringBuilder();
             String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_ASSIGN.toString():MoodleServices.CORE_ROLE_ASSIGN_ROLES.toString();
@@ -401,7 +403,9 @@ public class MoodleRestEnrol implements Serializable {
                 if (user[i]==null) throw new MoodleRestEnrolException();
                 if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
                 if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             (new MoodleCallRestWebService()).__call(url,data.toString());
@@ -411,32 +415,32 @@ public class MoodleRestEnrol implements Serializable {
     }
 
     /**
-     * <p>Method to un-enrol a user from a Moodle course.</p>
+     * <p>Method to unassign a role from a user from a Moodle course.</p>
      * 
      * @param user MoodleEnrolUser
      * @throws UnsupportedEncodingException
      * @throws MoodleRestEnrolException
      */
-    public static void unenrolUser(MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public static void unassignRoleFromUser(MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         MoodleEnrolUser[] a=new MoodleEnrolUser[1];
         a[0]=user;
-        unenrolUsers(a);
+        unassignRoleFromUsers(a);
     }
 
-    public void __unenrolUser(String url, String token, MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public void __unassignRoleFromUser(String url, String token, MoodleEnrolUser user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         MoodleEnrolUser[] a=new MoodleEnrolUser[1];
         a[0]=user;
-        __unenrolUsers(url, token, a);
+        __unassignRoleFromUsers(url, token, a);
     }
 
     /**
-     * <p>Method to un-enrol a number of users from Moodle courses.</p>
+     * <p>Method to unassign a role from a number of users from Moodle courses.</p>
      * 
      * @param user MoodleEnrolUser[]
      * @throws UnsupportedEncodingException
      * @throws MoodleRestEnrolException
      */
-    public static void unenrolUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public static void unassignRoleFromUsers(MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.toString():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.toString();
         try {
             StringBuilder data=new StringBuilder();
@@ -447,9 +451,11 @@ public class MoodleRestEnrol implements Serializable {
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestEnrolException();
-                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             MoodleCallRestWebService.call(data.toString());
@@ -458,7 +464,7 @@ public class MoodleRestEnrol implements Serializable {
         }
     }
 
-    public void __unenrolUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+    public void __unassignRoleFromUsers(String url, String token, MoodleEnrolUser[] user) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
         String functionCall=MoodleCallRestWebService.isLegacy()?MoodleServices.MOODLE_ROLE_UNASSIGN.toString():MoodleServices.CORE_ROLE_UNASSIGN_ROLES.toString();
         try {
             StringBuilder data=new StringBuilder();
@@ -466,9 +472,11 @@ public class MoodleRestEnrol implements Serializable {
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestEnrolException();
-                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             (new MoodleCallRestWebService()).__call(url,data.toString());

@@ -31,6 +31,8 @@ public class MoodleEnrolUser implements Serializable {
     private Long roleid=null;
     private Long userid=null;
     private Long contextid=null;
+    private String contextlevel=null;
+    private Long instanceid=null;
 
     /**
      * <p>Constructor for bean requirements.</p>
@@ -49,6 +51,30 @@ public class MoodleEnrolUser implements Serializable {
         this.userid=userid;
         this.contextid=contextid;
     }
+
+    public MoodleEnrolUser(Long roleid, Long userid, Long contextid, String contextlevel, Long instanceid) {
+        this.roleid=roleid;
+        this.userid=userid;
+        this.contextid=contextid;
+        this.contextlevel=contextlevel;
+        this.instanceid=instanceid;
+    }
+    
+  public String getContextLevel() {
+    return contextlevel;
+  }
+
+  public void setContextLevel(String contextlevel) {
+    this.contextlevel = contextlevel;
+  }
+
+  public Long getInstanceId() {
+    return instanceid;
+  }
+
+  public void setInstanceId(Long instanceid) {
+    this.instanceid = instanceid;
+  }
 
     /**
      * <p>Method to set the roleid attribute of a MoodleEnrolUser object.</p>
