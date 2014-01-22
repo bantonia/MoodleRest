@@ -37,7 +37,6 @@ public class MoodleRestModForum {
     for (int j=0; j<elements.getLength(); j++) {
       String content=elements.item(j).getTextContent();
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-      if (nodeName.equals("id")) {
         if (nodeName.equals("id")) {
           if (forums==null) {
             forums=new ArrayList<ModCourseForum>();
@@ -47,7 +46,6 @@ public class MoodleRestModForum {
         } else {
           forum.setFieldValue(nodeName, content);
         }
-      }
     }
     ModCourseForum[] results=null;
     if (forums!=null) {
@@ -79,7 +77,6 @@ public class MoodleRestModForum {
     for (int j=0; j<elements.getLength(); j++) {
       String content=elements.item(j).getTextContent();
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-      if (nodeName.equals("id")) {
         if (nodeName.equals("id")) {
           if (discussions==null) {
             discussions=new ArrayList<ModForumDiscussion>();
@@ -89,7 +86,6 @@ public class MoodleRestModForum {
         } else {
           discussion.setFieldValue(nodeName, content);
         }
-      }
     }
     ModForumDiscussion[] results=null;
     if (discussions!=null) {

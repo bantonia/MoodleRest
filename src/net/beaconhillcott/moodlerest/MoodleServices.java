@@ -67,7 +67,7 @@ public enum MoodleServices implements Serializable {
         CORE_ENROL_GET_ENROLLED_USERS("core_enrol_get_enrolled_users"), // MoodleRestEnrol Tested 21/01/2014      
         CORE_ENROL_GET_USERS_COURSES("core_enrol_get_users_courses"), // MoodleRestEnrol Tested 21/01/2014 (Only visible courses returned by Moodle)
         CORE_ENROL_GET_COURSE_ENROLMENT_METHODS("core_enrol_get_course_enrolment_methods"), // Moodle 2.6 MoodleRestEnrol (Tested but returned no results, Moodle bug?)
-        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment Cannot test as this uses a contextid as a parameter!!!!!!!!
+        ENROL_MANUAL_ENROL_USERS("enrol_manual_enrol_users"), // MoodleRestUserEnrolment Tested 22/01/2014
         ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 MoodleRestEnrol Tested 21/01/2014
 
         // ROLE
@@ -104,7 +104,7 @@ public enum MoodleServices implements Serializable {
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // MoodleRestNotes (Untested)
 
         // WEBSERVICE
-        CORE_WEBSERVICE_GET_SITE_INFO("core_webservice_get_site_info"), // MoodleRestWebService
+        CORE_WEBSERVICE_GET_SITE_INFO("core_webservice_get_site_info"), // MoodleRestWebService Tested 22/01/2014
 
         // GET
         CORE_GET_STRING("core_get_string"), // MoodleRestStrings (Bug in Moodle, will give an invalid parameter error if not altered within Moodle 2.6)
@@ -145,8 +145,8 @@ public enum MoodleServices implements Serializable {
         CORE_CALENDAR_CREATE_CALENDAR_EVENTS("core_calendar_create_calendar_events"), //MoodleRestCalendar
 
         // FORUM
-        MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // MoodleRestModForum (Untested)
-        MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum (Untested)
+        MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // MoodleRestModForum Tested 22/01/2014
+        MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum Tested 22/01/2014
         
         // GRADING
         CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 MoodleRestGrade (Untested)

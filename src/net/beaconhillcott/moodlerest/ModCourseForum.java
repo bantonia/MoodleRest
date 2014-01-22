@@ -70,10 +70,10 @@ public class ModCourseForum implements Serializable {
   }
 
   public void setFieldValue(String name, String value) {
-    if (("."+name+".").indexOf("."+VARIABLES+".")!=-1) {
+    if (("."+VARIABLES+".").indexOf("."+name+".")!=-1) {
       if (value!=null) {
         int varIndex;
-        String[] a=VARIABLES.split(".");
+        String[] a=VARIABLES.split("\\.");
         for (varIndex=0; varIndex<a.length; varIndex++) {
           if (name.equals(a[varIndex])) {
             break;

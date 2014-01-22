@@ -63,7 +63,7 @@ public class ModForumDiscussion implements Serializable {
   private final static int LASTUSERIMAGEALT=22;
   private final static int LASTUSERPICTURE=23;
   private final static int LASTUSEREMAIL=24;
-  private final static String VARIABLES="id.course.forum.name.userid.groupid.assessed.firstpost.firstuserfullname.firstuserimagealt.firstuserpicture.firstuseremail.subject.numreplies.numunread.lastpost.lastuserid.lastuserfullname.lastuserimagealt.lastuserpicture.lastuseremail";
+  private final static String VARIABLES="id.course.forum.name.userid.groupid.assessed.timemodified.usermodified.timestart.timeend.firstpost.firstuserfullname.firstuserimagealt.firstuserpicture.firstuseremail.subject.numreplies.numunread.lastpost.lastuserid.lastuserfullname.lastuserimagealt.lastuserpicture.lastuseremail";
 
   public ModForumDiscussion() {
   }
@@ -73,10 +73,10 @@ public class ModForumDiscussion implements Serializable {
   }
 
   public void setFieldValue(String name, String value) {
-    if (("."+name+".").indexOf("."+VARIABLES+".")!=-1) {
+    if (("."+VARIABLES+".").indexOf("."+name+".")!=-1) {
       if (value!=null) {
         int varIndex;
-        String[] a=VARIABLES.split(".");
+        String[] a=VARIABLES.split("\\.");
         for (varIndex=0; varIndex<a.length; varIndex++) {
           if (name.equals(a[varIndex])) {
             break;

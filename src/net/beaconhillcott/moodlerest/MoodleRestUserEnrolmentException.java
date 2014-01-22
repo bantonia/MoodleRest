@@ -8,7 +8,7 @@ package net.beaconhillcott.moodlerest;
  *
  * @author root
  */
-class MoodleRestUserEnrolmentException extends Exception {
+public class MoodleRestUserEnrolmentException extends Exception {
   
   public static final String USER_NULL="User cannot be null";
 
