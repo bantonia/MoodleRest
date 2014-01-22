@@ -49,7 +49,7 @@ public enum MoodleServices implements Serializable {
         CORE_GROUP_UNASSIGN_GROUPING("core_group_unassign_grouping"), // MoodleRestGroup
 
         // FILES API
-        CORE_FILES_GET_FILES("core_files_get_fNot yet implementediles"), //MoodleRestFile
+        CORE_FILES_GET_FILES("core_files_get_files"), //MoodleRestFile
         CORE_FILES_UPLOAD("core_files_upload"), //MoodleRestFile
 
         // USER API
