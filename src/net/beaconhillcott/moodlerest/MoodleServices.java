@@ -71,8 +71,8 @@ public enum MoodleServices implements Serializable {
         ENROL_SELF_GET_INSTANCE_INFO("enrol_self_get_instance_info"), // Moodle 2.6 MoodleRestEnrol Tested 21/01/2014
 
         // ROLE
-        CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol Tested 21/01/2014 but returns an invalidparameter exception when tested with no optional parameters
-        CORE_ROLE_UNASSIGN_ROLES("core_role_unassign_roles"), //MoodleRestEnrol Tested 21/01/2014 but returns an invalidparameter exception when tested with no optional parameters
+        CORE_ROLE_ASSIGN_ROLES("core_role_assign_roles"),  //MoodleRestEnrol Tested 21/01/2014, returns an invalidparameter exception when tested with no optional parameters. Functions correctly when contextlevel and instanceid set.
+        CORE_ROLE_UNASSIGN_ROLES("core_role_unassign_roles"), //MoodleRestEnrol Tested 21/01/2014, returns an invalidparameter exception when tested with no optional parameters. Functions when optional parameters set to the same values tested for core_role_assign_roles.
 
         // COURSE
         CORE_COURSE_GET_CONTENTS("core_course_get_contents"), // MoodleRestCourse Tested 21/01/2014
@@ -108,7 +108,7 @@ public enum MoodleServices implements Serializable {
 
         // GET
         CORE_GET_STRING("core_get_string"), // MoodleRestStrings (Bug in Moodle, will give an invalid parameter error if not altered within Moodle 2.6)
-        CORE_GET_STRINGS("core_get_strings"), // MoodleRestStrings (Untested)
+        CORE_GET_STRINGS("core_get_strings"), // MoodleRestStrings Tested 22/01/2014
         CORE_GET_COMPONENT_STRINGS("core_get_component_strings"), // MoodleRestStrings (Tested 17/12/2013)
 
         // ASSIGN

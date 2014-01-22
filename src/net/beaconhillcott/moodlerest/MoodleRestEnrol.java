@@ -451,11 +451,11 @@ public class MoodleRestEnrol implements Serializable {
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestEnrolException();
-                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
-                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             MoodleCallRestWebService.call(data.toString());
@@ -472,11 +472,11 @@ public class MoodleRestEnrol implements Serializable {
             data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
             for (int i=0;i<user.length;i++) {
                 if (user[i]==null) throw new MoodleRestEnrolException();
-                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("assignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
-                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
-                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("assignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getRoleId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getRoleId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getUserId()==null) throw new MoodleRestEnrolException(); else data.append("&").append(URLEncoder.encode("unassignments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getUserId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextId()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextId(), MoodleServices.ENCODING.toString()));
+                if (user[i].getContextLevel()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][contextlevel]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getContextLevel(), MoodleServices.ENCODING.toString()));
+                if (user[i].getInstanceId()!=null) data.append("&").append(URLEncoder.encode("unassignments["+i+"][instanceid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+user[i].getInstanceId(), MoodleServices.ENCODING.toString()));
             }
             data.trimToSize();
             (new MoodleCallRestWebService()).__call(url,data.toString());
