@@ -80,13 +80,13 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_CREATE_COURSES("core_course_create_courses"), // MoodleRestCourse
         CORE_COURSE_DELETE_COURSES("core_course_delete_courses"), // MoodleRestCourse
         CORE_COURSE_DUPLICATE_COURSE("core_course_duplicate_course"), // MoodleRestCourse (Untested)
-        CORE_COURSE_GET_CATEGORIES("core_course_get_categories"), // MoodleRestCourse
+        CORE_COURSE_GET_CATEGORIES("core_course_get_categories"), // MoodleRestCourse Tested 01/02/2014
         CORE_COURSE_CREATE_CATEGORIES("core_course_create_categories"), // MoodleRestCourse
         CORE_COURSE_UPDATE_CATEGORIES("core_course_update_categories"), // MoodleRestCourse
         CORE_COURSE_DELETE_CATEGORIES("core_course_delete_categories"), // MoodleRestCourse
         CORE_COURSE_IMPORT_COURSE("core_course_import_course"), //  MoodleRestCourse (Untested)
         CORE_COURSE_DELETE_MODULES("core_course_delete_modules"), // MoodleRestCourse
-        CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // MoodleRestCourse (Untested)
+        CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // MoodleRestCourse Tested 02/02/2014
 
         // MESSAGE
         CORE_MESSAGE_SEND_INSTANT_MESSAGES("core_message_send_instant_messages"), // MoodleRestMessage

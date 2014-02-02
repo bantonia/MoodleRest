@@ -161,8 +161,8 @@ public class MoodleRestCourse implements Serializable {
      * @throws UnsupportedEncodingException
      * @throws MoodleRestException
      */
-    public static MoodleCourse getCourseFromId(long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
-        long[] a=new long[1];
+    public static MoodleCourse getCourseFromId(Long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
+        Long[] a=new Long[1];
         a[0]=id;
         MoodleCourse[] crs=getCoursesById(a);
         return crs[0];
@@ -178,16 +178,16 @@ public class MoodleRestCourse implements Serializable {
      * @throws UnsupportedEncodingException
      * @throws MoodleRestException
      */
-    public static MoodleCourse getCourseFromId(Long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
+    /*public static MoodleCourse getCourseFromId(Long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
         Long[] a=new Long[1];
         a[0]=id;
         MoodleCourse[] crs=getCoursesById(a);
         return crs[0];
-    }
+    }*/
     
-    public static MoodleCourse[] getCoursesById(long[] courseids) throws MoodleRestException, UnsupportedEncodingException {
+    /*public static MoodleCourse[] getCoursesById(Long[] courseids) throws MoodleRestException, UnsupportedEncodingException {
       return getCoursesById(courseids);
-    }
+    }*/
     
     /**
      * <p>Method to return an array of MoodleCourse objects given an array of id's of the courses within Moodle.<br />
@@ -253,12 +253,12 @@ public class MoodleRestCourse implements Serializable {
         return results;
     }
 
-    public MoodleCourse __getCourseFromId(String url, String token, long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
+    /*public MoodleCourse __getCourseFromId(String url, String token, long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
         long[] a=new long[1];
         a[0]=id;
         MoodleCourse[] crs=__getCoursesById(url, token, a);
         return crs[0];
-    }
+    }*/
 
     public MoodleCourse __getCourseFromId(String url, String token, Long id) throws MoodleRestCourseException, UnsupportedEncodingException, MoodleRestException {
         Long[] a=new Long[1];
@@ -267,9 +267,9 @@ public class MoodleRestCourse implements Serializable {
         return crs[0];
     }
     
-    public MoodleCourse[] __getCoursesById(String url, String token, long[] courseids) throws MoodleRestException, UnsupportedEncodingException {
+    /*public MoodleCourse[] __getCoursesById(String url, String token, long[] courseids) throws MoodleRestException, UnsupportedEncodingException {
       return __getCoursesById(url, token, courseids);
-    }
+    }*/
     
     public MoodleCourse[] __getCoursesById(String url, String token, Long[] courseids) throws MoodleRestException, UnsupportedEncodingException {
         StringBuilder data=new StringBuilder();
@@ -933,7 +933,7 @@ public class MoodleRestCourse implements Serializable {
      * @throws UnsupportedEncodingException
      */
     public static MoodleCategory[] getCategories() throws MoodleRestException, UnsupportedEncodingException {
-      return getCategories(0, true);
+      return getCategories(null, true);
     }
 
     /**
@@ -943,19 +943,21 @@ public class MoodleRestCourse implements Serializable {
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static MoodleCategory[] getCategories(long categoryId) throws MoodleRestException, UnsupportedEncodingException {
-      return getCategories(categoryId, true);
+    public static MoodleCategory[] getCategories(OptionParameter categorySearch) throws MoodleRestException, UnsupportedEncodingException {
+      OptionParameter[] a=new OptionParameter[1];
+      a[0]=categorySearch;
+      return getCategories(a, true);
     }
-
+    
     /**
      *
-     * @param categoryId
+     * @param 
      * @param subcategories
      * @return MoodleCategory[]
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static MoodleCategory[] getCategories(long categoryId, boolean subcategories) throws MoodleRestException, UnsupportedEncodingException {
+    public static MoodleCategory[] getCategories(OptionParameter[] categoriesSearch, boolean subcategories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       String functionCall=MoodleServices.CORE_COURSE_GET_CATEGORIES.toString();
@@ -964,8 +966,14 @@ public class MoodleRestCourse implements Serializable {
       else
         data.append(MoodleCallRestWebService.getAuth());
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-      if (categoryId<0) throw new MoodleRestCourseException(MoodleRestException.PARAMETER_RANGE+" categoryid"); data.append("&").append(URLEncoder.encode("categoryid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categoryId, MoodleServices.ENCODING.toString()));
-      data.append("&").append(URLEncoder.encode("addsubcategories", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(subcategories?1:0), MoodleServices.ENCODING.toString()));
+      if (categoriesSearch!=null) {
+        for (int i=0; i<categoriesSearch.length; i++) {
+          data.append("&").append(URLEncoder.encode("criteria["+i+"][key]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categoriesSearch[i].getName(), MoodleServices.ENCODING.toString()));
+          data.append("&").append(URLEncoder.encode("criteria["+i+"][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categoriesSearch[i].getValue(), MoodleServices.ENCODING.toString()));
+        }
+      }
+      if (!subcategories)
+        data.append("&").append(URLEncoder.encode("addsubcategories", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(subcategories?1:0), MoodleServices.ENCODING.toString()));
       NodeList elements = MoodleCallRestWebService.call(data.toString());
       ArrayList<MoodleCategory> categories=new ArrayList();
       MoodleCategory category=null;
