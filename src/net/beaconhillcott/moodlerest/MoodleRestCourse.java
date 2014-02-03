@@ -816,9 +816,9 @@ public class MoodleRestCourse implements Serializable {
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static void deleteCategory(CategoryDeletionData categoryData) throws MoodleRestException, UnsupportedEncodingException {
-      CategoryDeletionData[] categories=new CategoryDeletionData[1];
-      categories[0]=categoryData;
+    public static void deleteCategory(MoodleCategory category) throws MoodleRestException, UnsupportedEncodingException {
+      MoodleCategory[] categories=new MoodleCategory[1];
+      categories[0]=category;
       deleteCategories(categories);
     }
     
@@ -829,7 +829,7 @@ public class MoodleRestCourse implements Serializable {
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static void deleteCategories(CategoryDeletionData[] categories) throws MoodleRestException, UnsupportedEncodingException {
+    public static void deleteCategories(MoodleCategory[] categories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.toString();
@@ -845,8 +845,8 @@ public class MoodleRestCourse implements Serializable {
             data.append("&").append(URLEncoder.encode("categories["+i+"][newparent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getNewParent(), MoodleServices.ENCODING.toString()));
           }
         }
-        if (categories[i].isRecurse()!=null) {
-          if (categories[i].isRecurse()) data.append("&").append(URLEncoder.encode("categories["+i+"][recursive]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode("1", MoodleServices.ENCODING.toString()));
+        if (categories[i].isRecursive()!=null) {
+          if (categories[i].isRecursive()) data.append("&").append(URLEncoder.encode("categories["+i+"][recursive]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode("1", MoodleServices.ENCODING.toString()));
         }
       }
       MoodleCallRestWebService.call(data.toString());

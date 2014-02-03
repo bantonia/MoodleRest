@@ -40,6 +40,8 @@ public class MoodleCategory implements Serializable {
     private Long timemodified=null;
     private Integer depth=null;
     private String path=null;
+    private Long newParent=null;
+    private Boolean recursive=false;
 
     public MoodleCategory() {}
 
@@ -126,5 +128,23 @@ public class MoodleCategory implements Serializable {
         }
         return null;
     }
+
+  public Long getNewParent() {
+    return newParent;
+  }
+
+  public void setNewParent(Long newParent) {
+    this.newParent = newParent;
+  }
+
+  public Boolean isRecursive() {
+    return recursive;
+  }
+
+  public void setRecursive(Boolean recursive) {
+    this.recursive = recursive;
+  }
+    
+    
 }
 
