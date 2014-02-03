@@ -56,7 +56,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_CREATE_USERS("core_user_create_users"), // MoodleRestUser Tested 21/01/2014      
         CORE_USER_GET_USERS_BY_ID("core_user_get_users_by_id"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_GET_COURSE_USER_PROFILES("core_user_get_course_user_profiles"), // MoodleRestUser Tested 03/01/2014
-        CORE_USER_DELETE_USERS("core_user_delete_users"), // MoodleRestUser
+        CORE_USER_DELETE_USERS("core_user_delete_users"), // MoodleRestUser Tested 03/02/2014
         CORE_USER_UPDATE_USERS("core_user_update_users"), // MoodleRestUser Tested 21/01/2014       
         CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser Tested 03/01/2014 and modified      
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser Tested 03/01/2014
@@ -89,13 +89,13 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // MoodleRestCourse Tested 02/02/2014
 
         // MESSAGE
-        CORE_MESSAGE_SEND_INSTANT_MESSAGES("core_message_send_instant_messages"), // MoodleRestMessage
-        CORE_MESSAGE_CREATE_CONTACTS("core_message_create_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_DELETE_CONTACTS("core_message_delete_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_BLOCK_CONTACTS("core_message_block_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage
-        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Moodle bug 2.5?)
+        CORE_MESSAGE_SEND_INSTANT_MESSAGES("core_message_send_instant_messages"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_CREATE_CONTACTS("core_message_create_contacts"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_DELETE_CONTACTS("core_message_delete_contacts"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_BLOCK_CONTACTS("core_message_block_contacts"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage Tested 03/02/2014
+        CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Tested 03/02/2014 Moodle bug? Tracker MDL-42794)
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes

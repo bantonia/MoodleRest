@@ -40,7 +40,7 @@ public class MoodleMessage implements Serializable {
   public MoodleMessage() {}
 
   /**
-   * <p>Costructor to create a MoodleMessage object.</p>
+   * <p>Constructor to create a MoodleMessage object.</p>
    * <p>This is all which is required to send a message between users. The sender is the account which is used to access the webservice.</p>
    *
    * @param touserid long

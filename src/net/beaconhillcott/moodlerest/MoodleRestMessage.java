@@ -331,6 +331,7 @@ public class MoodleRestMessage implements Serializable {
 
 			data.trimToSize();
 			MoodleCallRestWebService.call(data.toString());
+                        
 
 		} catch (final UnsupportedEncodingException ex) {
 			Logger.getLogger(MoodleRestMessage.class.getName()).log(
@@ -459,6 +460,7 @@ public class MoodleRestMessage implements Serializable {
 			throws MoodleRestMessageException, UnsupportedEncodingException,
 			MoodleRestException {
 		actionContact(contact, MoodleContactAction.UNBLOCK);
+                actionContact(contact, MoodleContactAction.CREATE); // The unblock contact webservice deletes the contact connection from the database, this re-establishes the contact connection.
 	}
 
 	// core_message_unblock_contacts
@@ -477,6 +479,7 @@ public class MoodleRestMessage implements Serializable {
 			throws MoodleRestMessageException, UnsupportedEncodingException,
 			MoodleRestException {
 		actionContacts(contacts, MoodleContactAction.UNBLOCK);
+                actionContacts(contacts, MoodleContactAction.CREATE); // The unblock contact webservice deletes the contact connection from the database, this re-establishes the contact connection.
 	}
   
   public static MoodleContact[] searchContacts(String searchText, boolean onlyMyCourses) throws MoodleRestException {
