@@ -375,14 +375,14 @@ public class MoodleRestCourse implements Serializable {
             data.append("&").append(URLEncoder.encode("courses["+i+"][groupmodeforce]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+course[i].getGroupModeForce(), MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("courses["+i+"][defaultgroupingid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+course[i].getDefaultGroupingId(), MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("courses["+i+"][enablecompletion]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(course[i].getEnableCompletion()?1:0), MoodleServices.ENCODING.toString()));
-            data.append("&").append(URLEncoder.encode("courses["+i+"][completionstartonenrol]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(course[i].getCompletionStartOnEnrol()?1:0), MoodleServices.ENCODING.toString()));
+            //data.append("&").append(URLEncoder.encode("courses["+i+"][completionstartonenrol]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(course[i].getCompletionStartOnEnrol()?1:0), MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("courses["+i+"][completionnotify]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(course[i].getCompletionNotify()?1:0), MoodleServices.ENCODING.toString()));
             data.append("&").append(URLEncoder.encode("courses["+i+"][visible]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(course[i].getVisible()?1:0), MoodleServices.ENCODING.toString()));
             if (course[i].getSummary()!=null) data.append("&").append(URLEncoder.encode("courses["+i+"][summary]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(course[i].getSummary(), MoodleServices.ENCODING.toString()));
             if (course[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("courses["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(course[i].getIdNumber(), MoodleServices.ENCODING.toString()));
             if (course[i].getLang()!=null) data.append("&").append(URLEncoder.encode("courses["+i+"][lang]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(course[i].getLang(), MoodleServices.ENCODING.toString()));
             if (course[i].getForceTheme()!=null) data.append("&").append(URLEncoder.encode("courses["+i+"][forcetheme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(course[i].getForceTheme(), MoodleServices.ENCODING.toString()));
-            if (course[i].getStartDate()!=-1) data.append("&").append(URLEncoder.encode("courses["+i+"][startdate]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+course[i].getStartDate(), MoodleServices.ENCODING.toString()));
+            if (course[i].getStartDate()!=null) data.append("&").append(URLEncoder.encode("courses["+i+"][startdate]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+course[i].getStartDate(), MoodleServices.ENCODING.toString()));
         }
         data.trimToSize();
         NodeList elements=MoodleCallRestWebService.call(data.toString());
@@ -741,7 +741,7 @@ public class MoodleRestCourse implements Serializable {
       Hashtable<String, MoodleCategory> catStore=new Hashtable();
       for (int i=0; i<categories.length; i++) {
         if (categories[i].getName()==null) throw new MoodleRestCourseException(MoodleRestException.REQUIRED_PARAMETER+" name"); data.append("&").append(URLEncoder.encode("categories["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getName(), MoodleServices.ENCODING.toString()));
-        if (categories[i].getParent()==null) throw new MoodleRestCourseException(MoodleRestException.REQUIRED_PARAMETER+" parent"); data.append("&").append(URLEncoder.encode("categories["+i+"][parent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getParent(), MoodleServices.ENCODING.toString()));
+        if (categories[i].getParent()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][parent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getParent(), MoodleServices.ENCODING.toString()));
         if (categories[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getIdNumber(), MoodleServices.ENCODING.toString()));
         if (categories[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getDescription(), MoodleServices.ENCODING.toString()));
         if (categories[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getTheme(), MoodleServices.ENCODING.toString()));
@@ -816,9 +816,9 @@ public class MoodleRestCourse implements Serializable {
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static void deleteCategory(MoodleCategory category) throws MoodleRestException, UnsupportedEncodingException {
-      MoodleCategory[] categories=new MoodleCategory[1];
-      categories[0]=category;
+    public static void deleteCategory(CategoryDeletionData categoryData) throws MoodleRestException, UnsupportedEncodingException {
+      CategoryDeletionData[] categories=new CategoryDeletionData[1];
+      categories[0]=categoryData;
       deleteCategories(categories);
     }
     
@@ -829,7 +829,7 @@ public class MoodleRestCourse implements Serializable {
      * @throws MoodleRestException
      * @throws UnsupportedEncodingException
      */
-    public static void deleteCategories(MoodleCategory[] categories) throws MoodleRestException, UnsupportedEncodingException {
+    public static void deleteCategories(CategoryDeletionData[] categories) throws MoodleRestException, UnsupportedEncodingException {
       if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
       StringBuilder data=new StringBuilder();
       String functionCall=MoodleServices.CORE_COURSE_DELETE_CATEGORIES.toString();
@@ -840,12 +840,19 @@ public class MoodleRestCourse implements Serializable {
       data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
       for (int i=0; i<categories.length; i++) {
         if (categories[i].getId()==null) throw new MoodleRestCourseException(MoodleRestException.REQUIRED_PARAMETER+" id"); data.append("&").append(URLEncoder.encode("categories["+i+"][id]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getId(), MoodleServices.ENCODING.toString()));
-        if (categories[i].getParent()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][newparent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getParent(), MoodleServices.ENCODING.toString()));
+        if (categories[i].getNewParent()!=null) {
+          if (categories[i].getNewParent()!=0) {
+            data.append("&").append(URLEncoder.encode("categories["+i+"][newparent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getNewParent(), MoodleServices.ENCODING.toString()));
+          }
+        }
+        if (categories[i].isRecurse()!=null) {
+          if (categories[i].isRecurse()) data.append("&").append(URLEncoder.encode("categories["+i+"][recursive]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode("1", MoodleServices.ENCODING.toString()));
+        }
       }
       MoodleCallRestWebService.call(data.toString());
     }
     
-    public void __deleteCategory(String url, String token, MoodleCategory category) throws MoodleRestException, UnsupportedEncodingException {
+    /*public void __deleteCategory(String url, String token, MoodleCategory category) throws MoodleRestException, UnsupportedEncodingException {
       MoodleCategory[] categories=new MoodleCategory[1];
       categories[0]=category;
       __deleteCategories(url, token, categories);
@@ -862,7 +869,7 @@ public class MoodleRestCourse implements Serializable {
         if (categories[i].getParent()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][newparent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getParent(), MoodleServices.ENCODING.toString()));
       }
       (new MoodleCallRestWebService()).__call(url,data.toString());
-    }
+    }*/
 
     /**
      * <p>From Moodle 2.3</p>
@@ -898,7 +905,7 @@ public class MoodleRestCourse implements Serializable {
         if (categories[i].getParent()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][parent]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getParent(), MoodleServices.ENCODING.toString()));
         if (categories[i].getIdNumber()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getIdNumber(), MoodleServices.ENCODING.toString()));
         if (categories[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getDescription(), MoodleServices.ENCODING.toString()));
-        //if (categories[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getTheme(), MoodleServices.ENCODING.toString()));;
+        if (categories[i].getTheme()!=null) data.append("&").append(URLEncoder.encode("categories["+i+"][theme]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+categories[i].getTheme(), MoodleServices.ENCODING.toString()));;
       }
       MoodleCallRestWebService.call(data.toString());
     }
