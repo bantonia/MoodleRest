@@ -40,6 +40,11 @@ public class MoodleCategory implements Serializable {
     private Long timemodified=null;
     private Integer depth=null;
     private String path=null;
+    
+    /* The following do not contain category data.
+    These are here to enable the category deletion
+    routine. See the Moodle webservices API for details.
+    */
     private Long newParent=null;
     private Boolean recursive=false;
 
