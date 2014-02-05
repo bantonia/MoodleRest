@@ -120,7 +120,7 @@ public class MoodleRestCalendar implements Serializable {
     return calendars[0];
   }
   
-  public static MoodleCalendar[] getCalendarEvents(MoodleCalendar[] calendar, int userevents, int siteevents, long timestart, long timeend, int ignorehidden) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleCalendar[] getCalendarEvents(MoodleCalendar[] calendar, Integer userevents, Integer siteevents, Long timestart, Long timeend, Integer ignorehidden) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestCalendarException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_CALENDAR_GET_CALENDAR_EVENTS.toString();
@@ -129,16 +129,18 @@ public class MoodleRestCalendar implements Serializable {
     else
       data.append(MoodleCallRestWebService.getAuth());
     data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
-    for (int i=0;i<calendar.length;i++) {
-      if (calendar[i].getId()==null) throw new MoodleRestCalendarException(MoodleRestException.REQUIRED_PARAMETER+" eventids"); else data.append("&").append(URLEncoder.encode("events[eventids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getId(), MoodleServices.ENCODING.toString()));
-      if (calendar[i].getCourseId()==null) throw new MoodleRestCalendarException(MoodleRestException.REQUIRED_PARAMETER+" courseids"); else data.append("&").append(URLEncoder.encode("events[courseids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getCourseId(), MoodleServices.ENCODING.toString()));
-      if (calendar[i].getGroupId()==null) throw new MoodleRestCalendarException(MoodleRestException.REQUIRED_PARAMETER+" groupids"); else data.append("&").append(URLEncoder.encode("events[groupids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getGroupId(), MoodleServices.ENCODING.toString()));
+    if (calendar!=null) {
+      for (int i=0;i<calendar.length;i++) {
+        if (calendar[i].getId()!=null) data.append("&").append(URLEncoder.encode("events[eventids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getId(), MoodleServices.ENCODING.toString()));
+        if (calendar[i].getCourseId()!=null) data.append("&").append(URLEncoder.encode("events[courseids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getCourseId(), MoodleServices.ENCODING.toString()));
+        if (calendar[i].getGroupId()!=null) data.append("&").append(URLEncoder.encode("events[groupids]["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+calendar[i].getGroupId(), MoodleServices.ENCODING.toString()));
+      }
     }
-    data.append("&").append(URLEncoder.encode("options[userevents]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(userevents==0?0:1), MoodleServices.ENCODING.toString()));
-    data.append("&").append(URLEncoder.encode("options[siteevents]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(siteevents==0?0:1), MoodleServices.ENCODING.toString()));
-    data.append("&").append(URLEncoder.encode("options[timestart]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+timestart, MoodleServices.ENCODING.toString()));
-    data.append("&").append(URLEncoder.encode("options[timeend]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+timeend, MoodleServices.ENCODING.toString()));
-    data.append("&").append(URLEncoder.encode("options[ignorehidden]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(ignorehidden==0?0:1), MoodleServices.ENCODING.toString()));
+    if (userevents!=null) data.append("&").append(URLEncoder.encode("options[userevents]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(userevents==0?0:1), MoodleServices.ENCODING.toString()));
+    if (siteevents!=null) data.append("&").append(URLEncoder.encode("options[siteevents]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(siteevents==0?0:1), MoodleServices.ENCODING.toString()));
+    if (timestart!=null) data.append("&").append(URLEncoder.encode("options[timestart]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+timestart, MoodleServices.ENCODING.toString()));
+    if (timeend!=null) data.append("&").append(URLEncoder.encode("options[timeend]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+timeend, MoodleServices.ENCODING.toString()));
+    if (siteevents!=null) data.append("&").append(URLEncoder.encode("options[ignorehidden]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(ignorehidden==0?0:1), MoodleServices.ENCODING.toString()));
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
     String lastId=null;
@@ -175,7 +177,7 @@ public class MoodleRestCalendar implements Serializable {
     return results.toArray(calendar);
   }
 
-  public static MoodleCalendar[] getCalendarEvent(MoodleCalendar calendar, int userevents, int siteevents, long timestart, long timeend, int ignorehidden) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleCalendar[] getCalendarEvents(MoodleCalendar calendar, Integer userevents, Integer siteevents, Long timestart, Long timeend, Integer ignorehidden) throws MoodleRestException, UnsupportedEncodingException {
     MoodleCalendar[] calendars=new MoodleCalendar[1];
     calendars[0]=calendar;
     MoodleCalendar[] calendarEvents = getCalendarEvents(calendars, userevents, siteevents, timestart, timeend, ignorehidden);
@@ -186,7 +188,7 @@ public class MoodleRestCalendar implements Serializable {
     return getCalendarEvents(calendar, MoodleCalendar.GET_OPTION_USEREVENTS_DEFAULT, MoodleCalendar.GET_OPTION_SITEEVENTS_DEFAULT, MoodleCalendar.GET_OPTION_TIMESTART_DEFAULT, MoodleCalendar.GET_OPTION_TIMEEND_DEFAULT, MoodleCalendar.GET_OPTION_IGNOREHIDDEN_DEFAULT);
   }
   
-  public static MoodleCalendar[] getCalendarEvent(MoodleCalendar calendar) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleCalendar[] getCalendarEvents(MoodleCalendar calendar) throws MoodleRestException, UnsupportedEncodingException {
     MoodleCalendar[] calendars=new MoodleCalendar[1];
     calendars[0]=calendar;
     MoodleCalendar[] calendarEvents = getCalendarEvents(calendars, MoodleCalendar.GET_OPTION_USEREVENTS_DEFAULT, MoodleCalendar.GET_OPTION_SITEEVENTS_DEFAULT, MoodleCalendar.GET_OPTION_TIMESTART_DEFAULT, MoodleCalendar.GET_OPTION_TIMEEND_DEFAULT, MoodleCalendar.GET_OPTION_IGNOREHIDDEN_DEFAULT);

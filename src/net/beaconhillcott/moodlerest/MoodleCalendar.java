@@ -36,8 +36,8 @@ public class MoodleCalendar implements Serializable {
   private String name; //event name
   private String description=null; //Description
   private Integer format=1; // int  Default to "1" description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
-  private Integer courseid=0; //  Default to "0" course id
-  private Integer groupid=0; //  Default to "0" group id
+  private Integer courseid=null;
+  private Integer groupid=null;
   private Integer repeats=0; // Default to "0" number of repeats
   private String eventtype="user"; // Default to "user" Event type
   private Long timestart=1383216348L; // Default to "1383216348" timestart
