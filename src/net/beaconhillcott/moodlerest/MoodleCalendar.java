@@ -33,17 +33,17 @@ public class MoodleCalendar implements Serializable {
   private String uuid=null;
   private Long timemodified=null;
   private Integer subscriptionid=null;
-  private String name; //event name
+  private String name=null; //event name
   private String description=null; //Description
-  private Integer format=1; // int  Default to "1" description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
+  private Integer format=null; // int  Default to "1" description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
   private Integer courseid=null;
   private Integer groupid=null;
-  private Integer repeats=0; // Default to "0" number of repeats
-  private String eventtype="user"; // Default to "user" Event type
-  private Long timestart=1383216348L; // Default to "1383216348" timestart
-  private Integer timeduration=0; // Default to "0" time duration
-  private Integer visible=1; // Default to "1" visible
-  private Integer sequence=1; // Default to "1" sequence
+  private Integer repeats=null; // Default to "0" number of repeats
+  private String eventtype=null; // Default to "user" Event type
+  private Long timestart=null; // Default to "1392892303" timestart
+  private Integer timeduration=null; // Default to "0" time duration
+  private Integer visible=null; // Default to "1" visible
+  private Integer sequence=null; // Default to "1" sequence
   
   public static final Integer DESCRIPTION_FORMAT_MOODLE=0;
   public static final Integer DESCRIPTION_FORMAT_HTML=1;
@@ -53,7 +53,7 @@ public class MoodleCalendar implements Serializable {
   public static final int GET_OPTION_USEREVENTS_DEFAULT=1;
   public static final int GET_OPTION_SITEEVENTS_DEFAULT=1;
   public static final long GET_OPTION_TIMESTART_DEFAULT=0;
-  public static final long GET_OPTION_TIMEEND_DEFAULT=1383307840;
+  public static final long GET_OPTION_TIMEEND_DEFAULT=1392892303;
   public static final int GET_OPTION_IGNOREHIDDEN_DEFAULT=1;
   
 

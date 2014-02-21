@@ -53,6 +53,11 @@ public class MoodleRestFile implements Serializable {
     if (params.itemid!=null) data.append("&").append(URLEncoder.encode("itemid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.itemid, MoodleServices.ENCODING.toString())); else throw new MoodleRestFileException(MoodleRestException.REQUIRED_PARAMETER+": itemid");
     if (params.filepath!=null) data.append("&").append(URLEncoder.encode("filepath", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.filepath, MoodleServices.ENCODING.toString())); else throw new MoodleRestFileException(MoodleRestException.REQUIRED_PARAMETER+": filepath");
     if (params.filename!=null) data.append("&").append(URLEncoder.encode("filename", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.filename, MoodleServices.ENCODING.toString())); else throw new MoodleRestFileException(MoodleRestException.REQUIRED_PARAMETER+": filename");
+    if (params.contextid==-1L) {
+      if (params.modified!=null) data.append("&").append(URLEncoder.encode("modified", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.modified, MoodleServices.ENCODING.toString()));
+      if (params.contextlevel!=null) data.append("&").append(URLEncoder.encode("modified", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(params.contextlevel, MoodleServices.ENCODING.toString()));
+      if (params.instanceid!=null) data.append("&").append(URLEncoder.encode("instanceid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+params.instanceid, MoodleServices.ENCODING.toString()));
+    }
     NodeList elements=MoodleCallRestWebService.call(data.toString());
     MoodleFileGetFiles result=new MoodleFileGetFiles();
     MoodleFileParent fileParent=null;

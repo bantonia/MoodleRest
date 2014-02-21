@@ -140,9 +140,9 @@ public enum MoodleServices implements Serializable {
         CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // MoodleRestGrade (Switched calls to use core_grading_get_definitions, core_grade_get_definitions will be deprecated anyway by Moodle)
 
         // CALENDAR
-        CORE_CALENDAR_DELETE_CALENDAR_EVENTS("core_calendar_delete_calendar_events"), //MoodleRestCalendar
-        CORE_CALENDAR_GET_CALENDAR_EVENTS("core_calendar_get_calendar_events"), //MoodleRestCalendar
-        CORE_CALENDAR_CREATE_CALENDAR_EVENTS("core_calendar_create_calendar_events"), //MoodleRestCalendar
+        CORE_CALENDAR_DELETE_CALENDAR_EVENTS("core_calendar_delete_calendar_events"), //MoodleRestCalendar Tested 20/02/2014
+        CORE_CALENDAR_GET_CALENDAR_EVENTS("core_calendar_get_calendar_events"), //MoodleRestCalendar Tested 20/02/2014
+        CORE_CALENDAR_CREATE_CALENDAR_EVENTS("core_calendar_create_calendar_events"), //MoodleRestCalendar Tested 20/02/2014
 
         // FORUM
         MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // MoodleRestModForum Tested 22/01/2014

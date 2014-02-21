@@ -52,6 +52,10 @@ public class MoodleFileParent implements Serializable {
      *
      */
     protected String filename=null;
+    
+    protected Long modified=null;
+    protected String contextlevel=null;
+    protected Long instanceid=null;
 
     /**
      *
