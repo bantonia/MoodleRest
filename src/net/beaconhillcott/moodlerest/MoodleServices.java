@@ -88,7 +88,7 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_DELETE_MODULES("core_course_delete_modules"), // MoodleRestCourse
         CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // MoodleRestCourse Tested 02/02/2014
 
-        // MESSAGE
+        // CORE MESSAGE
         CORE_MESSAGE_SEND_INSTANT_MESSAGES("core_message_send_instant_messages"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_CREATE_CONTACTS("core_message_create_contacts"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_DELETE_CONTACTS("core_message_delete_contacts"), // MoodleRestMessage Tested 03/02/2014
@@ -96,6 +96,10 @@ public enum MoodleServices implements Serializable {
         CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Tested 03/02/2014 Moodle bug? Tracker MDL-42794)
+        
+        // MESSAGE
+        MESSAGE_AIRNOTIFIER_ARE_NOTIFICATION_PREFERENCES_CONFIGURED("message_airnotifier_are_notification_preferences_configured"), // Moodle 2.7 (No code yet)
+        MESSAGE_AIRNOTIFIER_IS_SYSTEM_CONFIGURED("message_airnotifier_is_system_configured"), // Moodle 2.7 (No code yet)
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes
@@ -126,6 +130,7 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_SET_USER_FLAGS("mod_assign_set_user_flags"), // Moodle 2.6 Not MoodleRestModAssign (Untested)
         MOD_ASSIGN_SUBMIT_FOR_GRADING("mod_assign_submit_for_grading"), // Moodle 2.6 MoodleRestModAssign (Untested)
         MOD_ASSIGN_UNLOCK_SUBMISSIONS("mod_assign_unlock_submissions"), // Moodle 2.6 MoodleRestModAssign (Untested)
+        MOD_ASSIGN_SAVE_GRADES("mod_assign_save_grades"), // Moodle 2.7 (No code yet)
         
         // COHORT
         CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort
@@ -138,6 +143,10 @@ public enum MoodleServices implements Serializable {
 
         // GRADE
         CORE_GRADE_GET_DEFINITIONS("core_grade_get_definitions"), // MoodleRestGrade (Switched calls to use core_grading_get_definitions, core_grade_get_definitions will be deprecated anyway by Moodle)
+        
+        // GRADES
+        CORE_GRADES_GET_GRADES("core_grades_get_grades"), // Moodle 2.7 (No code yet)
+        CORE_GRADES_UPDATE_GRADES("core_grades_update_grades"), // Moodle 2.7 (No code yet)
 
         // CALENDAR
         CORE_CALENDAR_DELETE_CALENDAR_EVENTS("core_calendar_delete_calendar_events"), //MoodleRestCalendar Tested 20/02/2014
@@ -147,6 +156,7 @@ public enum MoodleServices implements Serializable {
         // FORUM
         MOD_FORUM_GET_FORUMS_BY_COURSES("mod_forum_get_forums_by_courses"), // MoodleRestModForum Tested 22/01/2014
         MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum Tested 22/01/2014
+        MOD_FORUM_GET_FORUM_DISCUSSION_POSTS("mod_forum_get_forum_discussion_posts"), // Moodle 2.7 (No code yet)
         
         // GRADING
         CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 MoodleRestGrade (Untested)
