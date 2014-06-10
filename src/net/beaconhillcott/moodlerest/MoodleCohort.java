@@ -17,10 +17,10 @@ public class MoodleCohort implements Serializable {
   private String idnumber=null;
   private String description=null;
   private DescriptionFormat descriptionformat=DescriptionFormat.HTML;
-  private CohortTypeId categorytypetype=null;
-  private String categorytypevalue=null;
+  private CohortTypeId categorytypetype=CohortTypeId.SYSTEM;
+  private String categorytypevalue="";
 
-  public MoodleCohort() {
+  public MoodleCohort() {    
   }
 
   public void setMoodleCohortField(String nodeName, String content) throws MoodleCohortException {

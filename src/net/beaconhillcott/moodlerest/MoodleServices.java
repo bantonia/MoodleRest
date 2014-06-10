@@ -133,7 +133,7 @@ public enum MoodleServices implements Serializable {
         MOD_ASSIGN_SAVE_GRADES("mod_assign_save_grades"), // Moodle 2.7 (No code yet)
         
         // COHORT
-        CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort
+        CORE_COHORT_CREATE_COHORTS("core_cohort_create_cohorts"), // MoodleRestCohort Tested 10/06/2014
         CORE_COHORT_DELETE_COHORTS("core_cohort_delete_cohorts"), // MoodleRestCohort
         CORE_COHORT_GET_COHORTS("core_cohort_get_cohorts"), // MoodleRestCohort
         CORE_COHORT_UPDATE_COHORTS("core_cohort_update_cohorts"), // MoodleRestCohort (Dodgy Moodle parameter definition for id)

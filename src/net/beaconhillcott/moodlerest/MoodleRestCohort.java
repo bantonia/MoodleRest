@@ -228,8 +228,8 @@ public class MoodleRestCohort implements Serializable {
         data.append("&").append(URLEncoder.encode("cohorts["+i+"][categorytype][value]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getCategoryTypeValue(), MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("cohorts["+i+"][name]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getName(), MoodleServices.ENCODING.toString()));
         data.append("&").append(URLEncoder.encode("cohorts["+i+"][idnumber]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getIdNumber(), MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("cohorts["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescription(), MoodleServices.ENCODING.toString()));
-        data.append("&").append(URLEncoder.encode("cohorts["+i+"][descriptionformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescriptionFormat(), MoodleServices.ENCODING.toString()));    
+        if (cohorts[i].getDescription()!=null) data.append("&").append(URLEncoder.encode("cohorts["+i+"][description]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescription(), MoodleServices.ENCODING.toString()));
+        data.append("&").append(URLEncoder.encode("cohorts["+i+"][descriptionformat]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+cohorts[i].getDescriptionFormat().toInt(), MoodleServices.ENCODING.toString()));    
       }
       data.trimToSize();
       NodeList elements = MoodleCallRestWebService.call(data.toString());
