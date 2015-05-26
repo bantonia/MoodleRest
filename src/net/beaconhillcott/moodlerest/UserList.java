@@ -26,8 +26,9 @@ import java.io.Serializable;
  */
 public class UserList implements Serializable {
   
-  private Long userid=null;
-  private Long courseid=null;
+  private Long userId=null;
+  private Long courseId=null;
+  private Integer roleId=null;
   
   /**
    *
@@ -39,9 +40,15 @@ public class UserList implements Serializable {
    * @param userid
    * @param courseid
    */
-  public UserList(Long userid, Long courseid) {
-    this.userid=userid;
-    this.courseid=courseid;
+  public UserList(Long userId, Long courseId) {
+    this.userId=userId;
+    this.courseId=courseId;
+  }
+
+  public UserList(Long userId, Long courseId, Integer roleId) {
+    this.userId=userId;
+    this.courseId=courseId;
+    this.roleId=roleId;
   }
   
   /**
@@ -49,7 +56,7 @@ public class UserList implements Serializable {
    * @return
    */
   public Long getUserId() {
-    return userid;
+    return userId;
   }
   
   /**
@@ -57,22 +64,32 @@ public class UserList implements Serializable {
    * @return
    */
   public Long getCourseId() {
-    return courseid;
+    return courseId;
   }
   
   /**
    * 
    * @param userid
    */
-  public final void setUserId(Long userid) {
-    this.userid=userid;
+  public final void setUserId(Long userId) {
+    this.userId=userId;
   }
   
   /**
    *
    * @param courseid
    */
-  public final void setCourseId(Long courseid) {
-    this.courseid=courseid;
+  public final void setCourseId(Long courseId) {
+    this.courseId=courseId;
   }
+
+  public Integer getRoleId() {
+    return roleId;
+  }
+
+  public void setRoleId(Integer roleId) {
+    this.roleId = roleId;
+  }
+  
+  
 }

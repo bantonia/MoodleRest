@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import org.w3c.dom.NodeList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * <p>Class containing the static routines to manipulate Moodle groups and users within course groups.</p>
@@ -939,5 +940,64 @@ public class MoodleRestGroup implements Serializable {
         }
         data.trimToSize();
         (new MoodleCallRestWebService()).__call(url,data.toString());
+    }
+    
+    public MoodleGroups getCourseUserGroups(Long courseId, Long userId) throws UnsupportedEncodingException, MoodleRestGroupException, MoodleRestException {
+      return getCourseUserGroups(courseId, userId, 0);
+    }
+    
+    public MoodleGroups getCourseUserGroups(Long courseId, Long userId, Integer groupingId) throws UnsupportedEncodingException, MoodleRestGroupException, MoodleRestException {
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.CORE_GROUP_GET_COURSE_USER_GROUPS.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestGroupException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      if (courseId==null) throw new MoodleRestGroupException(); else data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+      if (userId==null) throw new MoodleRestGroupException(); else data.append("&").append(URLEncoder.encode("userid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+userId, MoodleServices.ENCODING.toString()));
+      if (groupingId==null) groupingId=0;
+      data.append("&").append(URLEncoder.encode("groupingid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+groupingId, MoodleServices.ENCODING.toString()));
+      data.trimToSize();
+      NodeList elements=MoodleCallRestWebService.call(data.toString());
+      ArrayList<MoodleGroup> groups=null;
+      ArrayList<MoodleWarning> warn=null;
+      MoodleGroup group=null;
+      MoodleWarning warning=null;
+      for (int j=0; j<elements.getLength(); j++) {
+        String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        if (parent.equals("groups")) {
+          if (nodeName.equals("id")) {
+            if (groups==null) {
+              groups=new ArrayList<MoodleGroup>();
+            }
+            group=new MoodleGroup();
+            group.setCourseId(courseId);
+            groups.add(group);
+            group.setId(Long.parseLong(content));
+          } else {
+            group.setMoodleGroupField(nodeName, content);
+          }
+        } else {
+          if (parent.equals("warnings")) {
+            if (nodeName.equals("item")) {
+              if (warn==null) {
+                warn=new ArrayList<MoodleWarning>();
+              }
+              warning=new MoodleWarning();
+              warn.add(warning);
+              warning.setItem(content);
+            } else {
+              warning.setMoodleWarningField(nodeName, content);
+            }
+          }
+        }
+      }
+      MoodleGroups groupsWithWarnings=new MoodleGroups();
+      groupsWithWarnings.setGroups(groups);
+      groupsWithWarnings.setWarnings(warn);
+      return groupsWithWarnings;
     }
 }

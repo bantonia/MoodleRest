@@ -824,4 +824,21 @@ public class MoodleRestEnrol implements Serializable {
       }
       return instance;
     }
+    
+    public static void enrolManualUnenrolUsers(UserList[] users) throws UnsupportedEncodingException, MoodleRestEnrolException, MoodleRestException {
+      StringBuilder data=new StringBuilder();
+      String functionCall=MoodleServices.ENROL_MANUAL_UNENROL_USERS.toString();
+      if (MoodleCallRestWebService.getAuth()==null)
+        throw new MoodleRestEnrolException();
+      else
+        data.append(MoodleCallRestWebService.getAuth());
+      data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+      for (int i=0;i<users.length;i++) {
+        if (users[i].getUserId()<1 || users[i].getUserId()==null) throw new MoodleRestEnrolException(MoodleRestException.REQUIRED_PARAMETER+" userid"); data.append("&").append(URLEncoder.encode("enrolments["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(users[i].getUserId());
+        if (users[i].getCourseId()<1 || users[i].getCourseId()==null) throw new MoodleRestEnrolException(MoodleRestException.REQUIRED_PARAMETER+" courseid"); data.append("&").append(URLEncoder.encode("enrolments["+i+"][courseid]", MoodleServices.ENCODING.toString())).append("=").append(users[i].getCourseId());
+        if (users[i].getRoleId()!=null) data.append("&").append(URLEncoder.encode("enrolments["+i+"][roleid]", MoodleServices.ENCODING.toString())).append("=").append(users[i].getRoleId());
+      }
+      data.trimToSize();
+      MoodleCallRestWebService.call(data.toString());
+    }
 }
