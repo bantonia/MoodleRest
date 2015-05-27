@@ -63,7 +63,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
         CORE_USER_REMOVE_USER_DEVICE("core_user_remove_user_device"), // No code yet
-        CORE_USER_VIEW_USER_LIST("core_user_view_user_list"), // No code yet
+        CORE_USER_VIEW_USER_LIST("core_user_view_user_list"), // MoodleRestUser Tested 27/05/2015
         CORE_USER_VIEW_USER_PROFILE("core_user_view_user_profile"), // No code yet
 
         // ENROL

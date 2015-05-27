@@ -1535,4 +1535,64 @@ public class MoodleRestUser implements Serializable {
       }
     }
     
+  public static ListStatus userViewUserList(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_USER_VIEW_USER_LIST.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCourseException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (courseId==null) { throw new MoodleRestException(MoodleRestException.REQUIRED_PARAMETER); }
+    data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(courseId);
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ListStatus listStatus=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    String parent=null;
+      for (int j=0;j<elements.getLength();j++) {
+        try {
+          parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        } catch (NullPointerException ex) {}
+        String content=elements.item(j).getTextContent();
+        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+        /*if (parent.equals("#document")) {
+          if (listStatus==null) {
+            listStatus=new ListStatus();
+            if (nodeName.equals("status"))
+              listStatus.setStatus(Integer.parseInt(content));
+          }*/
+        if (nodeName.equals("status")) {
+          if (listStatus==null) {
+            listStatus=new ListStatus();
+            if (nodeName.equals("status"))
+              listStatus.setStatus(Integer.parseInt(content));
+          }
+        } else {
+          if (parent.equals("warnings")) {
+            if (nodeName.equals("item")) {
+              if (warn==null) {
+                warn=new ArrayList<MoodleWarning>();
+              }
+              warning=new MoodleWarning();
+              warn.add(warning);
+              warning.setItem(content);
+            } else {
+              warning.setMoodleWarningField(nodeName, content);
+            }
+          }
+        }
+        //System.out.println("parent="+parent+" nodeName="+nodeName+" content="+content+"\n");
+      }
+    
+    if (warn!=null) {
+      if (listStatus==null) {
+        listStatus=new ListStatus();
+      }
+      listStatus.setWarnings(warn);
+    }
+    return listStatus;
+  }
 }
