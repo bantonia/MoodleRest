@@ -14,17 +14,17 @@ import java.util.ArrayList;
  * @author root
  */
 public class ListStatus implements Serializable {
-  private Integer status=null;
+  private Boolean status=null;
   private ArrayList<MoodleWarning> warnings=null;
 
   public ListStatus() {
   }
 
-  public Integer getStatus() {
+  public Boolean getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(Boolean status) {
     this.status = status;
   }
 

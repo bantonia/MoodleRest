@@ -1567,8 +1567,7 @@ public class MoodleRestUser implements Serializable {
         if (nodeName.equals("status")) {
           if (listStatus==null) {
             listStatus=new ListStatus();
-            if (nodeName.equals("status"))
-              listStatus.setStatus(Integer.parseInt(content));
+            listStatus.setStatus((content.equals("1")));
           }
         } else {
           if (parent.equals("warnings")) {
