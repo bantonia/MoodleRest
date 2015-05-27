@@ -33,7 +33,7 @@ import java.io.Serializable;
  * @see MoodleCourse
  */
 public class MoodleRestCourse implements Serializable {
- 
+
    // private static final int BUFFER_MAX=4000;
 
     /**
@@ -1209,5 +1209,63 @@ public class MoodleRestCourse implements Serializable {
       }
     }
     NodeList elements=MoodleCallRestWebService.call(data.toString());
+  }
+  
+  public static ListStatus courseViewCourse(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+    return courseViewCourse(courseId, null);
+  }
+ 
+  
+  public static ListStatus courseViewCourse(Long courseId, Integer sectionNumber) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_COURSE_VIEW_COURSE.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCourseException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (courseId==null) { throw new MoodleRestException(MoodleRestException.REQUIRED_PARAMETER); }
+    data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(courseId);
+    if (sectionNumber!=null) data.append("&").append(URLEncoder.encode("sectionnumber", MoodleServices.ENCODING.toString())).append("=").append(sectionNumber);
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ListStatus listStatus=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    String parent=null;
+    for (int j=0;j<elements.getLength();j++) {
+      try {
+        parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      } catch (NullPointerException ex) {}
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (nodeName.equals("status")) {
+        if (listStatus==null) {
+          listStatus=new ListStatus();
+          listStatus.setStatus((content.equals("1")));
+        }
+      } else {
+        if (parent.equals("warnings")) {
+          if (nodeName.equals("item")) {
+            if (warn==null) {
+              warn=new ArrayList<MoodleWarning>();
+            }
+            warning=new MoodleWarning();
+            warn.add(warning);
+            warning.setItem(content);
+          } else {
+            warning.setMoodleWarningField(nodeName, content);
+          }
+        }
+      }
+    }
+    if (warn!=null) {
+      if (listStatus==null) {
+        listStatus=new ListStatus();
+      }
+      listStatus.setWarnings(warn);
+    }
+    return listStatus;
   }
 }

@@ -1552,40 +1552,32 @@ public class MoodleRestUser implements Serializable {
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
-      for (int j=0;j<elements.getLength();j++) {
-        try {
-          parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-        } catch (NullPointerException ex) {}
-        String content=elements.item(j).getTextContent();
-        String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
-        /*if (parent.equals("#document")) {
-          if (listStatus==null) {
-            listStatus=new ListStatus();
-            if (nodeName.equals("status"))
-              listStatus.setStatus(Integer.parseInt(content));
-          }*/
-        if (nodeName.equals("status")) {
-          if (listStatus==null) {
-            listStatus=new ListStatus();
-            listStatus.setStatus((content.equals("1")));
-          }
-        } else {
-          if (parent.equals("warnings")) {
-            if (nodeName.equals("item")) {
-              if (warn==null) {
-                warn=new ArrayList<MoodleWarning>();
-              }
-              warning=new MoodleWarning();
-              warn.add(warning);
-              warning.setItem(content);
-            } else {
-              warning.setMoodleWarningField(nodeName, content);
+    for (int j=0;j<elements.getLength();j++) {
+      try {
+        parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      } catch (NullPointerException ex) {}
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (nodeName.equals("status")) {
+        if (listStatus==null) {
+          listStatus=new ListStatus();
+          listStatus.setStatus((content.equals("1")));
+        }
+      } else {
+        if (parent.equals("warnings")) {
+          if (nodeName.equals("item")) {
+            if (warn==null) {
+              warn=new ArrayList<MoodleWarning>();
             }
+            warning=new MoodleWarning();
+            warn.add(warning);
+            warning.setItem(content);
+          } else {
+            warning.setMoodleWarningField(nodeName, content);
           }
         }
-        //System.out.println("parent="+parent+" nodeName="+nodeName+" content="+content+"\n");
       }
-    
+    }
     if (warn!=null) {
       if (listStatus==null) {
         listStatus=new ListStatus();

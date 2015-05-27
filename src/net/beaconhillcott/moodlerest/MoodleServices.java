@@ -92,7 +92,7 @@ public enum MoodleServices implements Serializable {
         CORE_COURSE_IMPORT_COURSE("core_course_import_course"), //  MoodleRestCourse (Untested)
         CORE_COURSE_DELETE_MODULES("core_course_delete_modules"), // MoodleRestCourse
         CORE_COURSE_UPDATE_COURSES("core_course_update_courses"), // MoodleRestCourse Tested 02/02/2014
-        CORE_COURSE_VIEW_COURSE("core_course_view_course"), // No code yet
+        CORE_COURSE_VIEW_COURSE("core_course_view_course"), // MoodleRestCourse Tested 27/05/2015
 
         // CORE MESSAGE
         CORE_MESSAGE_SEND_INSTANT_MESSAGES("core_message_send_instant_messages"), // MoodleRestMessage Tested 03/02/2014
