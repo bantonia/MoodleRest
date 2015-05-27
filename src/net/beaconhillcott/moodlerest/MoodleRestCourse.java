@@ -1214,7 +1214,6 @@ public class MoodleRestCourse implements Serializable {
   public static ListStatus courseViewCourse(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
     return courseViewCourse(courseId, null);
   }
- 
   
   public static ListStatus courseViewCourse(Long courseId, Integer sectionNumber) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);

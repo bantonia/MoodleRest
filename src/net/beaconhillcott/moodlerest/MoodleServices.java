@@ -64,7 +64,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
         CORE_USER_REMOVE_USER_DEVICE("core_user_remove_user_device"), // No code yet
         CORE_USER_VIEW_USER_LIST("core_user_view_user_list"), // MoodleRestUser Tested 27/05/2015
-        CORE_USER_VIEW_USER_PROFILE("core_user_view_user_profile"), // No code yet
+        CORE_USER_VIEW_USER_PROFILE("core_user_view_user_profile"), // MoodleRestUser Tested 27/05/2015
 
         // ENROL
         CORE_ENROL_GET_ENROLLED_USERS_WITH_CAPABILITY("core_enrol_get_enrolled_users_with_capability"), // MoodleRestEnrol Tested 21/01/2014      
@@ -116,7 +116,7 @@ public enum MoodleServices implements Serializable {
         CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes (Moodle bug 2.5)
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // MoodleRestNotes (Untested)
         CORE_NOTES_GET_COURSE_NOTES("core_notes_get_course_notes"), // No code yet
-        CORE_NOTES_VIEW_NOTES("core_notes_view_notes"), // No code yet
+        CORE_NOTES_VIEW_NOTES("core_notes_view_notes"), // MoodleRestNotes Tested 27/05/2015
         
         // WEBSERVICE
         CORE_WEBSERVICE_GET_SITE_INFO("core_webservice_get_site_info"), // MoodleRestWebService Tested 22/01/2014
@@ -169,8 +169,8 @@ public enum MoodleServices implements Serializable {
         MOD_FORUM_GET_FORUM_DISCUSSIONS("mod_forum_get_forum_discussions"), // MoodleRestModForum Tested 22/01/2014
         MOD_FORUM_GET_FORUM_DISCUSSION_POSTS("mod_forum_get_forum_discussion_posts"), // Moodle 2.7 (No code yet)
         MOD_FORUM_GET_FORUM_DISCUSSIONS_PAGINATED("mod_forum_get_forum_discussions_paginated"), // No code yet
-        MOD_FORUM_VIEW_FORUM("mod_forum_view_forum"), // No code yet
-        MOD_FORUM_VIEW_FORUM_DISCUSSION("mod_forum_view_forum_discussion"), // No code yet
+        MOD_FORUM_VIEW_FORUM("mod_forum_view_forum"), // MoodleRestModForum (Untested)
+        MOD_FORUM_VIEW_FORUM_DISCUSSION("mod_forum_view_forum_discussion"), // MoodleRestModForum (Untested)
         
         // GRADING
         CORE_GRADING_GET_DEFINITIONS("core_grading_get_definitions"), // Moodle 2.6 MoodleRestGrade (Untested)
