@@ -62,7 +62,7 @@ public enum MoodleServices implements Serializable {
         CORE_USER_GET_USERS("core_user_get_users"), // MoodleRestUser Tested 03/01/2014 and modified      
         CORE_USER_GET_USERS_BY_FIELD("core_user_get_users_by_field"), // MoodleRestUser Tested 03/01/2014
         CORE_USER_ADD_USER_DEVICE("core_user_add_user_device"), // Moodle 2.6 MoodleRestUser (Untested)
-        CORE_USER_REMOVE_USER_DEVICE("core_user_remove_user_device"), // No code yet
+        CORE_USER_REMOVE_USER_DEVICE("core_user_remove_user_device"), // MoodleRestUser added 28/05/2015 (Untested)
         CORE_USER_VIEW_USER_LIST("core_user_view_user_list"), // MoodleRestUser Tested 27/05/2015
         CORE_USER_VIEW_USER_PROFILE("core_user_view_user_profile"), // MoodleRestUser Tested 27/05/2015
 
@@ -102,9 +102,9 @@ public enum MoodleServices implements Serializable {
         CORE_MESSAGE_UNBLOCK_CONTACTS("core_message_unblock_contacts"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_GET_CONTACTS("core_message_get_contacts"), // MoodleRestMessage Tested 03/02/2014
         CORE_MESSAGE_SEARCH_CONTACTS("core_message_search_contacts"), // MoodleRestMessage (Tested 03/02/2014 Moodle bug? Tracker MDL-42794)
-        CORE_MESSAGE_GET_BLOCKED_USERS("core_message_get_blocked_users"), // No code yet
-        CORE_MESSAGE_GET_MESSAGES("core_message_get_messages"), // No code yet
-        CORE_MESSAGE_MARK_MESSAGE_READ("core_message_mark_message_read"), // Nocode yet
+        CORE_MESSAGE_GET_BLOCKED_USERS("core_message_get_blocked_users"), // MoodleRestMessage added 28/05/2015 (Untested)
+        CORE_MESSAGE_GET_MESSAGES("core_message_get_messages"), // MoodleRestMessage added 28/05/2015 (Untested)
+        CORE_MESSAGE_MARK_MESSAGE_READ("core_message_mark_message_read"), // MoodleRestMessage added 28/05/2015 (Untested)
         
         // MESSAGE
         MESSAGE_AIRNOTIFIER_ARE_NOTIFICATION_PREFERENCES_CONFIGURED("message_airnotifier_are_notification_preferences_configured"), // Moodle 2.7 (No code yet)
@@ -115,7 +115,7 @@ public enum MoodleServices implements Serializable {
         CORE_NOTES_DELETE_NOTES("core_notes_delete_notes"), // MoodleRestNotes (Moodle bug 2.5)
         CORE_NOTES_GET_NOTES("core_notes_get_notes"), // MoodleRestNotes (Moodle bug 2.5)
         CORE_NOTES_UPDATE_NOTES("core_notes_update_notes"), // MoodleRestNotes (Untested)
-        CORE_NOTES_GET_COURSE_NOTES("core_notes_get_course_notes"), // No code yet
+        CORE_NOTES_GET_COURSE_NOTES("core_notes_get_course_notes"), // MoodleRestNotes Tested 28/05/2015
         CORE_NOTES_VIEW_NOTES("core_notes_view_notes"), // MoodleRestNotes Tested 27/05/2015
         
         // WEBSERVICE

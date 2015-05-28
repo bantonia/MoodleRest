@@ -314,4 +314,88 @@ public class MoodleRestNotes implements Serializable {
     }
     return listStatus;
   }
+  
+  public MoodleNotes getCourseNotes(Long courseId, Long userId) throws UnsupportedEncodingException, MoodleRestException {
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_NOTES_GET_COURSE_NOTES.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestMessageException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (courseId==null) throw new MoodleRestNotesException(); else data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseId, MoodleServices.ENCODING.toString()));
+    if (userId!=null) data.append("&").append(URLEncoder.encode("userid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+userId, MoodleServices.ENCODING.toString()));
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    ArrayList<MoodleNote> siteNotes=null;
+    ArrayList<MoodleNote> courseNotes=null;
+    ArrayList<MoodleNote> personalNotes=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleNote siteNote=null;
+    MoodleNote courseNote=null;
+    MoodleNote personalNote=null;
+    MoodleWarning warning=null;
+    for (int j=0; j<elements.getLength(); j++) {
+      String parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (parent.equals("sitenotes")) {
+        if (nodeName.equals("id")) {
+          if (siteNote==null) {
+            siteNotes=new ArrayList<MoodleNote>();
+          }
+          siteNote=new MoodleNote();
+          siteNotes.add(siteNote);
+          siteNote.setNoteId(Long.parseLong(content));
+        } else {
+          siteNote.setMoodleNoteField(nodeName, content);
+        }
+      } else {
+        if (parent.equals("coursenotes")) {
+          if (nodeName.equals("id")) {
+            if (courseNote==null) {
+              courseNotes=new ArrayList<MoodleNote>();
+            }
+            courseNote=new MoodleNote();
+            courseNotes.add(courseNote);
+            courseNote.setNoteId(Long.parseLong(content));
+          } else {
+            courseNote.setMoodleNoteField(nodeName, content);
+          }
+        } else {
+          if (parent.equals("personalnotes")) {
+            if (nodeName.equals("id")) {
+              if (personalNote==null) {
+                personalNotes=new ArrayList<MoodleNote>();
+              }
+              personalNote=new MoodleNote();
+              personalNotes.add(personalNote);
+              personalNote.setNoteId(Long.parseLong(content));
+            } else {
+              personalNote.setMoodleNoteField(nodeName, content);
+            }
+          } else {
+            if (parent.equals("warnings")) {
+              if (nodeName.equals("item")) {
+                if (warn==null) {
+                  warn=new ArrayList<MoodleWarning>();
+                }
+                warning=new MoodleWarning();
+                warn.add(warning);
+                warning.setItem(content);
+              } else {
+                warning.setMoodleWarningField(nodeName, content);
+              }
+            }
+          }
+        }
+      }
+    }
+    MoodleNotes notesWithWarnings=new MoodleNotes();
+    notesWithWarnings.setSiteNotes(siteNotes);
+    notesWithWarnings.setCourseNotes(courseNotes);
+    notesWithWarnings.setPersonalNotes(personalNotes);
+    notesWithWarnings.setWarnings(warn);
+    return notesWithWarnings;
+  }
 }

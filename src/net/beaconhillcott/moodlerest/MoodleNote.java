@@ -60,6 +60,10 @@ public class MoodleNote implements Serializable {
   private String clientNoteId=null;
   private Long noteId=null;
   private String errorMessage=null;
+  private Long created=null;
+  private Long lastModified=null;
+  private Long userModified=null;
+  
   
   /**
    *
@@ -112,6 +116,34 @@ public class MoodleNote implements Serializable {
     this.text=text;
     this.format=format;
     this.clientNoteId=clientNoteId;
+  }
+
+  public void setFormat(DescriptionFormat format) {
+    this.format = format;
+  }
+
+  public Long getCreated() {
+    return created;
+  }
+
+  public void setCreated(Long created) {
+    this.created = created;
+  }
+
+  public Long getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Long lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public Long getUserModified() {
+    return userModified;
+  }
+
+  public void setUserModified(Long userModified) {
+    this.userModified = userModified;
   }
   
   /**
@@ -242,7 +274,23 @@ public class MoodleNote implements Serializable {
     if (nodeName.equals("clientnoteid"))
       if (!content.isEmpty() && content!=null)
         setClientNoteId(content);
-    if (nodeName.equals("noteid")) setNoteId(Long.valueOf(content));
+    if (nodeName.equals("noteid") || nodeName.equals("id")) setNoteId(Long.valueOf(content));
+    if (nodeName.equals("courseid")) {courseId=Long.parseLong(content);}
+    if (nodeName.equals("userid")) {userId=Long.parseLong(content);}
+    if (nodeName.equals("format")) {}
+    if (nodeName.equals("format")) {
+      for (DescriptionFormat key : DescriptionFormat.values()) {
+        if ((""+key.toInt()).equals(content)) {
+          setFormat(key);
+          break;
+        }
+      }
+    }
+    if (nodeName.equals("created")) {created=Long.parseLong(content);}
+    if (nodeName.equals("content")) {this.text=content;}
+    if (nodeName.equals("lastmodified")) {lastModified=Long.parseLong(content);}
+    if (nodeName.equals("usermodified")) {userModified=Long.parseLong(content);}
+    if (nodeName.equals("publishedstate")) {publishState=content;}
     if (getNoteId()==null)
       if (nodeName.equals("errorMessage")) setErrorMessage(content);
   }

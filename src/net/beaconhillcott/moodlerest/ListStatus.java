@@ -13,9 +13,8 @@ import java.util.ArrayList;
  *
  * @author root
  */
-public class ListStatus implements Serializable {
+public class ListStatus extends MoodleWarnings implements Serializable {
   private Boolean status=null;
-  private ArrayList<MoodleWarning> warnings=null;
 
   public ListStatus() {
   }
@@ -26,18 +25,5 @@ public class ListStatus implements Serializable {
 
   public void setStatus(Boolean status) {
     this.status = status;
-  }
-
-  public ArrayList<MoodleWarning> getWarnings() {
-    return warnings;
-  }
-
-  public void setWarnings(ArrayList<MoodleWarning> warnings) {
-    this.warnings = warnings;
-  }
-  
-  public void addWarnings(MoodleWarning warning) {
-    if (warnings==null) warnings=new ArrayList<MoodleWarning>();
-    warnings.add(warning);
   }
 }

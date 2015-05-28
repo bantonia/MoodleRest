@@ -11,11 +11,10 @@ import java.util.ArrayList;
 
 /**
  *
- * @author root
+ * @author Bill Antonia
  */
-public class BlockedUsers implements Serializable {
+public class BlockedUsers extends MoodleWarnings implements Serializable {
   private ArrayList<MoodleUser> users=null;
-  private ArrayList<MoodleWarning> warnings=null;
 
   public BlockedUsers() {
   }
@@ -27,22 +26,9 @@ public class BlockedUsers implements Serializable {
   public void setUsers(ArrayList<MoodleUser> users) {
     this.users = users;
   }
-
-  public ArrayList<MoodleWarning> getWarnings() {
-    return warnings;
-  }
-
-  public void setWarnings(ArrayList<MoodleWarning> warnings) {
-    this.warnings = warnings;
-  }
   
   public void addUser(MoodleUser user) {
     if (users==null) users=new ArrayList<MoodleUser>();
     users.add(user);
-  }
-  
-  public void addWarning(MoodleWarning warning) {
-    if (warnings==null) warnings=new ArrayList<MoodleWarning>();
-    warnings.add(warning);
   }
 }

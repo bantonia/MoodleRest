@@ -1647,4 +1647,61 @@ public class MoodleRestUser implements Serializable {
     }
     return listStatus;
   }
+  
+  public static RemoveDevice removeUserDevice(Long uuId) throws MoodleRestException, UnsupportedEncodingException {
+    return removeUserDevice(uuId, null);
+  }
+  
+  public static RemoveDevice removeUserDevice(Long uuId, Long appId) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.CORE_USER_REMOVE_USER_DEVICE.toString();
+    if (MoodleCallRestWebService.getAuth()==null)
+      throw new MoodleRestCourseException();
+    else
+      data.append(MoodleCallRestWebService.getAuth());
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (uuId==null) { throw new MoodleRestException(MoodleRestException.REQUIRED_PARAMETER); }
+    data.append("&").append(URLEncoder.encode("uuid", MoodleServices.ENCODING.toString())).append("=").append(uuId);
+    if (appId!=null) data.append("&").append(URLEncoder.encode("appid", MoodleServices.ENCODING.toString())).append("=").append(appId);
+    data.trimToSize();
+    NodeList elements=MoodleCallRestWebService.call(data.toString());
+    RemoveDevice removeDevice=null;
+    ArrayList<MoodleWarning> warn=null;
+    MoodleWarning warning=null;
+    String parent=null;
+    for (int j=0;j<elements.getLength();j++) {
+      try {
+        parent=elements.item(j).getParentNode().getParentNode().getParentNode().getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      } catch (NullPointerException ex) {}
+      String content=elements.item(j).getTextContent();
+      String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+      if (nodeName.equals("removed")) {
+        if (removeDevice==null) {
+          removeDevice=new RemoveDevice();
+          removeDevice.setRemoved((content.equals("1")));
+        }
+      } else {
+        if (parent.equals("warnings")) {
+          if (nodeName.equals("item")) {
+            if (warn==null) {
+              warn=new ArrayList<MoodleWarning>();
+            }
+            warning=new MoodleWarning();
+            warn.add(warning);
+            warning.setItem(content);
+          } else {
+            warning.setMoodleWarningField(nodeName, content);
+          }
+        }
+      }
+    }
+    if (warn!=null) {
+      if (removeDevice==null) {
+        removeDevice=new RemoveDevice();
+      }
+      removeDevice.setWarnings(warn);
+    }
+    return removeDevice;
+  }
 }
