@@ -12,15 +12,15 @@ import java.io.Serializable;
  *
  * @author root
  */
-class RemoveDevice extends MoodleWarnings implements Serializable {
+class MoodleRemoveDevice extends MoodleWarnings implements Serializable {
 
   private Boolean removed;
 
-  public RemoveDevice() {
+  public MoodleRemoveDevice() {
     this.removed = null;
   }
 
-  public RemoveDevice(Boolean removed) {
+  public MoodleRemoveDevice(Boolean removed) {
     this.removed = removed;
   }
 

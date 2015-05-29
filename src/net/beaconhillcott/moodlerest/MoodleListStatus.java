@@ -7,16 +7,15 @@
 package net.beaconhillcott.moodlerest;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  *
  * @author root
  */
-public class ListStatus extends MoodleWarnings implements Serializable {
+public class MoodleListStatus extends MoodleWarnings implements Serializable {
   private Boolean status=null;
 
-  public ListStatus() {
+  public MoodleListStatus() {
   }
 
   public Boolean getStatus() {

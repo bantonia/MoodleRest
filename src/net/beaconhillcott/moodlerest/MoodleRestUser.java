@@ -1535,7 +1535,7 @@ public class MoodleRestUser implements Serializable {
       }
     }
     
-  public static ListStatus userViewUserList(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus userViewUserList(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_USER_VIEW_USER_LIST.toString();
@@ -1548,7 +1548,7 @@ public class MoodleRestUser implements Serializable {
     data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(courseId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -1560,7 +1560,7 @@ public class MoodleRestUser implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -1580,22 +1580,22 @@ public class MoodleRestUser implements Serializable {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }
     return listStatus;
   }
   
-  public static ListStatus userViewUserProfile() throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus userViewUserProfile() throws MoodleRestException, UnsupportedEncodingException {
     return userViewUserProfile(null, null);
   }
   
-  public static ListStatus userViewUserProfile(Long userId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus userViewUserProfile(Long userId) throws MoodleRestException, UnsupportedEncodingException {
     return userViewUserProfile(userId, null);
   }
   
-  public static ListStatus userViewUserProfile(Long userId, Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus userViewUserProfile(Long userId, Long courseId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_USER_VIEW_USER_PROFILE.toString();
@@ -1609,7 +1609,7 @@ public class MoodleRestUser implements Serializable {
     if (courseId!=null) data.append("&").append(URLEncoder.encode("courseid", MoodleServices.ENCODING.toString())).append("=").append(courseId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -1621,7 +1621,7 @@ public class MoodleRestUser implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -1641,18 +1641,18 @@ public class MoodleRestUser implements Serializable {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }
     return listStatus;
   }
   
-  public static RemoveDevice removeUserDevice(Long uuId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleRemoveDevice removeUserDevice(Long uuId) throws MoodleRestException, UnsupportedEncodingException {
     return removeUserDevice(uuId, null);
   }
   
-  public static RemoveDevice removeUserDevice(Long uuId, Long appId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleRemoveDevice removeUserDevice(Long uuId, Long appId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_USER_REMOVE_USER_DEVICE.toString();
@@ -1666,7 +1666,7 @@ public class MoodleRestUser implements Serializable {
     if (appId!=null) data.append("&").append(URLEncoder.encode("appid", MoodleServices.ENCODING.toString())).append("=").append(appId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    RemoveDevice removeDevice=null;
+    MoodleRemoveDevice removeDevice=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -1678,7 +1678,7 @@ public class MoodleRestUser implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("removed")) {
         if (removeDevice==null) {
-          removeDevice=new RemoveDevice();
+          removeDevice=new MoodleRemoveDevice();
           removeDevice.setRemoved((content.equals("1")));
         }
       } else {
@@ -1698,7 +1698,7 @@ public class MoodleRestUser implements Serializable {
     }
     if (warn!=null) {
       if (removeDevice==null) {
-        removeDevice=new RemoveDevice();
+        removeDevice=new MoodleRemoveDevice();
       }
       removeDevice.setWarnings(warn);
     }

@@ -95,7 +95,7 @@ public class MoodleRestModForum {
     return results;
   }
   
-  public static ListStatus forumViewForum(Long forumId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus forumViewForum(Long forumId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.MOD_FORUM_VIEW_FORUM.toString();
@@ -108,7 +108,7 @@ public class MoodleRestModForum {
     data.append("&").append(URLEncoder.encode("forumid", MoodleServices.ENCODING.toString())).append("=").append(forumId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -120,7 +120,7 @@ public class MoodleRestModForum {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -140,14 +140,14 @@ public class MoodleRestModForum {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }
     return listStatus;
   }
   
-  public static ListStatus forumViewForumDiscussion(Long discussionId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus forumViewForumDiscussion(Long discussionId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.MOD_FORUM_VIEW_FORUM_DISCUSSION.toString();
@@ -160,7 +160,7 @@ public class MoodleRestModForum {
     data.append("&").append(URLEncoder.encode("discussionid", MoodleServices.ENCODING.toString())).append("=").append(discussionId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -172,7 +172,7 @@ public class MoodleRestModForum {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -192,7 +192,7 @@ public class MoodleRestModForum {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }

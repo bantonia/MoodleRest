@@ -196,7 +196,7 @@ public enum MoodleServices implements Serializable {
         GRADEREPORT_USER_VIEW_GRADE_REPORT("gradereport_user_view_grade_report"), // No code yet
         
         // DATA
-        MOD_DATA_GET_DATABASES_BY_COURSES("mod_data_get_databases_by_courses"), // No code yet
+        MOD_DATA_GET_DATABASES_BY_COURSES("mod_data_get_databases_by_courses"), // MoodleRestModData added 29/05/2015 (Untested)
         
         // ####################
         // # LEGACY FUNCTIONS #

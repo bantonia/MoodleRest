@@ -254,15 +254,15 @@ public class MoodleRestNotes implements Serializable {
     }
   }
   
-  public static ListStatus notesViewNotes() throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus notesViewNotes() throws MoodleRestException, UnsupportedEncodingException {
     return notesViewNotes(null, null);
   }
   
-  public static ListStatus notesViewNotes(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus notesViewNotes(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
     return notesViewNotes(courseId, null);
   }
   
-  public static ListStatus notesViewNotes(Long courseId, Long userId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus notesViewNotes(Long courseId, Long userId) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_NOTES_VIEW_NOTES.toString();
@@ -276,7 +276,7 @@ public class MoodleRestNotes implements Serializable {
     if (userId!=null) data.append("&").append(URLEncoder.encode("userid", MoodleServices.ENCODING.toString())).append("=").append(userId);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -288,7 +288,7 @@ public class MoodleRestNotes implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -308,7 +308,7 @@ public class MoodleRestNotes implements Serializable {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }

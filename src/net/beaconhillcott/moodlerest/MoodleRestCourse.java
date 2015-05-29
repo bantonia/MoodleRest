@@ -1211,11 +1211,11 @@ public class MoodleRestCourse implements Serializable {
     NodeList elements=MoodleCallRestWebService.call(data.toString());
   }
   
-  public static ListStatus courseViewCourse(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus courseViewCourse(Long courseId) throws MoodleRestException, UnsupportedEncodingException {
     return courseViewCourse(courseId, null);
   }
   
-  public static ListStatus courseViewCourse(Long courseId, Integer sectionNumber) throws MoodleRestException, UnsupportedEncodingException {
+  public static MoodleListStatus courseViewCourse(Long courseId, Integer sectionNumber) throws MoodleRestException, UnsupportedEncodingException {
     if (MoodleCallRestWebService.isLegacy()) throw new MoodleRestException(MoodleRestException.NO_LEGACY);
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_COURSE_VIEW_COURSE.toString();
@@ -1229,7 +1229,7 @@ public class MoodleRestCourse implements Serializable {
     if (sectionNumber!=null) data.append("&").append(URLEncoder.encode("sectionnumber", MoodleServices.ENCODING.toString())).append("=").append(sectionNumber);
     data.trimToSize();
     NodeList elements=MoodleCallRestWebService.call(data.toString());
-    ListStatus listStatus=null;
+    MoodleListStatus listStatus=null;
     ArrayList<MoodleWarning> warn=null;
     MoodleWarning warning=null;
     String parent=null;
@@ -1241,7 +1241,7 @@ public class MoodleRestCourse implements Serializable {
       String nodeName=elements.item(j).getParentNode().getAttributes().getNamedItem("name").getNodeValue();
       if (nodeName.equals("status")) {
         if (listStatus==null) {
-          listStatus=new ListStatus();
+          listStatus=new MoodleListStatus();
           listStatus.setStatus((content.equals("1")));
         }
       } else {
@@ -1261,7 +1261,7 @@ public class MoodleRestCourse implements Serializable {
     }
     if (warn!=null) {
       if (listStatus==null) {
-        listStatus=new ListStatus();
+        listStatus=new MoodleListStatus();
       }
       listStatus.setWarnings(warn);
     }

@@ -13,10 +13,10 @@ import java.util.ArrayList;
  *
  * @author Bill Antonia
  */
-public class BlockedUsers extends MoodleWarnings implements Serializable {
+public class MoodleBlockedUsers extends MoodleWarnings implements Serializable {
   private ArrayList<MoodleUser> users=null;
 
-  public BlockedUsers() {
+  public MoodleBlockedUsers() {
   }
 
   public ArrayList<MoodleUser> getUsers() {

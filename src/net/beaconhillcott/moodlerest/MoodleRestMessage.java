@@ -535,7 +535,7 @@ public class MoodleRestMessage implements Serializable {
     return results;
   }
   
-  public BlockedUsers getBlockedUsers(Long userId) throws MoodleRestCommentsException , UnsupportedEncodingException, MoodleRestException {
+  public MoodleBlockedUsers getBlockedUsers(Long userId) throws MoodleRestCommentsException , UnsupportedEncodingException, MoodleRestException {
     StringBuilder data=new StringBuilder();
     String functionCall=MoodleServices.CORE_MESSAGE_GET_BLOCKED_USERS.toString();
     if (MoodleCallRestWebService.getAuth()==null)
@@ -580,7 +580,7 @@ public class MoodleRestMessage implements Serializable {
         }
       }
     }
-    BlockedUsers usersWithWarnings=new BlockedUsers();
+    MoodleBlockedUsers usersWithWarnings=new MoodleBlockedUsers();
     usersWithWarnings.setUsers(users);
     usersWithWarnings.setWarnings(warn);
     return usersWithWarnings;
