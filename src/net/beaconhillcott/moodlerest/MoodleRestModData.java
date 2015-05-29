@@ -28,13 +28,13 @@ public class MoodleRestModData {
       data.append(MoodleCallRestWebService.getAuth());
     data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
     if (courseIds==null)
-      throw new MoodleRestModDataException();
+      throw new MoodleRestModDataException("courseIds cannot be null");
     else {
       if (courseIds.length>0) {
         for (int i=0; i<courseIds.length; i++)
           data.append("&").append(URLEncoder.encode("courseids["+i+"]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+courseIds[i], MoodleServices.ENCODING.toString()));
       } else {
-        throw new MoodleRestModDataException();
+        throw new MoodleRestModDataException("courseId array size must be larger than 0");
       }
     }
     data.trimToSize();
@@ -59,18 +59,18 @@ public class MoodleRestModData {
           database.setField(nodeName, content);
         }
       } else {
-            if (parent.equals("warnings")) {
-              if (nodeName.equals("item")) {
-                if (warn==null) {
-                  warn=new ArrayList<MoodleWarning>();
-                }
-                warning=new MoodleWarning();
-                warn.add(warning);
-                warning.setItem(content);
-              } else {
-                warning.setMoodleWarningField(nodeName, content);
-              }
+        if (parent.equals("warnings")) {
+          if (nodeName.equals("item")) {
+            if (warn==null) {
+              warn=new ArrayList<MoodleWarning>();
             }
+            warning=new MoodleWarning();
+            warn.add(warning);
+            warning.setItem(content);
+          } else {
+            warning.setMoodleWarningField(nodeName, content);
+          }
+        }
       }
     }
     MoodleDatabases databasesWithWarnings=new MoodleDatabases();

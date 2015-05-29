@@ -107,8 +107,8 @@ public enum MoodleServices implements Serializable {
         CORE_MESSAGE_MARK_MESSAGE_READ("core_message_mark_message_read"), // MoodleRestMessage added 28/05/2015 (Untested)
         
         // MESSAGE
-        MESSAGE_AIRNOTIFIER_ARE_NOTIFICATION_PREFERENCES_CONFIGURED("message_airnotifier_are_notification_preferences_configured"), // Moodle 2.7 (No code yet)
-        MESSAGE_AIRNOTIFIER_IS_SYSTEM_CONFIGURED("message_airnotifier_is_system_configured"), // Moodle 2.7 (No code yet)
+        MESSAGE_AIRNOTIFIER_ARE_NOTIFICATION_PREFERENCES_CONFIGURED("message_airnotifier_are_notification_preferences_configured"), // MoodleRestMessageAirNotifier added 29/05/2015 (Untested)
+        MESSAGE_AIRNOTIFIER_IS_SYSTEM_CONFIGURED("message_airnotifier_is_system_configured"), // MoodleRestMessageAirNotifier added 29/05/2015 (Tested)
 
         // NOTES
         CORE_NOTES_CREATE_NOTES("core_notes_create_notes"), // MoodleRestNotes

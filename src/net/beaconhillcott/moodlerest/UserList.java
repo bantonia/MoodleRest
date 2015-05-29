@@ -29,6 +29,7 @@ public class UserList implements Serializable {
   private Long userId=null;
   private Long courseId=null;
   private Integer roleId=null;
+  private Boolean configured=null;
   
   /**
    *
@@ -90,6 +91,13 @@ public class UserList implements Serializable {
   public void setRoleId(Integer roleId) {
     this.roleId = roleId;
   }
-  
+
+  public Boolean isConfigured() {
+    return configured;
+  }
+
+  public void setConfigured(Boolean configured) {
+    this.configured = configured;
+  }
   
 }
