@@ -792,4 +792,28 @@ public class MoodleRestModAssign implements Serializable {
     return results;
   }
   
+  public static void saveGrades(Long assignmentId, Boolean applyToAll, ModAssignGrades grades) throws MoodleRestException, UnsupportedEncodingException {
+    if (MoodleCallRestWebService.isLegacy()) {
+      throw new MoodleRestException(MoodleRestException.NO_LEGACY);
+    }
+    StringBuilder data=new StringBuilder();
+    String functionCall=MoodleServices.MOD_ASSIGN_SAVE_GRADES.toString();
+    if (MoodleCallRestWebService.getAuth()==null) {
+      throw new MoodleRestModAssignException();
+    } else {
+      data.append(MoodleCallRestWebService.getAuth());
+    }
+    data.append("&").append(URLEncoder.encode("wsfunction", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(functionCall, MoodleServices.ENCODING.toString()));
+    if (assignmentId==null) throw new MoodleRestModAssignException("Required parameter: assignmentId"); else data.append("&").append(URLEncoder.encode("assignmentid", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+assignmentId, MoodleServices.ENCODING.toString()));
+    if (applyToAll==null) throw new MoodleRestModAssignException("Required parameter: applyToAll"); else data.append("&").append(URLEncoder.encode("applytoall", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+(applyToAll?1:0), MoodleServices.ENCODING.toString()));
+    if (grades==null)
+      throw new MoodleRestModAssignException("Required parameter: grades");
+    else
+      for (int i=0; i<grades.getGrades().size(); i++) {
+        data.append("&").append(URLEncoder.encode("grades["+i+"][userid]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+grades.getGrades().get(i).getUserId(), MoodleServices.ENCODING.toString()));
+        if (grades.getGrades().get(i).getAdvancedGradingData()==null && grades.getGrades().get(i).getGrade()!=null) data.append("&").append(URLEncoder.encode("grades["+i+"][grade]", MoodleServices.ENCODING.toString())).append("=").append(URLEncoder.encode(""+grades.getGrades().get(i).getGrade(), MoodleServices.ENCODING.toString()));
+        
+      }
+  }
+  
 }

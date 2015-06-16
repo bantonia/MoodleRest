@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author root
+ * @author Bill Antonia
  */
 public class MoodleDatabase implements Serializable {
   private Long id; //int   //Database id

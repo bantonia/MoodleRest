@@ -181,7 +181,7 @@ public enum MoodleServices implements Serializable {
         CORE_COMMENT_GET_COMMENTS("core_comment_get_comments"), // Added 2015-05-26 (Untested)
         
         // COMPLETION
-        CORE_COMPLETION_GET_ACTIVITIES_COMPLETION_STATUS("core_comment_get_activities_completion_status"), // No code yet
+        CORE_COMPLETION_GET_ACTIVITIES_COMPLETION_STATUS("core_comment_get_activities_completion_status"), // Added 2015-06-16 (Untested)
         CORE_COMPLETION_GET_COURSE_COMPLETION_STATUS("core_comment_get_course_completion_status"), // No code yet
         CORE_COMPLETION_UPDATE_ACTIVITY_COMPLETION_STATUS_MANUALLY("core_comment_update_activity_completion_status_manually"), // No code yet
         
