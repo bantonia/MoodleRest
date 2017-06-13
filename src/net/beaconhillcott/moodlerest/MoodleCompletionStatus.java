@@ -76,7 +76,7 @@ public class MoodleCompletionStatus implements Serializable {
     if (nodeName.equals("modname")) {setModName(content);}
     if (nodeName.equals("instance")) { setInstance(Long.parseLong(content));}
     if (nodeName.equals("state")) { setState(Integer.parseInt(content));}
-    if (nodeName.equals("timecompleted")) { setInstance(Long.parseLong(content));}
+    if (nodeName.equals("timecompleted")) { setTimeCompleted(Long.parseLong(content));}
     if (nodeName.equals("tracking")) { setTracking(Long.parseLong(content));}
   }
   
