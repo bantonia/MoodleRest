@@ -285,10 +285,11 @@ public class MoodleCallRestWebService implements Serializable {
                 //System.out.println(line);
                 if (error) {
                   String errMess=line.substring(line.indexOf('>')+1, line.indexOf('<', line.indexOf('>')+1));
-                  line=reader.readLine();
-                  if (line!=null) {
+                  while ((line=reader.readLine())!=null) {
                     if (line.contains("<MESSAGE>")) {
-                      errMess+=(": "+line.replace("<MESSAGE>", "").replace("</MESSAGE>", ""));
+                        errMess += (": " + line.replace("<MESSAGE>", "").replace("</MESSAGE>", ""));
+                    } else if (line.contains("<DEBUGINFO>")) {
+                        errMess += (": " + line.replace("<DEBUGINFO>", "").replace("</DEBUGINFO>", ""));
                     }
                   }
                   throw new MoodleRestException(errMess);
